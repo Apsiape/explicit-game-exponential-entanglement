@@ -1,0 +1,34 @@
+  derived s-lemma  [p, i p i] = sigma, area <= 13
+  derived H s s                                      resolved length  2, area <= 27
+  derived H s p s P s p s P s p s P                  resolved length  6, area <= 87
+  derived H s p p s P P s^-1 p p s^-1 P P            resolved length  4, area <= 64
+  derived H p s P q s^-1 Q                           resolved length  6, area <= 40
+  derived Q t t                                      resolved length  2, area <= 1
+  derived S t s p T P s^-1                           resolved length  4, area <= 32
+  derived S t s q T Q s^-1                           resolved length  8, area <= 40
+  derived S d B s p D P s^-1 B^-1                    resolved length  6, area <= 64
+  derived S d B s q D Q s^-1 B^-1                    resolved length 10, area <= 72
+  derived C t1 t2 t1^-1 t2^-1                        resolved length  4, area <= 8
+  derived A d t1 D t2^-1 t1^-1                       resolved length  5, area <= 7
+  derived A d t2 D t2^-1                             resolved length  4, area <= 8
+  derived A d t3 D t3^-1                             resolved length  4, area <= 12
+  derived Z p x P X                                  resolved length  2, area <= 4
+  derived Z p z P Z                                  resolved length  2, area <= 4
+  derived Z q x Q X                                  resolved length  6, area <= 12
+  derived Z q z Q Z                                  resolved length  6, area <= 12
+  derived Z d x D X                                  resolved length  4, area <= 4
+  derived Z d z D Z                                  resolved length  4, area <= 4
+  derived L x x                                      resolved length  2, area <= 1
+  derived L z z                                      resolved length  2, area <= 1
+  derived L x z x z x z x z                          resolved length  8, area <= 4
+  derived P x t x T X t X T                          resolved length  8, area <= 8
+  derived P x t z T X t Z T                          resolved length  8, area <= 8
+  derived P z t x T Z t X T                          resolved length  8, area <= 8
+  derived P z t z T Z t Z T                          resolved length  8, area <= 8
+  derived K J t J^-1 T                               resolved length 10, area <= 10
+C0 composition: 32 from derivations, 25 centrality triples added, 19 linear-set commutation triples added
+the search met 43 involutive generators; kept the 26 on returned derivation paths and discarded 17 (g7 g8 g9 g11 g12 g15 g16 g18 g20 g21 g22 g23 g24 g25 g26 g34 g35)
+built P: |S0| = 26 involutive generators, S1 = {p}, |C0| = 76, |C1| = 10, |LIN| = 8; total area bound 550
+rebuilt file is byte-identical to egamma0_P.json
+VERIFY OK: 26 S0 generators, |C0| = 76, |C1| = 10, |LIN| = 8; all relations true in G_P^+; w central; 29 derivations replayed
+exit 0

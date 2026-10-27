@@ -1,0 +1,9 @@
+input  egamma0_P.json  sha256 ad0fd91d9378bc956a78e65c813b94fbb93a0e7090b3068b4d76ac6cbc1590f0
+P: |S0| = 26, S1 = {p}, |C0| = 76, |C1| = 10, 8 linear sets
+variables by step: P 26, Step 1 12, Step 2 2, Step 3 315, Step 4 1638
+generators after Step 2 (J excluded): 40; conjugacy relations after Step 2: 97; nice relations after Step 3: 234
+equations: 283 linear sets + 6 x 234 gadget equations = 1687
+n = 1993 variables (J excluded), m = 1687 equations, s = 3; equations by size 2: 1, 3: 1686
+right-hand sides: 1 equations with b = 1: ['g14 + u']
+equations whose product order is increasing in the variable numbering: 1687 of 1687
+wrote game_Ab.json

@@ -1,0 +1,36 @@
+PASS  egamma0_P.json has the SHA-256 digest printed in Section C.4 [cert:rerun]
+PASS  game_Ab.json was generated from that file
+PASS  n = 1993 variables besides J
+PASS  m = 1687 equations
+PASS  every equation has 1 to 3 distinct variables (s = 3) and b in {0,1}
+PASS  variable names are distinct
+PASS  every variable occurs in some equation
+      equations by number of variables: {3: 1686, 2: 1}; equations with b = 1: 1
+PASS  variable roles are distinct
+      own derivation: 40 generators after Step 2, 97 conjugacy triples, 234 nice relations, 1687 equations
+PASS  the equations are exactly those of Steps 1-4 of Lemma B.1 [lem:gadget] applied to P
+PASS  the variables are exactly those of Steps 1-4 of Lemma B.1 [lem:gadget]
+PASS  model: p P = P p = 1
+PASS  model: iota, t, d, x, z are involutions
+PASS  model: [p, iota p iota] is the transposition of (1,1) and (1,2)
+PASS  model: (xz)^2 = J != 1
+PASS  model: J commutes with p, iota, t, d, x, z
+PASS  model: the translations t and p t p^-1 commute
+PASS  model: the lamps at 0 and e_1 commute
+PASS  model: d t d^-1 = t (p t p^-1)
+PASS  model: p, d, iota fix the lamp at 0
+PASS  model: negative tests (xtxt, xz, [d,t] and xtx (txt)^-1 are nontrivial)
+PASS  model: all 26 defining words are involutions in G_P^+
+PASS  model: w -> J
+PASS  model: the 76 relations of C0 hold
+PASS  model: the 10 relations of C1 hold
+PASS  model: the 8 linear relations hold
+PASS  model: the 1993 squares x^2, the 1993 commutators [x,J], the 5059 commutators within equations and the 1687 product relators of Gamma(A,b) hold for the 8x8 block-monomial images, with J -> J I_8 != I
+      model: 198 distinct elements of G_P^+ were formed
+PASS  over F_2 the system A x = b is inconsistent (A has rank 1512), so no deterministic strategy wins with certainty
+PASS  negative control: a gadget equation with b = 1 fails in the model
+PASS  negative control: a gadget equation with a wrong variable fails in the model
+PASS  negative control: a deleted equation is detected by the structure check
+PASS  negative control: with b = 0 in the equation x_w + x_u = 1 the system becomes solvable
+
+ALL CHECKS PASSED

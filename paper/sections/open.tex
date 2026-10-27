@@ -1,0 +1,77 @@
+%======================================================================
+\section{Open questions}\label{sec:open}
+%======================================================================
+
+\paragraph{The exact scale.} For the game of Theorem~A,
+\[
+c\,\eps^{-1}\bfun(\eps)\ \le\ \log\Ent(G,\eps)\ \le\ \log\Entme(G,\eps)\ \le\ C\eps^{-1}\log(1/\eps).
+\]
+The factor $\bfun(\eps)=2^{-O((\log\log(1/\eps))^2)}$ comes only from the pair areas $\Lambda_N$, that is from the Dehn function of $H_3$, and
+the factor $\log(1/\eps)$ only from the number of affine hashes over which the models of the upper bound average. Under the polynomial bound~\ref{H-poly}, which
+we do not use, $\bfun(\eps)$ improves to a power of $\log(1/\eps)$ (\cref{rem:sector-poly}).
+
+\begin{question}\label{q:scale}
+Is $\log\Ent(G,\eps)$ of order $\eps^{-1}\log(1/\eps)$, or of order $\eps^{-1}$? In $\GP$, is $\log\hlp(J;2,\eps)$ of order
+$\eps^{-2}\log(1/\eps)$?
+\end{question}
+
+The lower bound sees $2^N\approx\eps^{-1}$ lamps on $N\approx\log(1/\eps)$ points, one qubit each. The upper bound keeps about $\eps^{-1}$
+qubits as well, but averages over a family of about $2^{6mk}$ affine hashes, with $k\approx\log(1/\eps)$ bits, and the size of that family is
+where the factor $\log(1/\eps)$ comes from. Deciding which count is right seems to need either a lower bound that also charges for the
+points a lamp uses, or models built from a much smaller family of hashes.
+
+\paragraph{The Dehn function of Houghton's group.} The proof of \cref{cor:dehn-qp} halves Lee's recursion for the commutator of two
+transpositions at distance $M$ and obtains $M^{(1+o(1))\log M}$. The Dehn function of $H_3$ is at least quadratic: $H_3$ is not hyperbolic,
+since its finitary permutations have unbounded finite orders, and a finitely presented group with subquadratic Dehn function is
+hyperbolic~\cite{Bri02}.
+
+\begin{question}\label{q:dehn}
+Is the Dehn function of $H_3$ quadratic, improving the polynomial bound~\ref{H-poly} of our preprint~\cite{DM-H3}? In particular, do the commutators $[\sigma_0,\sigma_M]$ of far-apart transpositions have area $O(M^2)$?
+\end{question}
+
+A quadratic bound would give $\Lambda_N=O(N^4)$ and replace $\bfun(\eps)$ by $(\log(1/\eps))^{-O(1)}$; it would not touch the factor
+$\log(1/\eps)$ of \cref{q:scale}.
+
+\paragraph{Faster growth.} By $\Pi_2$-completeness~\cite{MNY22}, every total computable bound on $\Ent(G,\eps)$ in terms of the game and
+the precision is exceeded by some game of quantum value one, but the argument exhibits no such game. The exponent $1$ of Theorem~A is the
+natural limit of the present method: a strategy can only certify about $\eps^{-1}$ independent qubits
+at precision $\sqrt\eps$ when the errors add in squares, so faster growth must come from a mechanism other than counting commuting Pauli
+pairs, for instance from lamps whose state space itself grows with the precision.
+
+\begin{question}\label{q:faster}
+Is there an explicit two-player game $G$ of quantum value one such that $\log\log\Ent(G,\eps)\ge\eps^{-c}$ for some $c>0$? Can it be a
+linear system game whose solution group is amenable?
+\end{question}
+
+For amenable solution groups the second part asks for a central involution $J$ whose state-weighted profile is at least doubly
+exponential; by Theorem~D this is exactly what such a game needs.
+
+\paragraph{Keeping the state.} By Theorem~D the entanglement of a linear system game is the state-weighted profile of $J$, and the
+entanglement of maximally entangled strategies is the flat profile $\hlp(J;2,\cdot)$, at the same precision $\sqrt\eps$ up to constants.
+In all examples we know, the logarithms of the two profiles agree up to factors $(1/e)^{o(1)}$ as the precision $e\to0$: for $\GP$ by Theorem~B, and for the group
+$K$ of Slofstra and Vidick, where the profiles themselves agree up to constant factors, by Theorem~F.
+
+\begin{question}\label{q:flat}
+Is there a finitely presented group with a central involution $J$ for which $\log\hlps(J;e)$ is much smaller than
+$\log\hlp(J;2,e)$, say $\log\hlps(J;e)\le(\log\hlp(J;2,e))^{1-c}$? If such a group can be the solution group of a linear system game of
+quantum value one, then, by Theorem~D and~\cite[Cor.~4.6]{SV18}, strategies of that game far from maximally entangled save a power of the
+entanglement.
+\end{question}
+
+\paragraph{A smaller game.} The game has $1687$ equations because it encodes, through Slofstra's embedding, an $E\Gamma_0$ presentation,
+with $27$ generators, of a group that maps onto $\GPp$. Most of the equations are gadgets: each conjugacy relation of the presentation
+costs fourteen equations. The constants of Theorem~A are explicit but astronomically small, and a smaller game would improve them too.
+
+\begin{question}\label{q:small}
+What is the least number of equations of a linear system game, or of questions of a two-player game, of quantum value one in which
+$\Ent(G,\eps)$ grows faster than every polynomial in $1/\eps$?
+\end{question}
+
+\paragraph{Other measures of entanglement.} The lower bounds of Theorems~A and~E hold for the entanglement entropy of pure strategies and for
+the entanglement of formation of mixed ones. For mixed states the entanglement of formation is at least the entanglement cost, the
+distillable entanglement and the relative entropy of entanglement, so lower bounds on it do not bound these.
+
+\begin{question}\label{q:distill}
+Do near-optimal mixed strategies for CHSH$(n)$, or for the game of Theorem~A, have distillable entanglement of the same order as their
+entanglement of formation?
+\end{question}

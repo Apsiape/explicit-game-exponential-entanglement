@@ -1,0 +1,293 @@
+\begin{thebibliography}{BDSW96}
+
+\bibitem[BDSW96]{BDSW96}
+Charles~H. Bennett, David~P. DiVincenzo, John~A. Smolin, and William~K.
+  Wootters.
+\newblock Mixed-state entanglement and quantum error correction.
+\newblock {\em Phys. Rev. A}, 54:3824--3851, 1996.
+\newblock arXiv:quant-ph/9604024.
+
+\bibitem[Bri02]{Bri02}
+Martin~R. Bridson.
+\newblock The geometry of the word problem.
+\newblock In Martin~R. Bridson and Simon~M. Salamon, editors, {\em Invitations
+  to Geometry and Topology}, volume~7 of {\em Oxford Graduate Texts in
+  Mathematics}, pages 29--91. Oxford University Press, 2002.
+
+\bibitem[Cho80]{Cho80}
+Ching Chou.
+\newblock Elementary amenable groups.
+\newblock {\em Illinois J. Math.}, 24:396--407, 1980.
+
+\bibitem[Cir80]{Cir80}
+Boris~S. Cirel'son.
+\newblock Quantum generalizations of {B}ell's inequality.
+\newblock {\em Lett. Math. Phys.}, 4:93--100, 1980.
+
+\bibitem[CLS17]{CLS17}
+Richard Cleve, Li~Liu, and William Slofstra.
+\newblock Perfect commuting-operator strategies for linear system games.
+\newblock {\em J. Math. Phys.}, 58:012202, 2017.
+\newblock arXiv:1606.02278.
+
+\bibitem[CM14]{CM14}
+Richard Cleve and Rajat Mittal.
+\newblock Characterization of binary constraint system games.
+\newblock In {\em Automata, Languages, and Programming (ICALP 2014)}, volume
+  8572 of {\em Lecture Notes in Comput. Sci.}, pages 320--331. Springer, 2014.
+\newblock arXiv:1209.2729.
+
+\bibitem[Col20]{Col20}
+Andrea Coladangelo.
+\newblock A two-player dimension witness based on embezzlement, and an
+  elementary proof of the non-closure of the set of quantum correlations.
+\newblock {\em Quantum}, 4:282, 2020.
+\newblock doi:10.22331/q-2020-06-18-282; arXiv:1904.02350.
+
+\bibitem[Con76]{Con76}
+Alain Connes.
+\newblock Classification of injective factors. {C}ases {II}$_1$, {II}$_\infty$,
+  {III}$_\lambda$, $\lambda\ne1$.
+\newblock {\em Ann. of Math. (2)}, 104:73--115, 1976.
+
+\bibitem[CRSV17]{CRSV17}
+Rui Chao, Ben~W. Reichardt, Chris Sutherland, and Thomas Vidick.
+\newblock Overlapping qubits.
+\newblock In {\em 8th Innovations in Theoretical Computer Science Conference
+  (ITCS 2017)}, volume~67 of {\em LIPIcs}, pages 48:1--48:21, 2017.
+
+\bibitem[dC06]{Cor06}
+Yves de~Cornulier.
+\newblock Finitely presented wreath products and double coset decompositions.
+\newblock {\em Geom. Dedicata}, 122:89--108, 2006.
+
+\bibitem[dlS25]{dlS22}
+Mikael de~la Salle.
+\newblock Spectral gap and stability for groups and non-local games.
+\newblock {\em J. \'Ec. polytech. Math.}, 12:1417--1444, 2025.
+\newblock arXiv:2204.07084.
+
+\bibitem[DM26a]{DM-lamps}
+Seth Douglas and Nidhal Mghirbi.
+\newblock Amenable groups with nearly exponential sofic profile, and quantum
+  channels that need nearly linear memory.
+\newblock arXiv:2610.04271v1, identical to Zenodo version 1.1.2,
+  doi:10.5281/zenodo.23111927. Unrefereed preprint; result numbers refer to
+  this version, 2026.
+
+\bibitem[DM26b]{DM-H3}
+Seth Douglas and Nidhal Mghirbi.
+\newblock Houghton's group {$H_3$} has superpolynomial sofic profile.
+\newblock Version 1.1.2, Zenodo, 2026.
+\newblock doi:10.5281/zenodo.23070869. Unrefereed preprint. Result numbers
+  refer to version 1.1.2.
+
+\bibitem[DPP19]{DPP19}
+Ken Dykema, Vern~I. Paulsen, and Jitendra Prakash.
+\newblock Non-closure of the set of quantum correlations via graphs.
+\newblock {\em Comm. Math. Phys.}, 365:1125--1142, 2019.
+\newblock arXiv:1709.05032.
+
+\bibitem[ES05]{ES05}
+G\'abor Elek and Endre Szab\'o.
+\newblock Hyperlinearity, essentially free actions and {$L^2$}-invariants.
+  {T}he sofic property.
+\newblock {\em Math. Ann.}, 332:421--441, 2005.
+
+\bibitem[Gao15]{Gao15}
+Jingliang Gao.
+\newblock Quantum union bounds for sequential projective measurements.
+\newblock {\em Phys. Rev. A}, 92(5):052331, 2015.
+
+\bibitem[GH17]{GH17}
+W.~T. Gowers and O.~Hatami.
+\newblock Inverse and stability theorems for approximate representations of
+  finite groups.
+\newblock {\em Sb. Math.}, 208:1784--1817, 2017.
+\newblock arXiv:1510.04085.
+
+\bibitem[Gro99]{Gro99}
+Misha Gromov.
+\newblock Endomorphisms of symbolic algebraic varieties.
+\newblock {\em J. Eur. Math. Soc.}, 1:109--197, 1999.
+
+\bibitem[GYZ26]{GYZ26}
+Minbo Gao, Tianshi Yu, and Lihong Zhi.
+\newblock An explicit counterexample to {T}sirelson's problem via a linear
+  system game, 2026.
+\newblock arXiv:2610.10248.
+
+\bibitem[Hou78]{Hou78}
+C.~H. Houghton.
+\newblock The first cohomology of a group with permutation module coefficients.
+\newblock {\em Archiv der Mathematik}, 31:254--258, 1978.
+
+\bibitem[JLV20]{JLV20}
+Zhengfeng Ji, Debbie Leung, and Thomas Vidick.
+\newblock A three-player coherent state embezzlement game.
+\newblock {\em Quantum}, 4:349, 2020.
+\newblock arXiv:1802.04926.
+
+\bibitem[Joh99]{Joh99}
+D.~L. Johnson.
+\newblock Embedding some recursively presented groups.
+\newblock In {\em Groups St Andrews 1997 in Bath, II}, volume 261 of {\em
+  London Mathematical Society Lecture Note Series}, pages 410--416. Cambridge
+  University Press, 1999.
+
+\bibitem[KTW14]{KTW14}
+Jedrzej Kaniewski, Marco Tomamichel, and Stephanie Wehner.
+\newblock Entropic uncertainty from effective anticommutators.
+\newblock {\em Phys. Rev. A}, 90:012332, 2014.
+\newblock arXiv:1402.5722.
+
+\bibitem[Lee12]{Lee12}
+Sang~Rae Lee.
+\newblock {\em Geometry of {H}oughton's groups}.
+\newblock PhD thesis, University of Oklahoma, 2012.
+\newblock arXiv:1212.0257v1; result numbers refer to that version.
+
+\bibitem[Lie73]{Lie73}
+Elliott~H. Lieb.
+\newblock Convex trace functions and the {W}igner--{Y}anase--{D}yson
+  conjecture.
+\newblock {\em Adv. Math.}, 11:267--288, 1973.
+
+\bibitem[Lin74]{Lin74}
+G\"oran Lindblad.
+\newblock Expectations and entropy inequalities for finite quantum systems.
+\newblock {\em Comm. Math. Phys.}, 39:111--119, 1974.
+
+\bibitem[Lin75]{Lin75}
+G\"oran Lindblad.
+\newblock Completely positive maps and entropy inequalities.
+\newblock {\em Comm. Math. Phys.}, 40:147--151, 1975.
+
+\bibitem[Lin23]{Lin23}
+Junqiao Lin.
+\newblock Tracially embeddable strategies: lifting {MIP}$^*$ tricks to
+  {MIP}$^{co}$, 2023.
+\newblock arXiv:2304.01940.
+
+\bibitem[LS77]{LS77}
+Roger~C. Lyndon and Paul~E. Schupp.
+\newblock {\em Combinatorial Group Theory}, volume~89 of {\em Ergebnisse der
+  Mathematik und ihrer Grenzgebiete}.
+\newblock Springer-Verlag, Berlin, 1977.
+
+\bibitem[MdlS23]{MdlS23}
+Amine Marrakchi and Mikael de~la Salle.
+\newblock Almost synchronous correlations and {T}omita--{T}akesaki theory,
+  2023.
+\newblock arXiv:2307.08129.
+
+\bibitem[MNY22]{MNY22}
+Hamoon Mousavi, Seyed~Sajjad Nezhadi, and Henry Yuen.
+\newblock Nonlocal games, compression theorems, and the arithmetical hierarchy.
+\newblock In {\em Proceedings of the 54th Annual ACM Symposium on Theory of
+  Computing (STOC 2022)}, pages 1--11, 2022.
+\newblock doi:10.1145/3519935.3519949; arXiv:2110.04651.
+
+\bibitem[MV15]{MV15}
+Laura Man\v{c}inska and Thomas Vidick.
+\newblock Unbounded entanglement in nonlocal games.
+\newblock {\em Quantum Inf. Comput.}, 15:1317--1332, 2015.
+\newblock Conference version, \emph{Unbounded entanglement can be needed to
+  achieve the optimal success probability}, in ICALP 2014,
+  doi:10.1007/978-3-662-43948-7\_69; arXiv:1402.4145.
+
+\bibitem[NV17]{NV17}
+Anand Natarajan and Thomas Vidick.
+\newblock A quantum linearity test for robustly verifying entanglement.
+\newblock In {\em Proceedings of the 49th Annual ACM Symposium on Theory of
+  Computing (STOC 2017)}, pages 1003--1015, 2017.
+\newblock arXiv:1610.03574.
+
+\bibitem[Ost16]{Ost16}
+Dimiter Ostrev.
+\newblock The structure of nearly-optimal quantum strategies for the
+  {CHSH}$(n)$ {XOR} games.
+\newblock {\em Quantum Inf. Comput.}, 16:1191--1211, 2016.
+\newblock arXiv:1506.00607, as \emph{The structure of optimal and
+  nearly-optimal quantum strategies for non-local {XOR} games}.
+
+\bibitem[OV18]{OV18}
+Dimiter Ostrev and Thomas Vidick.
+\newblock Entanglement of approximate quantum strategies in {XOR} games.
+\newblock {\em Quantum Inf. Comput.}, 18:617--631, 2018.
+\newblock arXiv:1609.01652.
+
+\bibitem[Pad22]{Pad22}
+Connor Paddock.
+\newblock Rounding near-optimal quantum strategies for nonlocal games to
+  strategies using maximally entangled states, 2022.
+\newblock arXiv:2203.02525. Result numbers refer to version~5 (September 2025).
+
+\bibitem[Pes08]{Pes08}
+Vladimir~G. Pestov.
+\newblock Hyperlinear and sofic groups: a brief guide.
+\newblock {\em Bull. Symbolic Logic}, 14:449--480, 2008.
+\newblock arXiv:0804.3968.
+
+\bibitem[PS70]{PS70}
+Robert~T. Powers and Erling St{\o}rmer.
+\newblock Free states of the canonical anticommutation relations.
+\newblock {\em Comm. Math. Phys.}, 16:1--33, 1970.
+
+\bibitem[Slo11]{Slo11}
+William Slofstra.
+\newblock Lower bounds on the entanglement needed to play {XOR} non-local
+  games.
+\newblock {\em J. Math. Phys.}, 52:102202, 2011.
+\newblock arXiv:1007.2248.
+
+\bibitem[Slo18]{Slo18}
+William Slofstra.
+\newblock A group with at least subexponential hyperlinear profile, 2018.
+\newblock arXiv:1806.05267v1.
+
+\bibitem[Slo19]{Slo19}
+William Slofstra.
+\newblock The set of quantum correlations is not closed.
+\newblock {\em Forum Math. Pi}, 7:e1, 2019.
+\newblock arXiv:1703.08618. Result numbers refer to arXiv:1703.08618v2.
+
+\bibitem[Slo20]{Slo20}
+William Slofstra.
+\newblock Tsirelson's problem and an embedding theorem for groups arising from
+  non-local games.
+\newblock {\em J. Amer. Math. Soc.}, 33:1--56, 2020.
+\newblock arXiv:1606.03140.
+
+\bibitem[SV18]{SV18}
+William Slofstra and Thomas Vidick.
+\newblock Entanglement in non-local games and the hyperlinear profile of
+  groups.
+\newblock {\em Ann. Henri Poincar\'e}, 19:2979--3005, 2018.
+\newblock doi:10.1007/s00023-018-0718-y; arXiv:1711.10676. Result numbers refer
+  to arXiv:1711.10676v2.
+
+\bibitem[Uhl77]{Uhl77}
+Armin Uhlmann.
+\newblock Relative entropy and the {W}igner--{Y}anase--{D}yson--{L}ieb
+  concavity in an interpolation theory.
+\newblock {\em Comm. Math. Phys.}, 54:21--32, 1977.
+
+\bibitem[Vid22]{Vid22}
+Thomas Vidick.
+\newblock Almost synchronous quantum correlations.
+\newblock {\em J. Math. Phys.}, 63:022201, 2022.
+\newblock arXiv:2103.02468.
+
+\bibitem[Vil09]{Vil09}
+C\'edric Villani.
+\newblock {\em Optimal Transport: Old and New}, volume 338 of {\em Grundlehren
+  der mathematischen Wissenschaften}.
+\newblock Springer, Berlin, 2009.
+
+\bibitem[Wei00]{Wei00}
+Benjamin Weiss.
+\newblock Sofic groups and dynamical systems.
+\newblock {\em Sankhy\=a Ser. A}, 62:350--359, 2000.
+
+\end{thebibliography}

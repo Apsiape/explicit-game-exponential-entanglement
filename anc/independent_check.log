@@ -1,0 +1,136 @@
+Part A: R_P evaluated in my own model of G_P^+
+ok    R_P has 27 words (27)
+ok    H  s s                          trivial in G_P (len 8) and with q->ipi (len 16)
+ok    H  s p s P s p s P s p s P      trivial in G_P (len 22) and with q->ipi (len 38)
+ok    H  s p p s P P s^-1 p p s^-1 P P trivial in G_P (len 22) and with q->ipi (len 38)
+ok    H  p s P q s^-1 Q               trivial in G_P (len 12) and with q->ipi (len 24)
+ok    Q  t t                          trivial in G_P (len 2) and with q->ipi (len 2)
+ok    S  t s p T P s^-1               trivial in G_P (len 12) and with q->ipi (len 20)
+ok    S  t s q T Q s^-1               trivial in G_P (len 8) and with q->ipi (len 12)
+ok    S  d B s p D P s^-1 B^-1        trivial in G_P (len 16) and with q->ipi (len 24)
+ok    S  d B s q D Q s^-1 B^-1        trivial in G_P (len 12) and with q->ipi (len 16)
+ok    C  t1 t2 t1^-1 t2^-1            trivial in G_P (len 8) and with q->ipi (len 8)
+ok    A  d t1 D t2^-1 t1^-1           trivial in G_P (len 7) and with q->ipi (len 7)
+ok    A  d t2 D t2^-1                 trivial in G_P (len 8) and with q->ipi (len 8)
+ok    A  d t3 D t3^-1                 trivial in G_P (len 12) and with q->ipi (len 12)
+ok    Z  p x P X                      trivial in G_P (len 4) and with q->ipi (len 4)
+ok    Z  p z P Z                      trivial in G_P (len 4) and with q->ipi (len 4)
+ok    Z  q x Q X                      trivial in G_P (len 4) and with q->ipi (len 8)
+ok    Z  q z Q Z                      trivial in G_P (len 4) and with q->ipi (len 8)
+ok    Z  d x D X                      trivial in G_P (len 4) and with q->ipi (len 4)
+ok    Z  d z D Z                      trivial in G_P (len 4) and with q->ipi (len 4)
+ok    L  x x                          trivial in G_P (len 2) and with q->ipi (len 2)
+ok    L  z z                          trivial in G_P (len 2) and with q->ipi (len 2)
+ok    L  x z x z x z x z              trivial in G_P (len 8) and with q->ipi (len 8)
+ok    P  x t x T X t X T              trivial in G_P (len 8) and with q->ipi (len 8)
+ok    P  x t z T X t Z T              trivial in G_P (len 8) and with q->ipi (len 8)
+ok    P  z t x T Z t X T              trivial in G_P (len 8) and with q->ipi (len 8)
+ok    P  z t z T Z t Z T              trivial in G_P (len 8) and with q->ipi (len 8)
+ok    K  J t J^-1 T                   trivial in G_P (len 10) and with q->ipi (len 10)
+ok    J=(xz)^2 is the nontrivial central element (0 ~ J^1)
+ok    [J,p] = 1
+ok    [J,q] = 1
+ok    [J,t] = 1
+ok    [J,d] = 1
+ok    [J,x] = 1
+ok    [J,z] = 1
+ok    [J,i] = 1
+ok    q = iota p iota
+ok    (X_u Z_u)^2 = J at all 8 ladder sites
+ok    distinct ladder sites commute (8*7*4 commutators)
+ok    negative control rejected: xzxz
+ok    negative control rejected: xzXZ
+ok    negative control rejected: xtXT
+ok    negative control rejected: dtDT
+ok    negative control rejected: pqPQ
+ok    negative control rejected: tpTP
+ok    negative control rejected: ptPtpTPTx
+ok    negative control rejected: xtxTXtXd
+ok    negative control rejected: dxDXz
+ok    negative control rejected: pxPz
+ok    negative control rejected: ipiq
+ok    negative control rejected: corrupted q-substitution word
+Part B: the EGamma_0 presentation, relation by relation in my model
+ok    S1 = {p}
+ok    w = g14 is in S0
+ok    all 26 S0 generators are involutions in G_P^+
+ok    w maps to J (nontrivial central)
+ok    all 76 C0 relations a b a = c hold []
+ok    all 10 C1 relations p b p^-1 = c hold []
+ok    all 8 linear relations hold and their members commute []
+ok    centrality triples (g,w,w) present for all g in S0\{w} []
+ok    p w p^-1 = w present
+INFO  commutation pairs inside linear sets NOT listed explicitly as C0 triples: 0 of 24: []
+ok    all linear sets have size 3 (so commutation is derivable, area <= 6)
+Part C: (R3) derivations re-derived and re-justified
+ok    29 derivations (29)
+ok    slemma [p,q] sigma^-1               my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 45 (theirs 13) 
+ok    H      s s                          my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 99 (theirs 27) 
+ok    H      s p s P s p s P s p s P      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 335 (theirs 87) 
+ok    H      s p p s P P s^-1 p p s^-1 P P my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 254 (theirs 64) 
+ok    H      p s P q s^-1 Q               my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 139 (theirs 40) 
+ok    Q      t t                          my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 9 (theirs 1) 
+ok    S      t s p T P s^-1               my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 128 (theirs 32) 
+ok    S      t s q T Q s^-1               my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 142 (theirs 40) 
+ok    S      d B s p D P s^-1 B^-1        my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 241 (theirs 64) 
+ok    S      d B s q D Q s^-1 B^-1        my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 255 (theirs 72) 
+ok    C      t1 t2 t1^-1 t2^-1            my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 46 (theirs 8) 
+ok    A      d t1 D t2^-1 t1^-1           my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 47 (theirs 7) 
+ok    A      d t2 D t2^-1                 my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 36 (theirs 8) 
+ok    A      d t3 D t3^-1                 my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 40 (theirs 12) 
+ok    Z      p x P X                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 19 (theirs 4) 
+ok    Z      p z P Z                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 19 (theirs 4) 
+ok    Z      q x Q X                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 33 (theirs 12) 
+ok    Z      q z Q Z                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 33 (theirs 12) 
+ok    Z      d x D X                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 22 (theirs 4) 
+ok    Z      d z D Z                      my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 22 (theirs 4) 
+ok    L      x x                          my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 9 (theirs 1) 
+ok    L      z z                          my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 9 (theirs 1) 
+ok    L      x z x z x z x z              my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 48 (theirs 4) 
+ok    P      x t x T X t X T              my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 48 (theirs 8) 
+ok    P      x t z T X t Z T              my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 48 (theirs 8) 
+ok    P      z t x T Z t X T              my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 48 (theirs 8) 
+ok    P      z t z T Z t Z T              my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 48 (theirs 8) 
+ok    K      J t J^-1 T                   my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 43 (theirs 10) 
+ok    Jlink  (xz)^2 w^-1                  my front end gives their S0 sequence
+ok           moves replayed to the empty word with my relator test; my area bound 31 (theirs 3) 
+INFO  derivations needed the added linear-set commutators: False
+INFO  my generous total area bound for all 29 words: 2296
+Part D: negative controls for the presentation and the derivations
+ok    false relation x t x = g16 (=txt) rejected by the model
+ok    sanity: the true relation x t x = g15 is accepted
+ok    derivation rejected after deleting C0 (sigma,g4,g5)
+ok    front end detects a falsified C1 triple
+ok    illegal cancel move rejected
+ok    derivation of the nontrivial word x z rejected
+
+ALL CHECKS PASSED
+exit 0

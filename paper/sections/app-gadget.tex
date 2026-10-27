@@ -1,0 +1,316 @@
+%======================================================================
+\section{Slofstra's embedding with \texorpdfstring{$w\mapsto-I$}{w -> -I}}\label{app:gadget}
+%======================================================================
+
+This appendix proves the embedding behind the game of \cref{sec:game}. An $E\Gamma_0$ presentation $\Pres$ with at most one
+non-involutive generator and a distinguished involutive generator $w$ is turned into a binary linear system $(A,b)$, together with a
+substitution $\Psi$ of words, so that approximate representations pass in both directions with linear loss and $w$ corresponds to $J$
+(\cref{lem:gadget,thm:embedding}). The construction is Slofstra's~\cite[\S4]{Slo19}: the non-involutive generator is removed with ancilla
+involutions~\cite[Prop.~4.8]{Slo19}, a commutator device makes $J=[w,t^*]$~\cite[Lemma~5.2]{Slo19}, the conjugacy relations are put in a
+special form~\cite[Lemma~4.4]{Slo19}, and each of them is replaced by six linear equations~\cite[Prop.~4.2]{Slo19}. The two-sided statement
+follows Slofstra and Vidick~\cite[Prop.~6.2]{SV18}. What we add is bookkeeping: in the direction from $\Pres$ to $\Gamma$ the dimension
+grows by the factor $8$ and the defect by the factor $3$; the direction from $\Gamma$ to $\Pres$ keeps an arbitrary state; and we count the
+variables and equations. We treat only $\abs{S_1}\le1$, the case of \cref{prop:presentation}.
+
+\subsection{Conventions}\label{gadget:conv}
+
+A \emph{linear-plus-conjugacy presentation} has a finite set $T$ of generators, a further generator $J\notin T$, and the following
+relators: $x^2$ for $x\in T\cup\{J\}$; $[x,J]$ for $x\in T$; for each $V$ in a finite family $\mathcal V$ of nonempty subsets of $T$ (the
+\emph{linear sets}), the commutators $[x,x']$ for $x,x'\in V$ and one product relator $J^{b_V}\prod_{x\in V}x$, with $b_V\in\{0,1\}$ and the
+product taken in a fixed order; and \emph{conjugacy relators} $xyxz^{-1}$ for the triples $(x,y,z)$ of a finite set $\mathcal C\subseteq T^3$.
+With $\mathcal C=\emptyset$ this is the presentation of a solution group (\cref{def:lcs}), up to the order of the products. The presentation
+is \emph{nice} if for every $(x,y,z)\in\mathcal C$ either $y=z$, or $y$ and $z$ lie in a common linear set; then $[y,z]$ is freely trivial or a
+relator.
+
+All assignments below send each generator to a \emph{block-monomial} unitary: an operator on $(\C^D)^{\oplus k}$ with exactly one nonzero
+block in each block row and each block column, every nonzero block being a unitary on $\C^D$. Products and inverses of block-monomial
+unitaries are block-monomial. If $M=\operatorname{diag}(M_1,\dots,M_k)$ is block-diagonal, then
+$\fn{M-I}^2=\frac1k\sum_l\fn{M_l-I}^2\le\max_l\fn{M_l-I}^2$. In our formulas every nonzero block of the image of a generator is the image of
+a word under a given assignment $\gamma$; so when the image of a relator $r$ is block-diagonal, as it is in every case below, its diagonal
+blocks are images $\gamma(r_1),\dots,\gamma(r_k)$ of words, which we call the \emph{block words} of $r$. Hence, if every block word of $r$
+is trivial in the group of $\gamma$ with area at most $k_0$, the defect of $r$ is at most $k_0$ times the largest defect of a relator under
+$\gamma$ (\cref{lem:defect}). We write
+\[
+\Omega=\begin{pmatrix}0&I\\ I&0\end{pmatrix},\qquad U\oplus V=\begin{pmatrix}U&0\\ 0&V\end{pmatrix},\qquad
+\operatorname{adiag}(U,V)=\begin{pmatrix}0&U\\ V&0\end{pmatrix},
+\]
+so that $\operatorname{adiag}(U,V)\operatorname{adiag}(U',V')=UV'\oplus VU'$ and $\operatorname{adiag}(U,V)^{-1}=\operatorname{adiag}(V^{-1},U^{-1})$.
+
+\subsection{The construction}\label{gadget:construction}
+
+\begin{lemma}[Slofstra's embedding, with $w\mapsto-I$; {cf.~\cite[\S4]{Slo19}, \cite[\S6]{SV18}}]\label{lem:gadget}
+Let $\Pres=\langle S_0\sqcup S_1\mid R\rangle$ be an $E\Gamma_0$ presentation with $\abs{S_1}\le1$ and nonempty linear sets of at most three
+elements, and let $w\in S_0$. Assume that the product of each linear set of $\Pres$ is taken in an order that is a cyclic rotation of the order in
+which $S_0$ is listed. The construction below gives a binary linear system $(A,b)$ in variables $x_1,\dots,x_n$, with at most three variables
+in each equation; a homomorphism $\Psi:F(S_0\sqcup S_1)\to F(x_1,\dots,x_n,J)$ that sends each $g\in S_0$ to a variable $x_g$ and the
+generator of $S_1$, if there is one, to a product $x_fx_v$ of two variables; a variable $x_{j_0}$; and a constant $A_0\ge1$, such that, with
+$\Gamma=\Gamma(A,b)$ presented as in \cref{def:lcs}:
+\begin{enumerate}[label=(G\arabic*),itemsep=1pt]
+\item for every $r\in R$, the word $\Psi(r)$ is trivial in $\Gamma$ and has area at most $A_0$;
+\item the word $[x_w,x_{j_0}]J$ is trivial in $\Gamma$ and has area at most $A_0$;
+\item every $\eps$-representation $\phi$ of $\Pres$ on $\C^d$ with $\phi(w)=-I$ yields a $3\eps$-representation of $\Gamma$ on $\C^{8d}$
+with $J\mapsto-I$.
+\end{enumerate}
+If $\Pres$ has $n_0$ involutive generators, $\ell_0$ linear sets, $c_0$ triples in $C_0$ and $c_1$ in $C_1$, put $N=n_0+c_1+4$ and
+$c=c_0+2c_1+1$ if $S_1\ne\emptyset$, and $N=n_0+2$, $c=c_0+1$ otherwise. Then $(A,b)$ has
+\[
+n=11N+16c+1\ \text{ variables and }\ m=\ell_0+1+8N+14c\ \text{ equations},
+\]
+all with right-hand side $0$ except one, $x_w+x_u=1$.
+\end{lemma}
+
+The hypothesis on the order of the products costs nothing: reordering the product of a linear set changes neither the group nor, up to a
+constant factor, the defects (\cref{lem:change-presentation}), and the presentation of \cref{prop:presentation} satisfies it
+(\cref{cert:what}).
+
+\begin{proof}
+Let $\phi$ be an $\eps$-representation of $\Pres$ on $\C^d$ with $\phi(w)=-I$. We pass through presentations $G'$, $\widehat G$ and a nice
+$\widehat G_1$, each of which receives the relators of the previous one as trivial words and an approximate representation built from the
+previous one. The dimension doubles in Steps~1, 3 and~4, and the defect grows by the factor $3$ in Step~4; before that, only the
+commutators inside the linear sets of $\Pres$, which are not relators of $\Pres$, reach defect $\sqrt2\eps$.
+
+\emph{Step 1: removing the non-involutive generator}~\cite[Prop.~4.8]{Slo19}. If $S_1=\emptyset$, let $G'=\Pres$ and put
+$\gamma(x)=\phi(x)\oplus I$ on $\C^d\oplus\C^d$. Otherwise let $S_1=\{y\}$. Add involutions $f,v$, with $y=fv$ in mind, and for each triple
+$(y,b,c)\in C_1$ an involution $Z_{bc}$ with the two conjugacy relations $vbv=Z_{bc}$ and $fZ_{bc}f=c$. These imply the old relation, since
+$fvbvf=(fv)b(fv)^{-1}$ once $f^2=v^2=e$. With them imposed, $y$ occurs only in $y=fv$ and can be deleted. The result $G'$ has only involutive
+generators, the linear sets of $\Pres$, and conjugacy relations. On $\C^d\oplus\C^d$ put
+\begin{gather*}
+\gamma(x)=\phi(x)\oplus I\ \ (x\in S_0),\qquad\gamma(f)=\Omega,\\
+\gamma(v)=\operatorname{adiag}\bigl(\phi(y)^*,\phi(y)\bigr),\qquad\gamma(Z_{bc})=I\oplus\phi(y)\phi(b)\phi(y)^* .
+\end{gather*}
+Then $\gamma(f)\gamma(v)=\phi(y)\oplus\phi(y)^*$. The relations $f^2=v^2=e$ and $vbv=Z_{bc}$ hold exactly; $Z_{bc}^2$ has block words $e$
+and $yb^2y^{-1}$, so its defect is at most that of $b^2$; and $\gamma(f)\gamma(Z_{bc})\gamma(f)\gamma(c)^{-1}=\phi(yby^{-1}c^{-1})\oplus I$
+has defect at most $\eps$. The relations among $S_0$ keep defect at most $\eps$, because $\gamma(x)=\phi(x)\oplus I$ and the assignment
+$x\mapsto I$ satisfies every homogeneous linear relation and every conjugacy relation. So in both cases $\gamma$ is an $\eps$-representation
+of $G'$ on $\C^{2d}$ with $\gamma(w)=-I_d\oplus I_d$. The commutators $[x,x']$ of two elements of a linear set of $\Pres$ are not relators of
+$\Pres$, but they are relators of the linear-plus-conjugacy presentations below. Since $(x,x',x')$ or $(x',x,x)$ lies in $C_0$, the word
+$[x,x']$ is the relator $xx'xx'^{-1}$, or the inverse of $x'xx'x^{-1}$, with one letter inverted, so it has area at most $2$ in $\Pres$ and
+$\fn{\phi([x,x'])-I}\le2\eps$ (\cref{lem:defect}); hence $\gamma([x,x'])=\phi([x,x'])\oplus I$ has defect at most $\sqrt2\eps$.
+
+\emph{Step 2: making $J$ a commutator}~\cite[Lemma~5.2]{Slo19}. Let $\widehat G$ be presented by the relations of $G'$ together with new
+involutions $t^*,J,u$ and the relations $J^2=t^{*2}=u^2=e$, $[x,J]=e$ for every generator $x$, the linear set $\{w,u\}$ with $b_V=1$ (that
+is, the relators $[w,u]$ and $Jwu$), and the conjugacy relation $t^*wt^*=u$. In $\widehat G$ these give
+$[w,t^*]=w\,(t^*wt^*)=wu=J$, so the word $[w,t^*]J$ is trivial. Extend $\gamma$ by $\gamma(J)=-I_{2d}$, $\gamma(u)=-\gamma(w)=I_d\oplus-I_d$
+and $\gamma(t^*)=\Omega$. Then $\gamma(t^*)\gamma(w)\gamma(t^*)=\gamma(u)$, and all new relations hold exactly. So $\gamma$ is an
+$\eps$-representation of $\widehat G$ on $\C^{2d}$ with $J\mapsto-I$, except that the commutators inside the linear sets of $\Pres$ have defect
+at most $\sqrt2\eps$. The presentation of $\widehat G$ is a linear-plus-conjugacy
+presentation; its conjugacy relations are those of $C_0$ (among them the commutations, listed as triples $(x,y,y)$), the $2c_1$ relations
+of Step~1, and $t^*wt^*=u$.
+
+\emph{Step 3: making the conjugacy relations nice}~\cite[Lemma~4.4]{Slo19}. Let $T$ be the set of generators of $\widehat G$ other than $J$,
+and $\mathcal C$ its set of conjugacy triples. The presentation of $\widehat G_1$ has the generators of $\widehat G$, one more involution $g^*$,
+and for each $a\in T$ three involutions $a',a'',\bar a$. Its relators are those of $\widehat G$ except the conjugacy relators, together with:
+the linear sets $\{a,a',a''\}$ and $\{a,g^*,\bar a\}$ for $a\in T$, with $b_V=0$; the conjugacy relators $g^*a'g^*a''^{-1}$ for $a\in T$; and,
+for each $(a,b,c)\in\mathcal C$, the conjugacy relators $\bar ab'\bar ac''^{-1}$ and $\bar ab''\bar ac'^{-1}$ together with the linear sets
+$\{b',c'',k_{abc}\}$ and $\{c',b'',k'_{abc}\}$ in new involutions $k_{abc},k'_{abc}$. This presentation is nice: $a',a''$ lie in
+$\{a,a',a''\}$, $b',c''$ in $\{b',c'',k_{abc}\}$, and $c',b''$ in $\{c',b'',k'_{abc}\}$. The old conjugacy relators follow. Indeed
+$a=g^*\bar a=\bar ag^*$ and $b=b'b''$, so
+\[
+aba=g^*\,(\bar ab'\bar a)(\bar ab''\bar a)\,g^*=g^*c''c'g^*=(g^*c''g^*)(g^*c'g^*)=c'c''=c,
+\]
+using $g^*c'g^*=c''$, hence $g^*c''g^*=c'$, and the commutation of $c'$ and $c''$. So the identity on the generators of $\widehat G$ sends its
+relators to trivial words of $\widehat G_1$.
+
+Let $D=2d$, and on $\C^D\oplus\C^D$ put
+\begin{gather*}
+\gamma_1(x)=\gamma(x)\oplus\gamma(x)\ \ (x\in T\cup\{J\}),\qquad\gamma_1(g^*)=\Omega,\qquad\gamma_1(\bar a)=\operatorname{adiag}\bigl(\gamma(a),\gamma(a)\bigr),\\
+\gamma_1(a')=\gamma(a)\oplus I,\quad\gamma_1(a'')=I\oplus\gamma(a),\quad\gamma_1(k_{abc})=\gamma(b)\oplus\gamma(c),\quad\gamma_1(k'_{abc})=\gamma(c)\oplus\gamma(b).
+\end{gather*}
+Write $U_a=\gamma(a)$, $U_b=\gamma(b)$, $U_c=\gamma(c)$. The relators of $\widehat G$ that were kept have block words $r,r$, so their defects
+are unchanged, and $\gamma_1(J)=-I$ commutes with everything. The commutators inside the new linear sets and the relators $g^*a'g^*a''^{-1}$
+are mapped exactly to $I$, as one sees by multiplying the matrices; for instance $\gamma_1(\bar a)\gamma_1(g^*)=U_a\oplus U_a$ and
+$\Omega(U_a\oplus I)\Omega=I\oplus U_a$. The squares of the new generators and the product relators of the new linear sets have block words
+among $aa$, $bb$, $cc$ and the empty word, in any order of the factors; each has area at most $1$. Finally
+\begin{gather*}
+\gamma_1(\bar a)\gamma_1(b')\gamma_1(\bar a)\gamma_1(c'')^{-1}=U_a^2\oplus U_aU_bU_aU_c^{-1},\\
+\gamma_1(\bar a)\gamma_1(b'')\gamma_1(\bar a)\gamma_1(c')^{-1}=U_aU_bU_aU_c^{-1}\oplus U_a^2,
+\end{gather*}
+with block words of area $1$. So $\gamma_1$ is an $\eps$-representation of $\widehat G_1$ on $\C^{2D}$ with $J\mapsto-I$, with the same
+exception.
+
+\emph{Step 4: linear gadgets for nice conjugacy relations}~\cite[Prop.~4.2]{Slo19}. Let $\Gamma(A,b)$ be the solution group obtained from
+$\widehat G_1$ by deleting each conjugacy relator $abac^{-1}$ (from now on $a,b,c$ denote generators of $\widehat G_1$) and adding seven new
+variables $y_1,\dots,y_7$, depending on the triple, and the six equations
+\begin{equation}\label{gadget:six}
+ay_1y_2=by_2y_3=y_3y_4y_5=ay_5y_6=cy_6y_7=y_1y_4y_7=e .
+\end{equation}
+Every linear set of $\widehat G_1$ becomes one equation. The six equations force the relation: using them in turn,
+\[
+aba=(y_1y_2)(y_2y_3)(y_5y_6)=y_1y_3y_5y_6=y_1(y_4y_5)y_5y_6=y_1y_4y_6=y_1(y_1y_7)y_6=y_7y_6=c .
+\]
+So the identity on the old generators sends the relators of $\widehat G_1$ to trivial words of $\Gamma(A,b)$.
+
+\emph{Ordering.} Number the variables as follows: the generators of $\widehat G$ other than $J$ (those of $\Pres$ in their listed order,
+then $f$, $v$, the $Z_{bc}$, $t^*$, $u$), then all $a'$, all $a''$, $g^*$, all $\bar a$, all $k_{abc}$ and $k'_{abc}$, and then the gadget
+variables $y_1<\dots<y_7$ of each triple. The products in~\eqref{gadget:six} and in the linear sets of Steps~2 and~3, in the order written,
+are then increasing. The products of the linear sets of $\Pres$ are cyclic rotations of increasing ones, by hypothesis, so the relator of
+\cref{def:lcs} is a conjugate of the one written. Replacing a relator by a conjugate changes neither flat defects nor areas, so we may work
+with the orders written.
+
+\emph{The representation.} On $\C^{2D}\oplus\C^{2D}$ let $\gamma_2(x)=\gamma_1(x)\oplus\gamma_1(x)$ for the generators of $\widehat G_1$, so the
+kept relators have unchanged defects and $\gamma_2(J)=-I$. For a triple $(a,b,c)$ write now $U_a=\gamma_1(a)$, $U_b=\gamma_1(b)$,
+$U_c=\gamma_1(c)$, and put
+\begin{gather*}
+\gamma_2(y_1)=\operatorname{adiag}(U_a,U_a),\qquad\gamma_2(y_2)=\Omega,\qquad\gamma_2(y_3)=\operatorname{adiag}(U_b,U_b),\\
+\gamma_2(y_4)=\operatorname{adiag}(U_bU_a,U_aU_b),\qquad\gamma_2(y_5)=U_bU_aU_b\oplus U_a,\\
+\gamma_2(y_6)=U_bU_c\oplus I,\qquad\gamma_2(y_7)=U_b\oplus U_c .
+\end{gather*}
+If $\gamma_1$ were an exact representation, $\gamma_2$ would be one. Multiplying out the matrices, the image of every relator of
+$\Gamma(A,b)$ that involves the gadget is block-diagonal; \cref{gadget:tab} lists its block words, which are words in $a,b,c$. We bound their
+areas with respect to the relators $a^2$, $b^2$, $c^2$, $abac^{-1}$ and $bcb^{-1}c^{-1}$ of $\widehat G_1$; the last one is a relator, or
+freely trivial, because $\widehat G_1$ is nice. All five have defect at most $\eps$ under $\gamma_1$: for every conjugacy triple of
+$\widehat G_1$ the letters $b,c$ lie in one of the linear sets added in Step~3, whose commutators are mapped exactly to $I$. A \emph{cell} replaces a subword of a cyclic permutation of the word by the inverse of the
+complementary subword of a cyclic permutation of one of these relators or its inverse; for instance $x^{-1}\to x$, $xx\to e$, $aba\to c$,
+$c^{-1}a\to a^{-1}b^{-1}$, $bc\to cb$. Free reductions and cyclic permutations cost nothing. Every block word reaches the empty word in at
+most $3$ cells (\cref{gadget:tab}), so it has area at most $3$ in $\widehat G_1$.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+block word & where it occurs & cells \\
+\midrule
+$a^2$, $b^2$, $c^2$ & squares of $y_1,y_3,y_5,y_7$; products $1,2,4,5$; $[y_3,y_5]$ & $1$\\
+$bab^{-2}a^{-1}b^{-1}$, $ab^2a^{-1}$ (conjugates of $b^{\mp2}$) & $[y_3,y_5]$, $[y_4,y_5]$ & $1$\\
+$cbc^{-1}b^{-1}$, $bcbc^{-1}b^{-2}$ (conjugates of $[c,b]$) & $[c,y_6]$, $[c,y_7]$, $[y_6,y_7]$ & $1$\\
+$a^2b^2$ & square of $y_4$; products $3,6$ & $2$\\
+$b^2ab^{-2}a^{-1}$, $a^2ba^{-2}b^{-1}$ & $[y_3,y_4]$, $[y_1,y_4]$ & $2$\\
+$abac$ & product $6$ & $2$\\
+$aca^{-1}b^{-1}$, $aba^{-1}c^{-1}$ & $[y_1,y_7]$, $[y_4,y_7]$ & $2$\\
+$bab^2ab$ & square of $y_5$; product $3$ & $3$\\
+$bcbc$ & square of $y_6$; product $5$ & $3$\\
+$abab^2c$ & product $4$ & $3$\\
+$abab\,a^{-1}b^{-1}a^{-1}b^{-1}$ & $[a,y_5]$ & $3$\\
+$abca^{-1}c^{-1}b^{-1}$ & $[a,y_6]$ & $3$\\
+$bab^2cb^{-1}a^{-1}b^{-1}c^{-1}b^{-1}$ & $[y_5,y_6]$ & $3$\\
+\bottomrule
+\end{tabular}
+\caption{The block words of the gadget relators in Step~4 of the proof of \cref{lem:gadget}, up to cyclic permutation and inversion, with
+the number of cells of the reductions listed after it. ``Product $i$'' is the product relator of the $i$-th equation in~\eqref{gadget:six}.
+All other block words are freely trivial, for instance both blocks of the square of $y_2$ and of every commutator within the first two
+equations; the relators $[y_i,J]$ are mapped exactly to $I$.}
+\label{gadget:tab}
+\end{table}
+
+\emph{Reductions.} Every arrow is one cell, $\sim$ marks a cyclic permutation, and free reductions are made silently.
+\begin{itemize}[itemsep=1pt]
+\item $a^2b^2\to a^2\to e$; $\ b^2\cdot ab^{-2}a^{-1}\to ab^{-2}a^{-1}\to e$, and likewise $a^2\cdot ba^{-2}b^{-1}$.
+\item $abac\to cc\to e$; $\ aca^{-1}b^{-1}\sim a^{-1}b^{-1}ac\to a^{-1}b^{-1}a^{-1}c\to e$; $\ aba^{-1}c^{-1}\sim a^{-1}c^{-1}ab\to a^{-2}\to e$.
+\item $bab^2ab\to ba^2b\to b^2\to e$; $\ abab^2c\to abac\to cc\to e$.
+\item $bcbc\to b^{-1}cbc\to b^{-1}c^{-1}bc\to e$, the last step because $b^{-1}c^{-1}bc$ is a cyclic permutation of $[b,c]$.
+\item $abab\,a^{-1}b^{-1}a^{-1}b^{-1}\to cb\,a^{-1}b^{-1}a^{-1}b^{-1}\to cbc^{-1}b^{-1}\to e$.
+\item $abca^{-1}c^{-1}b^{-1}\sim a^{-1}c^{-1}b^{-1}abc\to a^{-1}b^{-1}c^{-1}abc\to a^{-1}b^{-1}a^{-1}c\to e$, using $c^{-1}b^{-1}\to
+b^{-1}c^{-1}$ and then $c^{-1}a\to a^{-1}b^{-1}$.
+\item $bab^2cb^{-1}a^{-1}b^{-1}c^{-1}b^{-1}\sim a^{-1}b^{-1}c^{-1}ab^2cb^{-1}\to a^{-1}b^{-1}a^{-1}bcb^{-1}\to a^{-1}b^{-1}a^{-1}c\to e$, using
+$c^{-1}a\to a^{-1}b^{-1}$ and then $bc\to cb$.
+\end{itemize}
+
+The kept relators have defect at most $\sqrt2\eps<3\eps$, so $\gamma_2$ is a $3\eps$-representation of $\Gamma(A,b)$ on
+$\C^{4D}=\C^{8d}$ with $\gamma_2(J)=-I$. This proves (G3).
+
+\emph{(G1) and (G2).} Let $\Psi$ be the composite of the substitutions of the four steps: $y\mapsto x_fx_v$ for $y\in S_1$, and $g\mapsto x_g$
+for $g\in S_0$. Every relator of $\Pres$ is sent to a word that is trivial in $G'$ (Step~1), hence in $\widehat G$, $\widehat G_1$ and
+$\Gamma(A,b)$, since each step sends relators to trivial words. Put $x_{j_0}=x_{t^*}$. The word $[x_w,x_{t^*}]J$ is trivial in $\widehat G$
+(Step~2), hence in $\Gamma(A,b)$. The areas of these finitely many trivial words depend only on $\Pres$; let $A_0\ge1$ bound them. For
+the presentation of \cref{prop:presentation}, $A_0=42$ (\cref{rem:A0}).
+
+\emph{Accounting.} The generators of $\widehat G$ other than $J$ are the $n_0$ of $\Pres$, then $f$, $v$ and the $c_1$ involutions $Z_{bc}$ if
+$S_1\ne\emptyset$, and $t^*$, $u$: $N$ in all. Its conjugacy relations are the $c_0$ of $\Pres$, the $2c_1$ of Step~1 and $t^*wt^*=u$: $c$ in all.
+Step~3 adds $3N+1+2c$ involutions and $2N+2c$ linear sets, and turns the $c$ conjugacy relations into $N+2c$ nice ones; Step~4 adds
+$7(N+2c)$ variables and $6(N+2c)$ equations. So $n=N+(3N+1+2c)+7(N+2c)=11N+16c+1$, and the linear sets of $\Pres$, the set $\{w,u\}$, those
+of Step~3 and the gadget equations give $m=\ell_0+1+(2N+2c)+6(N+2c)$ equations. All have at most three variables, and only $x_w+x_u=1$ has
+right-hand side $1$.
+\end{proof}
+
+\begin{remark}[The constant $A_0$ for $\Pres$]\label{rem:A0}
+For the presentation $\Pres$ of \cref{prop:presentation} we may take $A_0=42$, and then $C_\Psi=A_0(8A_0+17)=14826$ in
+\cref{thm:embedding}. For every relator $r$ of $\Pres$, and for the word $[x_w,x_{t^*}]J$, we have written down a product of conjugates of
+relators of $\Gamma(A,b)$, in the presentation of \cref{def:lcs}, that is freely equal to the word; the number of factors bounds its area.
+
+The basic piece is the gadget of a nice relation $aba=c$. The six equations~\eqref{gadget:six}, together with the commutators $[a,y_6]$ and
+$[b,y_3]$, give the word $aca^{-1}b^{-1}$ area at most $8$. A conjugacy relation $aba=c$ of $\widehat G$ then gives the word
+$aba^{-1}c^{-1}$ area at most $22$:
+\begin{itemize}[itemsep=1pt]
+\item $a=\bar a^{-1}g^{*-1}$ by the linear set $\{a,g^*,\bar a\}$;
+\item $g^*$ commutes with $b$ because $\{b,g^*,\bar b\}$ is an equation, so $[b,g^*]$ is a relator of $\Gamma(A,b)$;
+\item $b=b''^{-1}b'^{-1}$;
+\item the gadgets of $\bar ab''\bar a=c'$ and $\bar ab'\bar a=c''$ turn $\bar a^{-1}b\bar a$ into $c'^{-1}c''^{-1}$;
+\item one commutation and the linear set $\{c,c',c''\}$ give $c$.
+\end{itemize}
+This uses the relators $[a,g^*]$ of $\Gamma(A,b)$ directly, rather than the nice relations $g^*a'g^*=a''$ of Step~3, which serve (G3).
+
+The resulting areas are as follows:
+\begin{itemize}[itemsep=1pt]
+\item the squares and the linear relations of $\Pres$ have area $1$;
+\item the commutations inside a linear set have area $2$;
+\item the other relations of $C_0$ have area $23$;
+\item the relations of $C_1$ have area $42$, by four gadgets through $vbv=Z_{bc}$ and $fZ_{bc}f=c$;
+\item the word of (G2) has area $24$.
+\end{itemize}
+The longest conjugator that occurs has $59$ letters, within the bound $8+4A_0$ used in the proof of \cref{thm:embedding}. The program
+\texttt{a0/a0\_check.py} in the ancillary files rebuilds every certificate from \texttt{egamma0\_P.json} and \texttt{game\_Ab.json}. It
+checks that each factor is a conjugate of a relator of $\Gamma(A,b)$ and that the product reduces freely to the word. It also rejects
+corrupted certificates and corrupted systems (\cref{app:cert}).
+\end{remark}
+
+\subsection{The embedding theorem}\label{gadget:theorem}
+
+\begin{theorem}[Slofstra's embedding with $w\mapsto-I$; cf.~{\cite[Prop.~6.2]{SV18}}]\label{thm:embedding}
+Let $\Pres$ and $w$ be as in \cref{lem:gadget}, let $(A,b)$, $\Psi$, $x_{j_0}$ and $A_0$ be as there, $\Gamma=\Gamma(A,b)$, and put
+$C_\Psi=A_0(8A_0+17)$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item (From $\Pres$ to $\Gamma$.) Every $\eps$-representation of $\Pres$ on $\C^d$ with $w\mapsto-I$ yields a $3\eps$-representation of
+$\Gamma$ on $\C^{8d}$ with $J\mapsto-I$. Hence $\hlp_\Gamma(J;2,3\eps)\le8\,\hlp_\Pres(w;2,\eps)$ for every $\eps>0$.
+\item (From $\Gamma$ to $\Pres$, in a state.) Let $(\phi,\rho)$ be a state-weighted model of $\Gamma$ at precision $e$ on $\C^d$
+(\cref{def:model}) with $\phi(J)=-I$, and $\xi=\rho^{1/2}$. Then $(\phi\circ\Psi,\rho)$ is a state-weighted model of $\Pres$ at precision
+$C_\Psi e$, and
+\[
+\hs{(\phi(x_w)-I)\xi}\ \ge\ 1-C_\Psi e .
+\]
+\end{enumerate}
+\end{theorem}
+
+In (b) the involution $w$ is \emph{visible}: in the state, $\phi(\Psi(w))=\phi(x_w)$ stays at distance about $1$ from $I$. Nothing in (b) is
+flattened, and $w$ need not be central.
+
+\begin{proof}
+(a) is (G3), and the inequality follows by~\eqref{eq:unitary-distance}, by which defect $2$ means $\phi(w)=-I$, resp.\ $\phi(J)=-I$.
+
+(b) The relators of $\Gamma$ have length at most $4$, since its equations have at most three variables, and those of $\Pres$ have length
+at most $4$ (\cref{def:EG0}). By~\ref{prelim:S2} for $\Gamma$, every generator of $\Gamma$ has state commutator at most $e$.
+
+\emph{\ref{prelim:S2} for $\Pres$.} Each $\Psi(g)$ has at most two letters, so $\hs{[\phi(\Psi(g)),\xi]}\le2e$ by \cref{lem:calculus}(a).
+
+\emph{\ref{prelim:S1} for $\Pres$.} Let $r\in R$. The word $\Psi(r)$ has at most $8$ letters and, by (G1), area at most $A_0$ in $\Gamma$. By
+\cref{lem:conjugator-length} it is freely equal to a product of at most $A_0$ conjugates of relators of $\Gamma$ and their inverses, with
+conjugators of length at most $8+4A_0$. By \cref{lem:calculus}(d),
+\[
+\hs{(\phi(\Psi(r))-I)\xi}\ \le\ A_0\bigl(1+2(8+4A_0)\bigr)e=A_0(8A_0+17)\,e=C_\Psi e .
+\]
+
+\emph{Visibility.} Let $W=\phi(x_w)$ and $V=\phi(x_{j_0})$, and $X=WVW^*V^*$. The word $[x_w,x_{j_0}]J$ has $5$ letters and, by (G2), area at
+most $A_0$; as above, $\hs{(\phi([x_w,x_{j_0}]J)-I)\xi}\le A_0(1+2(5+4A_0))e=A_0(8A_0+11)e$. Since $\phi(J)=-I$, this says
+$\hs{(X+I)\xi}\le A_0(8A_0+11)e$. On the other hand $X-I=W(VW^*V^*-I)+W(I-W^*)$, so by \cref{lem:calculus}(c), applied to the conjugate
+$VW^*V^*$, and $\hs{(W^*-I)\xi}=\hs{(W-I)\xi}$,
+\[
+\hs{(X-I)\xi}\ \le\ 2\hs{(W-I)\xi}+2\hs{[V,\xi]}\ \le\ 2\hs{(W-I)\xi}+2e .
+\]
+Since $\hs\xi=1$, $2=\hs{2\xi}\le\hs{(X+I)\xi}+\hs{(X-I)\xi}$. Hence
+$\hs{(W-I)\xi}\ge1-\bigl(\frac12A_0(8A_0+11)+1\bigr)e\ge1-C_\Psi e$, as $A_0\ge1$.
+\end{proof}
+
+\begin{remark}[Sources]\label{gadget:sources}
+Steps~1, 3 and~4 of \cref{lem:gadget} follow~\cite[Prop.~4.8, Lemma~4.4, Prop.~4.2]{Slo19}; Step~3 introduces two nice relations for
+each conjugacy relation, so the counts of \cref{lem:gadget} are those of this construction and not those of~\cite[Remark~4.5]{Slo19}. Step~2
+is the commutator device
+of~\cite[Lemma~5.2]{Slo19}, where an involution $t$ with $tat=Ja$ is adjoined; here $t^*wt^*=u$ and $wu=J$. By~\cite[Remark~4.5]{Slo19},
+Lemma~4.4 and Proposition~4.2 there turn a $d$-dimensional $\eps$-representation into a $4d$-dimensional $C\eps$-representation with
+$C\le75$; here the block words of Step~3 have area at most $1$ and those of Step~4 at most $3$, which gives the factor $3$, and Step~1 doubles
+the dimension once more. \Cref{thm:embedding} is the case $\abs{S_1}\le1$ of~\cite[Prop.~6.2]{SV18} (for two or more non-involutive generators see the discussion
+before \cref{lem:sv-lift}), which is stated there for every
+extended $E\Gamma_0$ presentation, with unspecified constants, for a central involution $w$ that is nontrivial in approximate
+representations, and whose lower bound passes through an amplification of $w$ to $-I$~\cite[Prop.~2.7]{SV18}. Part (b) replaces that
+amplification by the visibility estimate, which keeps the state; the inequality $2\le\hs{(X+I)\xi}+\hs{(X-I)\xi}$ is the state-weighted form
+of~\cite[Lemma~6.3]{SV18}. Linear system games and their solution groups go back to Cleve and Mittal~\cite{CM14} and Cleve, Liu and
+Slofstra~\cite{CLS17}.
+\end{remark}

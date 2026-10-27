@@ -1,0 +1,34 @@
+VERIFY FAILED (1 problems):
+   - bad conj move in ('slemma', '[p,q] sigma^-1')
+negative control "drop a used C0 triple": REJECTED (good)
+VERIFY FAILED (3 problems):
+   - C1 d x false
+   - resolved generator mismatch in ('S', 'd B s p D P s^-1 B^-1')
+   - resolved generator mismatch in ('S', 'd B s q D Q s^-1 B^-1')
+negative control "falsify a C1 triple": REJECTED (good)
+VERIFY FAILED (20 problems):
+   - S0 generator g14 is not an involution in G_P^+
+   - C0 g10 g14 g14 false
+   - C0 g11 g14 g14 false
+   - C0 g12 g14 g14 false
+   - C0 g13 g14 g14 false
+   - C0 g15 g14 g14 false
+   - C0 g17 g14 g14 false
+   - C0 g19 g14 g14 false
+   - C0 g20 g14 g14 false
+   - C0 g7 g14 g14 false
+   - C0 t g14 g14 false
+   - C0 x g14 g14 false
+   - C0 z g14 g14 false
+   - LIN product ['g12', 'g14', 'z'] false
+   - LIN ['g12', 'g14', 'z']: g12,g14 do not commute
+   - LIN ['g12', 'g14', 'z']: g14,z do not commute
+   - LIN product ['g13', 'g14', 'x'] false
+   - LIN ['g13', 'g14', 'x']: g13,g14 do not commute
+   - LIN ['g13', 'g14', 'x']: g14,x do not commute
+   - w is not (xz)^2
+negative control "redefine w": REJECTED (good)
+VERIFY FAILED (1 problems):
+   - LIN ['g3', 'i', 'sigma']: commutation of g3,i not listed as a C0 relation (SV18 Sec 6 format)
+negative control "drop a linear-set commutation triple": REJECTED (good)
+exit 0

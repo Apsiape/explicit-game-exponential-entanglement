@@ -1,0 +1,571 @@
+%======================================================================
+\section{Two sharp rates}\label{sec:rates}
+%======================================================================
+
+The state-weighted method of \cref{sec:state,sec:count,sec:transfer} is not specific to lamp groups. This section applies it to two games
+for which the earlier lower bounds lose a power of $\eps$ on the way from the strategy to a count. For the XOR games CHSH$(n)$ the qubit count of \cref{thm:count}, applied once in the reduced state
+of the players, gives the ebit cost $\Theta(\min(n,1/\eps))$ (Theorem~E, \cref{sec:rates-chsh}). For the linear system game of Slofstra
+and Vidick, a transport argument for spectral measures in one state gives the profile $\Theta(1/\eps)$ of its group and, through
+\cref{thm:transfer}, the local dimension $\Theta(\eps^{-1/2})$ (Theorem~F, \cref{sec:rates-sv}). In both cases the new lower bound meets an
+upper bound of the same order: for CHSH$(n)$ a known one, and for the game of Slofstra and Vidick theirs, through a lift that keeps the
+distinguished involution balanced (\cref{lem:sv-lift}).
+
+\subsection{The CHSH\texorpdfstring{$(n)$}{(n)} games}\label{sec:rates-chsh}
+
+The XOR games CHSH$(n)$ of Slofstra~\cite{Slo11} force $n$ pairwise anticommuting observables on one side. A strategy within a factor
+$1-\eps$ of the optimal bias pays a CHSH deficit for each of the $\binom n2$ pairs, and these deficits add up to $O(n^2\eps)$. From triples
+of anticommuting observables one builds $\Theta(n)$ approximate qubits~\cite{OV18}, and \cref{thm:count} charges each of them only the sum
+of the squares of its pair errors, which is $O(n\eps)$. So a constant fraction of the $n/3$ qubits survives as long as $n\eps$ is small.
+
+\begin{definition}[CHSH$(n)$; \cite{Slo11}, {\cite[Section~2.3]{OV18}}]\label{def:chsh}
+In CHSH$(n)$, $n\ge2$, the referee picks $i<j$ uniformly, sends Alice $i$ or $j$ and Bob $(i,j)$ or $(j,i)$, independently and uniformly,
+and accepts if and only if $a\oplus b=1$ when Alice received $j$ and Bob $(j,i)$, and $a\oplus b=0$ otherwise. A strategy is a unit vector
+$\psi\in H_A\otimes H_B$, with $H_A,H_B$ finite-dimensional, together with binary observables (Hermitian contractions) $A_k$ for Alice,
+$k\in[n]$, and $B_{ij}$ for Bob, $i\ne j$. Its \emph{bias}, the probability of winning minus that of losing, is
+\[
+\operatorname{bias}=\frac1{2n(n-1)}\sum_{i<j}C_{ij},\qquad C_{ij}=\ip{\psi}{(A_i\otimes(B_{ij}+B_{ji}))\psi}+\ip{\psi}{(A_j\otimes(B_{ij}-B_{ji}))\psi}.
+\]
+The optimal bias is $\operatorname{bias}^*=\sqrt2/2$, and a strategy is \emph{$\eps$-optimal} if $\operatorname{bias}\ge(1-\eps)\operatorname{bias}^*$.
+\end{definition}
+
+Ostrev and Vidick measure the bias by its absolute value; replacing every $A_k$ by $-A_k$ changes its sign and nothing else, so we may take
+it nonnegative. The next lemma is the robust form of Tsirelson's bound for one pair, with every error measured in Alice's reduced state.
+
+\begin{lemma}[One pair]\label{lem:one-pair}
+Let $A,A'$ be involutions on $H_A$, $B,B'$ involutions on $H_B$, $\psi\in H_A\otimes H_B$ a unit vector and $\xi_A=\rho_A^{1/2}$. Put
+$T_0=(B+B')/\sqrt2$, $T_1=(B-B')/\sqrt2$,
+$C=\ip{\psi}{(A\otimes(B+B'))\psi}+\ip{\psi}{(A'\otimes(B-B'))\psi}$ and $\delta=2\sqrt2-C$. Then
+\[
+\delta=\frac1{\sqrt2}\Bigl(\lVert(A\otimes I-I\otimes T_0)\psi\rVert^2+\lVert(A'\otimes I-I\otimes T_1)\psi\rVert^2\Bigr).
+\]
+Consequently $\delta\ge0$, and
+\[
+\hs{\{A,A'\}\xi_A}^2\le33\,\delta,\qquad\hs{[A,\xi_A]}^2\le2\sqrt2\,\delta,\qquad\hs{[A',\xi_A]}^2\le2\sqrt2\,\delta.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $\langle\cdot\rangle$ for the expectation in $\psi$. Since $A^2=I$, $\lVert(A\otimes I-I\otimes T_0)\psi\rVert^2=1+\langle
+T_0^2\rangle-\sqrt2\langle A\otimes(B+B')\rangle$, and likewise for the second norm. As $T_0^2+T_1^2=B^2+B'^2=2I$, the sum of the two norms
+is $4-\sqrt2\,C$, which is the identity. So both norms are at most $\tau=(\sqrt2\delta)^{1/2}$. Since $\{T_0,T_1\}=B^2-B'^2=0$ and
+$\op{T_0},\op{T_1}\le\sqrt2$, and since $A\otimes I$ commutes with $I\otimes T_1$,
+\[
+(AA'\otimes I)\psi=(A\otimes I)(I\otimes T_1)\psi+(A\otimes I)\bigl((A'\otimes I)-(I\otimes T_1)\bigr)\psi=(I\otimes T_1T_0)\psi+\epsilon_1,
+\]
+with $\lVert\epsilon_1\rVert\le(1+\sqrt2)\tau$. In the same way $(A'A\otimes I)\psi=(I\otimes T_0T_1)\psi+\epsilon_2$ with
+$\lVert\epsilon_2\rVert\le(1+\sqrt2)\tau$. Adding, and using \cref{lem:standard-form}(a) for Alice's side,
+$\hs{\{A,A'\}\xi_A}\le2(1+\sqrt2)\tau$; and $4(1+\sqrt2)^2\sqrt2<33$. Finally \cref{lem:standard-form}(b), with the roles of the two
+factors exchanged, gives Hermitian operators $\tilde T_0,\tilde T_1$ on $H_A$ with $\hs{A\xi_A-\xi_A\tilde T_0}$,
+$\hs{A'\xi_A-\xi_A\tilde T_1}\le\tau$, and \cref{lem:consistency} gives the last two bounds.
+\end{proof}
+
+With all observables involutions, the lemma gives $C_{ij}\le2\sqrt2$, which is Tsirelson's bound~\cite{Cir80}, and hence
+$\operatorname{bias}\le\operatorname{bias}^*$; the reduction to involutions in the next proof shows that this holds for all strategies.
+
+\begin{theorem}[Ebits for CHSH$(n)$]\label{thm:chsh}
+Let $n\ge3$ and $\eps>0$, and put $M=\lfloor\min(n,10^{-7}/\eps)/3\rfloor$. Every $\eps$-optimal strategy for CHSH$(n)$ satisfies
+\[
+S(\rho_A)\ \ge\ M/2 .
+\]
+In particular $S(\rho_A)\ge10^{-7}\min(n,1/\eps)/6-1/2$.
+\end{theorem}
+
+The proof selects $n'=3M$ questions whose pairwise CHSH deficits are small on average, splits them into $M$ triples, turns each triple
+into one approximate Pauli pair as in~\cite{OV18}, and applies \cref{thm:count} to the $M$ pairs in Alice's reduced state. The pair errors
+enter only through their squares, which add up to $O(n'^2\eps)$, that is, $O(n'\eps)$ per qubit.
+
+\begin{proof}
+If $M=0$ there is nothing to prove, so let $M\ge1$ and $n'=3M\le\min(n,10^{-7}/\eps)$.
+
+\emph{Step 0: reductions.} With all other observables fixed, the bias is an affine function $\Tr(A_kN_k)+\mathrm{const}$ of Alice's
+observable $A_k$, with $N_k$ Hermitian, so replacing $A_k$ by $\sgn(N_k)$ (with $\sgn(0)=1$) does not lower it; the same holds for Bob's
+observables. Doing this for each observable in turn, we may assume that all observables are involutions; the state is unchanged. Let
+$\delta_{ij}=2\sqrt2-C_{ij}\ge0$ (\cref{lem:one-pair}). From $\operatorname{bias}\ge(1-\eps)\sqrt2/2$,
+\[
+\sum_{i<j}\delta_{ij}\ \le\ 2\sqrt2\,\eps\binom n2 .
+\]
+Averaging over uniformly random $n'$-subsets of $[n]$, fix a subset $\mathcal N$ whose pair average
+$\bar\delta=\binom{n'}2^{-1}\sum_{x<y\in\mathcal N}\delta_{xy}$ is at most $2\sqrt2\,\eps$. A fixed pair of $\mathcal N$ lies in a common block of a
+uniformly random partition of $\mathcal N$ into $M$ triples with probability $2/(n'-1)$; fix a partition $\mathcal T_1,\dots,\mathcal T_M$
+for which the sum of $\delta_{xy}$ over the $3M$ pairs inside the triples is at most $\frac2{n'-1}\binom{n'}2\bar\delta=n'\bar\delta$.
+
+\emph{Step 1: pair errors.} Write $\xi=\rho_A^{1/2}$, $\eta_{xy}=\hs{\{A_x,A_y\}\xi}$ and $c_x=\hs{[A_x,\xi]}$. Applying \cref{lem:one-pair}
+to the pair $\{x,y\}$, with $(A,A',B,B')=(A_x,A_y,B_{xy},B_{yx})$ for $x<y$,
+\[
+\eta_{xy}^2\le33\,\delta_{xy},\qquad c_x^2\le2\sqrt2\,\delta_{xy}\quad\text{for every }y\ne x.
+\]
+Choosing for each $x\in\mathcal N$ the partner $y\in\mathcal N$ with the least $\delta_{xy}$,
+\[
+\sum_{x\in\mathcal N}c_x^2\ \le\ 2\sqrt2\sum_{x\in\mathcal N}\frac1{n'-1}\sum_{y\in\mathcal N\setminus x}\delta_{xy}\ =\ 2\sqrt2\,n'\bar\delta .
+\]
+
+\emph{Step 2: one qubit from each triple.} The construction of pairs from triples is that of~\cite{OV18}. For $\mathcal T_k=\{a,b,c\}$,
+labelled in any order, put $U_k=iA_aA_b$ and $W_k=iA_bA_c$, which are unitaries, and let $X_k=\mathrm r(U_k)$ and $Z_k=\mathrm r(W_k)$ be
+their roundings (\cref{lem:rounding}). Since $U_k^2-I=-A_aA_b\{A_a,A_b\}$, we have $\hs{(U_k^2-I)\xi}=\eta_{ab}$, so
+\[
+\hs{(X_k-U_k)\xi}\le\eta_{ab},\qquad\hs{[X_k,\xi]}\le c_a+c_b+2\eta_{ab},
+\]
+and likewise for $Z_k$ with $(b,c)$ in place of $(a,b)$. Put $\lambda_k=\eta_{ab}+\eta_{bc}+\eta_{ac}+c_a+c_b+c_c$ and, for $k\ne l$,
+$\mu_{kl}=\sum_{x\in\mathcal T_k,\,y\in\mathcal T_l}\eta_{xy}$. For distinct indices $b,c,b',c'$, and for one triple $\{a,b,c\}$, we have
+the identities, which use only $A_x^2=I$,
+\begin{align*}
+A_bA_cA_{b'}A_{c'}-A_{b'}A_{c'}A_bA_c&=A_b\{A_c,A_{b'}\}A_{c'}-\{A_b,A_{b'}\}A_cA_{c'}\\
+&\quad+A_{b'}A_b\{A_c,A_{c'}\}-A_{b'}\{A_b,A_{c'}\}A_c,\\
+\{U_k,W_k\}&=-A_b\{A_a,A_c\}A_b+\{A_a,A_b\}A_cA_b-A_aA_b\{A_b,A_c\}.
+\end{align*}
+Apply them to $\xi$ and move the trailing observables to the right of $\xi$, at cost $2c_x$ for each, the anticommutators having norm at
+most $2$. For $k\ne l$ this gives
+\[
+\hs{[W_k,W_l]\xi},\ \hs{[U_k,W_l]\xi}\ \le\ \mu_{kl}+4\lambda_k+4\lambda_l,\qquad\hs{\{U_k,W_k\}\xi}\le4\lambda_k .
+\]
+\Cref{lem:calculus}(e), with the primed operators the unitaries $U$ and $W$, whose state commutators are at most $\lambda_k$, replaces
+$U,W$ by $X,Z$: for $k\ne l$,
+\begin{gather*}
+\hs{[Z_k,Z_l]\xi},\ \hs{[X_k,Z_l]\xi}\le\mu_{kl}+8\lambda_k+8\lambda_l,\\
+\hs{\{X_k,Z_k\}\xi}\le12\lambda_k,\qquad\hs{[X_k,\xi]},\ \hs{[Z_k,\xi]}\le2\lambda_k .
+\end{gather*}
+
+\emph{Step 3: counting.} Apply \cref{thm:count} to the $M$ pairs $(X_k,Z_k)$ in the state $\rho_A$. With
+$c^X_k=\hs{[X_k,\xi]}$ and $c^Z_k=\hs{[Z_k,\xi]}$, its parts (i)--(iii) give numbers $a_k,b_k\ge0$ with
+$a_k^2\le2\sum_{l>k}(\hs{[Z_k,Z_l]\xi}+c^Z_l)^2+2\sum_{l>k}(c^Z_l)^2$,
+$b_k^2\le2(\hs{\{X_k,Z_k\}\xi}+c^Z_k)^2+2\sum_{l\ne k}(\hs{[X_k,Z_l]\xi}+c^Z_l)^2+2\sum_{l}(c^Z_l)^2$ and
+\[
+S(\rho_A)\ \ge\ \sum_{k=1}^M\Bigl[1-\frac{(b_k+c^X_k)^2}{2\ln2}-h\Bigl(\min\Bigl(\frac{(a_k+c^Z_k)^2}4,\frac12\Bigr)\Bigr)\Bigr].
+\]
+Put $\Sigma_\lambda=\sum_k\lambda_k^2$. By Step~2 and $(x+y+z)^2\le3(x^2+y^2+z^2)$,
+\[
+a_k^2\le6\sum_{l\ne k}\mu_{kl}^2+384M\lambda_k^2+608\,\Sigma_\lambda,\qquad b_k^2\le392\lambda_k^2+6\sum_{l\ne k}\mu_{kl}^2+384M\lambda_k^2+608\,\Sigma_\lambda .
+\]
+By $(x+y)^2\le2x^2+2y^2$, the monotonicity of $h$ on $[0,\frac12]$, and Jensen's inequality for the concave nondecreasing function
+$t\mapsto h(\min(t,\frac12))$,
+\[
+S(\rho_A)\ \ge\ M-\frac{B}{\ln2}-M\,h\Bigl(\min\Bigl(\frac A{2M},\frac12\Bigr)\Bigr),\qquad A=\sum_k(a_k^2+4\lambda_k^2),\quad B=\sum_k(b_k^2+4\lambda_k^2).
+\]
+Now $\mu_{kl}^2\le9\sum_{x\in\mathcal T_k,y\in\mathcal T_l}\eta_{xy}^2$, so $\sum_{k\ne l}\mu_{kl}^2\le18\sum_{x<y\in\mathcal
+N}\eta_{xy}^2\le594\binom{n'}2\bar\delta\le297\,n'^2\bar\delta$, and $\Sigma_\lambda\le6\bigl(\sum_{\rm internal}\eta_{xy}^2+\sum_{x\in\mathcal
+N}c_x^2\bigr)\le6(33+2\sqrt2)\,n'\bar\delta\le215\,n'\bar\delta$, where the internal pairs are those inside the triples. Hence, with
+$M\ge1$ and $M=n'/3$,
+\[
+A\le6\cdot297\,n'^2\bar\delta+996\,M\Sigma_\lambda\le73162\,n'^2\bar\delta,\qquad B\le6\cdot297\,n'^2\bar\delta+1388\,M\Sigma_\lambda\le101256\,n'^2\bar\delta .
+\]
+With $\bar\delta\le2\sqrt2\,\eps$ this gives
+\[
+S(\rho_A)\ \ge\ M\Bigl[1-1.24\cdot10^6\,n'\eps-h\bigl(\min(3.11\cdot10^5\,n'\eps,\tfrac12)\bigr)\Bigr].
+\]
+Since $n'\eps\le10^{-7}$, the bracket is at least $1-0.124-h(0.0311)>0.67$, so $S(\rho_A)\ge M/2$. Finally
+$M\ge\min(n,10^{-7}/\eps)/3-1\ge10^{-7}\min(n,1/\eps)/3-1$.
+\end{proof}
+
+\begin{corollary}[The ebit cost of CHSH$(n)$]\label{cor:chsh-ebits}
+Let $S_{\min}(n,\eps)$ be the least entanglement entropy $S(\rho_A)$ of an $\eps$-optimal strategy for CHSH$(n)$. For $n\ge3$ and
+$0<\eps\le1$,
+\[
+\frac{10^{-7}}6\min(n,1/\eps)-\frac12\ \le\ S_{\min}(n,\eps)\ \le\ \min\bigl(\lfloor n/2\rfloor,\lceil1/\eps\rceil\bigr).
+\]
+So $S_{\min}(n,\eps)=\Theta(\min(n,1/\eps))$ as $\min(n,1/\eps)\to\infty$.
+\end{corollary}
+
+\begin{proof}
+The lower bound is \cref{thm:chsh}. For the upper bound $\lceil1/\eps\rceil$, every XOR game has an $\eps$-optimal strategy on a maximally
+entangled state of local dimension $2^{\lceil1/\eps\rceil}$~\cite[Theorem~2]{OV18}. For the upper bound $\lfloor n/2\rfloor$, let
+$m=\lfloor n/2\rfloor$; the Jordan--Wigner construction gives $2m+1\ge n$ pairwise anticommuting involutions $A_1,\dots,A_n$ on
+$(\C^2)^{\otimes m}$. On the maximally entangled state $\Phi$ of local dimension $2^m$, for which $\ip{\Phi}{(Y\otimes Z^T)\Phi}=2^{-m}\Tr(YZ)$,
+let Bob use $B_{ij}=((A_i+A_j)/\sqrt2)^T$ and $B_{ji}=((A_i-A_j)/\sqrt2)^T$ for $i<j$, which are involutions. Then
+$B_{ij}+B_{ji}=\sqrt2A_i^T$ and $B_{ij}-B_{ji}=\sqrt2A_j^T$, so $C_{ij}=2\sqrt2$ for every pair and
+$\operatorname{bias}=\operatorname{bias}^*$, with $m$ ebits~\cite{Slo11,OV18}.
+\end{proof}
+
+The entropy bound does not use purity in an essential way: shared randomness cannot lower the entanglement of formation.
+
+\begin{corollary}[Entanglement of formation]\label{cor:chsh-ef}
+Let $\sigma$ be a state on $H_A\otimes H_B$ and let binary observables for CHSH$(n)$, $n\ge3$, achieve bias at least
+$(1-\eps)\operatorname{bias}^*$ on $\sigma$. Then
+\[
+E_F(\sigma)\ \ge\ \frac14\Bigl\lfloor\frac13\min\Bigl(n,\frac{10^{-7}}{2\eps}\Bigr)\Bigr\rfloor .
+\]
+\end{corollary}
+
+\begin{proof}
+Let $\sigma=\sum_jp_j\lvert\psi_j\rangle\langle\psi_j\rvert$ be any decomposition into pure states. The bias is linear in the state, so
+$\operatorname{bias}(\sigma)=\sum_jp_j\operatorname{bias}(\psi_j)$ with the same observables, and
+$\operatorname{bias}(\psi_j)\le\operatorname{bias}^*$. Put $\eps_j=1-\operatorname{bias}(\psi_j)/\operatorname{bias}^*\ge0$; then
+$\sum_jp_j\eps_j\le\eps$, so the components with $\eps_j\le2\eps$ have total weight at least $\frac12$. Each of them is a $2\eps$-optimal
+pure strategy, so its reduced state on $H_A$ has entropy at least half the floor in the statement, by \cref{thm:chsh}. Averaging over $j$,
+with entropy $\ge0$ for the other components, and taking the infimum over decompositions gives the claim.
+\end{proof}
+
+The strategies of \cref{cor:chsh-ebits} use pure states, for which $E_F$ is the entanglement entropy, so the entanglement of formation
+needed is also $\Theta(\min(n,1/\eps))$. \emph{Theorem~E is \cref{thm:chsh} with \cref{cor:chsh-ebits,cor:chsh-ef}.}
+
+\begin{remark}\label{rates:rem-chsh}
+The rate is linear in $1/\eps$, which~\cite[Theorem~2]{OV18} shows is optimal; the lower bound of~\cite[Theorem~1]{OV18} is
+$\Omega(\eps^{-1/5})$, with the same question sets of sizes $n$ and $n(n-1)$. The argument of~\cite{OV18} also builds about $n/3$ pairs from
+triples, but converts approximate anticommutation into a qubit count with polynomial losses at each step. Here every error stays in the
+state-weighted $\ell^2$ norm, and \cref{thm:count} is applied once. The threshold $n\eps\approx1$ at which the count stops is the scale at
+which the maximally entangled strategy of~\cite[Theorem~2]{OV18}, with $\lceil1/\eps\rceil$ ebits, becomes cheaper than the exact strategy
+with $\lfloor n/2\rfloor$.
+\end{remark}
+
+\subsection{The Slofstra--Vidick group and game}\label{sec:rates-sv}
+
+Slofstra and Vidick built a linear system game $\Gsv$ with $C\eps^{-1/6}\le\Ent(\Gsv,\eps)\le C'\eps^{-1/2}$~\cite[Theorem~1.1]{SV18} from
+the group~\cite[Proposition~3.2]{SV18}
+\begin{equation}\label{eq:K}
+K=\bigl\langle a,b,c,x,y\ \bigm|\ xyx^{-1}y^{-2},\ xcx^{-1}c^{-1},\ yay^{-1}b^{-1},\ yby^{-1}a^{-1},\ c^{-1}ab,\ a^2,\ b^2,\ c^2\bigr\rangle,
+\end{equation}
+in which $c$ is a central involution, and whose profile satisfies $C\eps^{-2/3}\le\hlp_K(c;\delta,\eps)\le C'/\eps$. We show that both
+lower exponents are the upper ones: $\hlp_K(c;\delta,\eps)=\Theta(1/\eps)$ (\cref{cor:K-profile}) and $\Ent(\Gsv,\eps)=\Theta(\eps^{-1/2})$
+(\cref{thm:sv-game}).
+
+The picture is as follows. Let $\mu$ be the spectral measure of $\phi(y)$ in the state. The relation $xyx^{-1}=y^2$ makes $\mu$ nearly
+invariant under the doubling map $\vartheta\mapsto2\vartheta$ of the circle, and, where $c$ acts as $-1$, the relations $yay^{-1}=b$ and
+$c=ab$ make it nearly invariant under the half-turn $\vartheta\mapsto\vartheta+\pi$. Averaging over the two inverse branches of the
+doubling map contracts the Wasserstein distance by a factor $2$, so a measure that is nearly invariant under both maps is close to Haar
+measure (\cref{prop:K-W1}), while a measure with $d$ atoms is at distance at least $\pi/(2d)$ from it. All quantities are measured in
+one state; the
+Wasserstein-$1$ distance, rather than a quadratic one, is what makes a change of state cost only a linear error.
+
+\subsubsection*{Measures on the circle}
+
+Let $\T=\R/2\pi\Z$ with the geodesic distance $d(\vartheta,\vartheta')\in[0,\pi]$, and let $\mathsf h$ be the normalized Haar measure. For
+probability measures $\mu,\nu$ on $\T$ put
+\[
+W_1(\mu,\nu)=\sup\Bigl\{\int f\,d\mu-\int f\,d\nu\ :\ f:\T\to\R\text{ is $1$-Lipschitz}\Bigr\}.
+\]
+By Kantorovich--Rubinstein duality~\cite[Chapter~5]{Vil09} this is the least mean distance of a coupling of $\mu$ and $\nu$; we use only
+the triangle inequality and the elementary bound $W_1(\mu,\nu)\le\int d\,d\gamma$ for every coupling $\gamma$ of $\mu$ and $\nu$, which
+holds because $\int f\,d\mu-\int f\,d\nu=\int(f(\vartheta)-f(\vartheta'))\,d\gamma$. Let $\mathsf D(\vartheta)=2\vartheta$ and
+$\mathsf S(\vartheta)=\vartheta+\pi$, with push-forwards $\mathsf D_*$, $\mathsf S_*$. The two square roots of $e^{i\vartheta}$ have angles
+$\vartheta/2$ and $\vartheta/2+\pi$, a set that does not depend on the representative of $\vartheta$. Let $\mathsf P$ replace each point by
+the uniform measure on its two square roots: $\int f\,d(\mathsf P\mu)=\int\mathsf P^*f\,d\mu$ with
+$\mathsf P^*f(\vartheta)=\frac12\bigl(f(\vartheta/2)+f(\vartheta/2+\pi)\bigr)$.
+
+\begin{lemma}[Doubling and half-turn]\label{lem:circle}
+For probability measures $\mu,\nu$ on $\T$:
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\mathsf P\mathsf h=\mathsf h$ and $\mathsf P(\mathsf D_*\mu)=\frac12(\mu+\mathsf S_*\mu)$;
+\item $W_1(\mathsf P\mu,\mathsf P\nu)\le\frac12W_1(\mu,\nu)$;
+\item $W_1(\mu,\mathsf h)\le W_1(\mathsf D_*\mu,\mu)+W_1(\mathsf S_*\mu,\mu)$;
+\item if $\mu$ is supported on at most $d$ points, then $W_1(\mu,\mathsf h)\ge\pi/(2d)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The maps $\vartheta\mapsto\vartheta/2$ and $\vartheta\mapsto\vartheta/2+\pi$, on a fundamental interval of length $2\pi$, carry $\mathsf h$ to
+the uniform measures on two complementary half-circles, so $\int\mathsf P^*f\,d\mathsf h=\int f\,d\mathsf h$. The square roots of
+$e^{2i\vartheta}$ are $\vartheta$ and $\vartheta+\pi$.
+
+(b) Let $f$ be $1$-Lipschitz and $d(\vartheta,\vartheta')=t$. Choose real representatives with $\vartheta'=\vartheta+s$ and $\lvert
+s\rvert=t\le\pi$. The roots $\vartheta/2$ and $(\vartheta+s)/2$, and the roots $\vartheta/2+\pi$ and $(\vartheta+s)/2+\pi$, are at distance at
+most $\lvert s\rvert/2$, so $\lvert\mathsf P^*f(\vartheta)-\mathsf P^*f(\vartheta')\rvert\le t/2$. Thus $2\mathsf P^*f$ is $1$-Lipschitz and
+$\int f\,d(\mathsf P\mu-\mathsf P\nu)=\int\mathsf P^*f\,d(\mu-\nu)\le\frac12W_1(\mu,\nu)$.
+
+(c) By the triangle inequality, (a) and (b),
+\begin{align*}
+W_1(\mu,\mathsf h)&\le W_1(\mu,\mathsf P\mathsf D_*\mu)+W_1(\mathsf P\mathsf D_*\mu,\mathsf P\mu)+W_1(\mathsf P\mu,\mathsf P\mathsf h)\\
+&\le\tfrac12W_1(\mu,\mathsf S_*\mu)+\tfrac12W_1(\mathsf D_*\mu,\mu)+\tfrac12W_1(\mu,\mathsf h),
+\end{align*}
+where the first term was computed directly: $\int f\,d(\mu-\frac12(\mu+\mathsf S_*\mu))=\frac12\int f\,d(\mu-\mathsf S_*\mu)$. Since
+$W_1(\mu,\mathsf h)\le\pi$ is finite, (c) follows.
+
+(d) Let $k\le d$ be the number of points of $\supp\mu$. They cut $\T$ into $k$ arcs of lengths $l_1,\dots,l_k$ with $\sum_jl_j=2\pi$. The function
+$f(\vartheta)=d(\vartheta,\supp\mu)$ is $1$-Lipschitz, $\int f\,d\mu=0$, and, by Cauchy--Schwarz,
+\[
+\int f\,d\mathsf h=\frac1{2\pi}\sum_j\int_0^{l_j}\min(t,l_j-t)\,dt=\sum_j\frac{l_j^2}{8\pi}\ \ge\ \frac{(2\pi)^2}{8\pi k}=\frac\pi{2k}. \qedhere
+\]
+\end{proof}
+
+The operator $\mathsf P$ is the transfer operator of the doubling map, and (b) is an averaged form of the square-root lifting that Slofstra
+and Vidick use in operator norm~\cite[Claims~3.6 and~3.7]{SV18}. Part~(d) needs no lower bound on the masses of the atoms.
+
+For a unitary $Y$ and a density matrix $\rho$ on $\C^d$ let $\mu^\rho_Y$ be the \emph{spectral measure of $Y$ in $\rho$}, the probability
+measure on $\T$ with $\int f\,d\mu^\rho_Y=\Tr(\rho f(Y))$, where $f(Y)$ applies $f$ to the angles of the eigenvalues. It is supported on
+the angles of the at most $d$ eigenvalues of $Y$, and
+\begin{equation}\label{eq:rates-spectral}
+\mu^\rho_{Y^2}=\mathsf D_*\mu^\rho_Y,\qquad\mu^\rho_{-Y}=\mathsf S_*\mu^\rho_Y,\qquad\mu^\rho_{UYU^*}=\mu^{U^*\rho U}_Y\quad(U\text{ unitary}).
+\end{equation}
+
+\begin{lemma}[Coupling in one state]\label{lem:coupling}
+Let $P,Q,Y,U$ be unitaries on $\C^d$ and $\xi=\rho^{1/2}$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item There is a coupling $\nu$ of $\mu^\rho_P$ and $\mu^\rho_Q$, viewed on the unit circle, with $\int\lvert z-z'\rvert^2\,d\nu(z,z')=\hs{P\xi-\xi
+Q}^2$. Hence $W_1(\mu^\rho_P,\mu^\rho_Q)\le\frac\pi2\hs{P\xi-\xi Q}$.
+\item $W_1(\mu^{U^*\rho U}_Y,\mu^\rho_Y)\le\pi\hs{[U,\xi]}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Let $P=\sum_iz_iE_i$ and $Q=\sum_jz'_jF_j$ be spectral decompositions with distinct eigenvalues, and
+$\nu=\sum_{i,j}\hs{E_i\xi F_j}^2\,\delta_{(z_i,z'_j)}$. The operators $E_i\xi F_j$ are mutually orthogonal in the Hilbert--Schmidt inner
+product. Since $\sum_jF_j=I$, $\sum_j\hs{E_i\xi F_j}^2=\hs{E_i\xi}^2=\Tr(E_i\rho)$, and likewise $\sum_i\hs{E_i\xi F_j}^2=\Tr(\rho F_j)$, so
+$\nu$ couples $\mu^\rho_P$ and $\mu^\rho_Q$; and $\int\lvert z-z'\rvert^2d\nu=\hs{\sum_{i,j}(z_i-z'_j)E_i\xi F_j}^2=\hs{P\xi-\xi Q}^2$. The arc
+length between two points of the unit circle is at most $\frac\pi2$ times their chordal distance, and $\int\lvert z-z'\rvert\,d\nu\le(\int\lvert
+z-z'\rvert^2d\nu)^{1/2}$.
+
+(b) Let $f$ be $1$-Lipschitz and $f_0=f-c_f$, with $c_f$ the midpoint of the range of $f$, so that $\lvert f_0\rvert\le\pi/2$, the diameter
+of $\T$ being $\pi$. Both measures have mass one, so $\int f\,d(\mu^{U^*\rho U}_Y-\mu^\rho_Y)=\Tr\bigl((U^*\rho U-\rho)f_0(Y)\bigr)\le\frac\pi2\tn{U^*\rho
+U-\rho}$, which is at most $\pi\hs{[U,\xi]}$ by \cref{lem:rotate}.
+\end{proof}
+
+The coupling in (a) is Connes' joint distribution trick~\cite[Lemma~1.2.6]{Con76}, in the form used in~\cite[Lemma~5.5]{SV18}; for
+$\rho=I/d$ it gives the Hoffman--Wielandt inequality. Part~(b) is the reason for working with $W_1$: a change of state by a unitary costs
+the state commutator linearly.
+
+\subsubsection*{The profile of \texorpdfstring{$K$}{K}}
+
+\begin{theorem}[The profile of $c$ in a state]\label{thm:K-profile}
+Let $\phi$ assign unitaries $A,B,C,X,Y$ on $\C^d$ to $a,b,c,x,y$, and let $\rho$ be a density matrix on $\C^d$ with $\xi=\rho^{1/2}$.
+Suppose that, for some $e>0$,
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item every relator $r$ in~\eqref{eq:K} has $\hs{(\phi(r)-I)\xi}\le e$;
+\item $\hs{[\phi(s),\xi]}\le e$ for $s\in\{a,b,c,x,y\}$;
+\item $\hs{(C+I)\xi}\le e$.
+\end{enumerate}
+Then $d\ge1/(29e)$. In the notation of \cref{def:state-profile}, $\hlps_K(c;e)\ge1/(29e)$.
+\end{theorem}
+
+The two relations are read off as near-invariances of $\mu=\mu^\rho_Y$, each up to a coupling in the state (\cref{lem:coupling}(a)) and a
+change of state by a unitary (\cref{lem:coupling}(b)); \cref{lem:circle} then compares $\mu$ with Haar measure. That comparison does not
+involve the dimension, and we state it on its own.
+
+\begin{proposition}[The spectral measure of $y$ in a state]\label{prop:K-W1}
+Under the hypotheses of \cref{thm:K-profile}, the spectral measure of $Y=\phi(y)$ in $\rho$ satisfies
+\[
+W_1(\mu^\rho_Y,\mathsf h)\ \le\ \frac{29\pi}2\,e .
+\]
+\end{proposition}
+
+The bound uses all three hypotheses: the state commutators~(ii) pay for the changes of state in \cref{lem:coupling}(b), and~(iii), which
+says that $c$ acts as $-1$ in the state, turns the relations $yay^{-1}=b$ and $c=ab$ into the half-turn.
+
+\begin{proof}
+Let $\mu=\mu^\rho_Y$, $\delta_{\mathsf D}=W_1(\mathsf D_*\mu,\mu)$ and $\delta_{\mathsf S}=W_1(\mathsf S_*\mu,\mu)$.
+
+\emph{Doubling.} Put $P=Y^2$ and $Q=XYX^*$. The relator $r=xyx^{-1}y^{-2}$ has $\phi(r)=QP^*$, so $(Q-P)\xi=(\phi(r)-I)P\xi=(\phi(r)-I)\xi
+P+(\phi(r)-I)[P,\xi]$, and $\hs{[P,\xi]}\le2e$; hence $\hs{(Q-P)\xi}\le5e$. Also $\hs{[Q,\xi]}\le3e$, so $\hs{P\xi-\xi Q}\le\hs{(P-Q)\xi}+\hs{[Q,\xi]}\le8e$.
+By \cref{lem:coupling}(a) and~\eqref{eq:rates-spectral}, $W_1(\mathsf D_*\mu,\mu^{X^*\rho X}_Y)\le4\pi e$, and by \cref{lem:coupling}(b),
+$W_1(\mu^{X^*\rho X}_Y,\mu)\le\pi e$. So $\delta_{\mathsf D}\le5\pi e$.
+
+\emph{Half-turn.} The word $w=a^{-1}yay^{-1}c^{-1}$ is freely equal to
+\[
+\bigl(a^{-1}(yay^{-1}b^{-1})a\bigr)\,(a^2)^{-1}\,\bigl(c(c^{-1}ab)c^{-1}\bigr),
+\]
+a product of three conjugates of relators with conjugators of length $1$, $0$ and $1$, so $\hs{(\phi(w)-I)\xi}\le3e+e+3e=7e$ by
+\cref{lem:calculus}(d). Since $A^*YA=\phi(w)CY$,
+\[
+\hs{(A^*YA-CY)\xi}=\hs{(\phi(w)-I)CY\xi}\le7e+2\hs{[CY,\xi]}\le11e,
+\]
+and $\hs{(CY+Y)\xi}=\hs{(C+I)Y\xi}\le\hs{(C+I)\xi}+2\hs{[Y,\xi]}\le3e$. So $\hs{(A^*YA+Y)\xi}\le14e$ and
+$\hs{(-Y)\xi-\xi(A^*YA)}\le14e+\hs{[A^*YA,\xi]}\le17e$. By \cref{lem:coupling}(a) and~\eqref{eq:rates-spectral},
+$W_1(\mathsf S_*\mu,\mu^{A\rho A^*}_Y)\le\frac{17}2\pi e$, and by \cref{lem:coupling}(b) with $U=A^*$, $W_1(\mu^{A\rho A^*}_Y,\mu)\le\pi e$.
+So $\delta_{\mathsf S}\le\frac{19}2\pi e$.
+
+\emph{Conclusion.} By \cref{lem:circle}(c), $W_1(\mu,\mathsf h)\le\delta_{\mathsf D}+\delta_{\mathsf S}\le\bigl(5+\frac{19}2\bigr)\pi
+e=\frac{29}2\pi e$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:K-profile}]
+The measure $\mu^\rho_Y$ is supported on the angles of the at most $d$ eigenvalues of $Y$, so by \cref{lem:circle}(d) and
+\cref{prop:K-W1}, $\frac\pi{2d}\le W_1(\mu^\rho_Y,\mathsf h)\le\frac{29}2\pi e$, that is $d\ge1/(29e)$. Conditions (i)--(iii) are
+\ref{prelim:S1}--\ref{prelim:S3} for $K$ and $w=c$, which gives the second sentence.
+\end{proof}
+
+For $\rho=I/d$ the state commutators vanish, and (i)--(iii) say that $\phi$ is an $e$-representation with $\fn{\phi(c)+I}\le e$. Together
+with an explicit model this pins down the profile of $c$.
+
+\begin{example}[A model]\label{ex:K-model}
+Let $d=2m$, $z_j=e^{2\pi ij/d}$ for $0\le j<d$, and on $\C^d$ put $Y=\operatorname{diag}(z_j)$, let $A$ exchange $e_j$ and $e_{j+m}$
+(indices mod $d$), $B=-A$, $C=-I$, and let $X$ be the permutation matrix with $Xe_{\varpi(j)}=e_j$, where $\varpi(j)=2(j\bmod m)+\lfloor
+j/m\rfloor$. Then $A^2=B^2=C^2=I$ and $C^{-1}AB=A^2=I$; $YAY^*=-A=B$ and $YBY^*=A$, because $z_{j+m}/z_j=-1$; and $C$ is central. Finally
+$XYX^*=\operatorname{diag}(z_{\varpi(j)})$, so $XYX^*Y^{-2}$ is $I$ on the first $m$ coordinates and $e^{2\pi i/d}I$ on the last $m$. With
+the flat state, every relator of~\eqref{eq:K} but $xyx^{-1}y^{-2}$ has defect $0$, that one has defect
+$\fn{XYX^*Y^{-2}-I}=\sqrt2\sin(\pi/d)$, and (ii), (iii) hold with $0$. This is a variant of the model of~\cite[Lemma~3.8]{SV18}.
+\end{example}
+
+\begin{corollary}[The profile of $c$]\label{cor:K-profile}
+For every $e>0$,
+\[
+\frac1{29e}\ \le\ \hlps_K(c;e)\ \le\ \hlp_K(c;2,e)\ \le\ 2\Bigl\lceil\frac\pi{\sqrt2\,e}\Bigr\rceil .
+\]
+For each $0<\delta\le2$ there are constants $c_\delta,C_\delta>0$ with $c_\delta/\eps\le\hlp_K(c;\delta,\eps)\le C_\delta/\eps$ for
+$0<\eps\le2$.
+\end{corollary}
+
+\begin{proof}
+The first inequality is \cref{thm:K-profile}. The second holds for every presentation: an $e$-representation with $\fn{\phi(c)-I}\ge2$ has
+$\phi(c)=-I$ by~\eqref{eq:unitary-distance}, and with the flat state it satisfies (S1)--(S3). For the third, \cref{ex:K-model} with
+$m=\lceil\pi/(\sqrt2e)\rceil$ has $\phi(c)=-I$ and defects at most $\sqrt2\sin(\pi/(2m))\le\sqrt2\pi/(2m)\le e$. For $\delta<2$,
+$\hlp_K(c;2,C\eps)\le\hlp_K(c;\delta,\eps)\le\hlp_K(c;2,\eps)$ for a constant $C\ge1$ depending on $\delta$~\cite[Proposition~2.7]{SV18},
+since $c$ is a central involution represented by a generator. So $\hlp_K(c;\delta,\eps)\ge1/(29C\eps)$, and for $\eps\le2$,
+$\hlp_K(c;\delta,\eps)\le2(\pi/(\sqrt2\eps)+1)\le(\sqrt2\pi+4)/\eps$.
+\end{proof}
+
+\Cref{cor:K-profile} improves the lower bound $C\eps^{-2/3}$ of~\cite[Lemma~3.5 and Proposition~3.2]{SV18} to the order of their upper
+bound. Their argument passes from the normalized norm to the operator norm, which costs a factor $\sqrt d$; the argument above never uses
+the operator norm.
+
+\subsubsection*{The game}
+
+Let $\Gsv=G(A,b)$ be the linear system game of~\cite[Theorem~1.1]{SV18}, with $m$ equations, $n$ variables, $s=\max_i\lvert V_i\rvert$ and
+solution group $\Gamma=\Gamma(A,b)$, the solution group of~\cite[Proposition~6.1]{SV18}. Its question distribution is that
+of~\cite[Section~4]{SV18}: the equation $i$ and the variable $j$ are independent and uniform, and a pair with $j\notin V_i$ is always won;
+so $\pi_{\min}=1/(mn)$ (\cref{def:lcs}). The construction~\cite[Propositions~6.1 and~6.2]{SV18} applies Slofstra's embedding
+theorem~\cite{Slo20}, in the form of~\cite[\S4]{Slo19}, to $K$, with distinguished central involution $c$. It supplies a homomorphism
+$\Psi:F(a,b,c,x,y)\to F(x_1,\dots,x_n,J)$ that descends to an embedding of $K$ into $\Gamma$, and a word $z$ in $x_1,\dots,x_n,J$, the
+image of an added involution $t$ with $tct=cJ$, such that $[\Psi(c),z]=J$ in $\Gamma$~\cite[proof of Proposition~6.2]{SV18}. (The proof
+there prints the relation as $twt=J$, for the distinguished involution $w$; the relation used is $twt=wJ$, that of~\cite[Lemma~5.2]{Slo19},
+which is what gives $[w,t]=J$.) For the lower bound we use only that $\Psi$ descends to a homomorphism $K\to\Gamma$ and this identity.
+Since $J$ is nontrivial in approximate representations of $\Gamma$~\cite[Proposition~6.1]{SV18}, $\omq(\Gsv)=1$ (see the discussion after
+\cref{def:lcs}), so $\Ent(\Gsv,\eps)$ counts strategies that win with probability at least $1-\eps$. Qualitatively, this nontriviality comes
+from Slofstra's embeddings and his tensor-power argument~\cite[Lemma~5.2]{Slo19}; \cref{lem:sv-lift} below gives it again, with rates.
+
+The upper bound $\Ent(\Gsv,\eps)\le C'\eps^{-1/2}$ of~\cite[Theorem~1.1]{SV18} rests on the second half of the proof
+of~\cite[Proposition~6.2]{SV18}. That argument takes from~\cite[Proposition~4.8]{Slo19} a $2d$-dimensional lift of a $d$-dimensional
+approximate representation of $K$ with $c\mapsto(-I_d)\oplus I_d$, and then lets $t$ exchange the two blocks. But~\cite[Proposition~4.8]{Slo19}
+removes the non-involutive generators one at a time, and each removal doubles the dimension and sends every involutive generator $s$ to
+the image of $s$ plus an identity block. The group $K$ has two non-involutive generators, $y<x$, and no presentation of $K$ in
+the sense of~\cite[\S6]{SV18} has fewer: the quotient of $K$ by $a,b,c$ is $\langle x,y\mid xyx^{-1}=y^2\rangle$, which is torsion-free and
+not cyclic, so it is also the quotient of $K$ by all its involutions, and that quotient is generated by the non-involutive generators of
+any such presentation. So the two lifts give $c\mapsto W=(-I_d)\oplus I_{3d}$. For every unitary $T$ on $\C^{4d}$ the $(+1)$-eigenspaces of $W$ and $TWT^*$ have dimension $3d$, so they
+meet in dimension at least $2d$, where $TWT^*+W=2I$; hence $\fn{TWT^*+W}^2\ge2$, and the relation $tct=cJ$ with $J\mapsto-I$ fails by at
+least $\sqrt2$, whatever the precision of the representation. So for $K$ this last step, as written in~\cite{SV18} (arXiv:1711.10676v2), does not produce the
+representation it needs; with at most one non-involutive generator it is complete, and that is the case of \cref{thm:embedding}. This
+affects only the upper bound $\hlp(J;2,\eps)\le N\,\hlp(c;2,C'\eps)$ of~\cite[Prop.~6.2]{SV18}. Its lower bound, the nontriviality of $J$
+and the value one of the game do not use this step: they use only that the embedding of~\cite[Prop.~4.8]{Slo19} keeps $c$ nontrivial in
+approximate representations, then~\cite[Lemma~5.2 and Prop.~4.2]{Slo19} and, for the value, \cite[Cor.~5.3]{SV18}. For $K$ the upper
+bound itself holds: \cref{lem:sv-lift} below supplies a balanced lift for the explicit models of $K$, and with it the upper bounds
+of~\cite[Prop.~6.1 and Thm.~1.1]{SV18} hold as stated. For the models of \cref{ex:K-model}, in which $X$ is a permutation matrix, the second removal can be done without
+doubling, and the marked involution stays balanced.
+
+\begin{lemma}[A balanced lift for $K$]\label{lem:sv-lift}
+Let $m\ge1$, $d=2m$, and let $\phi$ be the model of \cref{ex:K-model} on $\C^d$, whose relators have defect at most
+$e_m=\sqrt2\sin(\pi/(2m))$. Then the solution group $\Gamma$ of $\Gsv$ has a $C_\Gamma e_m$-representation $\gamma$ on $\C^{8d}$ with
+$\gamma(J)=-I$, where $C_\Gamma\le75$ is the constant of~\cite[Remark~4.5]{Slo19}.
+\end{lemma}
+
+\begin{proof}
+We follow the construction of $\Gamma$ in~\cite[proof of Proposition~6.2]{SV18} and lift $\phi$ through each of its steps. Write
+$A,B,C,X,Y$ for the images of $a,b,c,x,y$, and use the notation $\Omega$, $U\oplus V$ and $\operatorname{adiag}(U,V)$ of
+\cref{gadget:conv}. As an extended presentation in the sense of~\cite[\S6]{SV18}, $K$ has the involutive generators $a,b,c$, the linear
+set $\{a,b,c\}$ with its commutations, which Slofstra and Vidick add and the model satisfies exactly, the conjugacy relations $yay^{-1}=b$,
+$yby^{-1}=a$ and $xcx^{-1}=c$, and the non-involutive generators $y<x$ with the relation $xyx^{-1}=y^2$. In the model only the relator
+$r=xyx^{-1}y^{-2}$ has nonzero defect, and that defect is $e_m$.
+
+\emph{Step 1: removing $y$}~\cite[Proposition~4.8]{Slo19}. Add involutions $f,v$, with $y=fv$ in mind, and the relation that $f$ commutes
+with $x$. Replace $yay^{-1}=b$ by $vav=Z_a$ and $fZ_af=b$, and $yby^{-1}=a$ by $vbv=Z_b$ and $fZ_bf=a$, with ancilla involutions
+$Z_a,Z_b$. Once $y=fv$ and $fx=xf$, the relation $xyx^{-1}=y^2$ reads $xvx^{-1}=vfv$; replace it by $vfv=W_0$ and $xvx^{-1}=W_0$, with an
+ancilla involution $W_0$. Then $y$ occurs only in $y=fv$, and is deleted. On $\C^d\oplus\C^d$ put
+\[
+\gamma_1(s)=\phi(s)\oplus I\ \ (s=a,b,c),\qquad\gamma_1(f)=\Omega,\qquad\gamma_1(v)=\operatorname{adiag}(Y^*,Y),\qquad\gamma_1(x)=X\oplus X,
+\]
+and give $Z_a,Z_b,W_0$ their defining values $\gamma_1(vav)$, $\gamma_1(vbv)$, $\gamma_1(vfv)$. This is the lift
+of~\cite[Proposition~4.8]{Slo19}, with $\gamma_1(f)\gamma_1(v)=Y\oplus Y^*$. The relations that define the ancillas hold exactly,
+and so do $f^2=v^2=e$ and $fx=xf$. Every other relator is mapped to a block-diagonal matrix each of whose two blocks is the identity or a conjugate
+of $\phi(r')^{\pm1}$ for a relator $r'$ of $K$: for instance
+$\gamma_1(fZ_afb^{-1})=\phi(yay^{-1}b^{-1})\oplus I$, and $\gamma_1(xvx^{-1}W_0^{-1})$ is conjugate to $\phi(r)\oplus Y^{-2}\phi(r)^{-1}Y^2$. So
+$\gamma_1$ is an $e_m$-representation of the presentation reached, and $\gamma_1(c)=(-I_d)\oplus I_d$.
+
+\emph{Step 2: removing $x$ without doubling.} Now $x$ is the only non-involutive generator. The construction
+of~\cite[Proposition~4.8]{Slo19} adds involutions
+$f',v'$, with $x=f'v'$ in mind, and replaces each of the three relations $xsx^{-1}=s'$, namely $(s,s')=(c,c)$, $(f,f)$ and $(v,W_0)$, by
+$v'sv'=Z'_s$ and $f'Z'_sf'=s'$, with an ancilla involution $Z'_s$; it adds no commutation relations, since no non-involutive generator
+follows $x$, and then deletes $x$. The lift used there would double the dimension again. Instead we use that $X$ is a permutation matrix.
+Reflecting each cycle of the permutation, $a_i\mapsto a_{-i}$ on a cycle $(a_0\,a_1\,\cdots\,a_{k-1})$, gives an involutive permutation
+matrix $\tau$ with $\tau X\tau=X^{-1}$. Put
+\[
+\gamma_2(f')=\tau\oplus\tau,\qquad\gamma_2(v')=\tau X\oplus\tau X,\qquad\gamma_2(Z'_s)=\gamma_2(v')\gamma_1(s)\gamma_2(v'),
+\]
+and $\gamma_2(s)=\gamma_1(s)$ for the other generators. The matrix $\tau X$ is real, and $(\tau X)^*=X^{-1}\tau=\tau X$ and $(\tau X)^2=X^{-1}X=I$,
+so $\gamma_2(f')$ and $\gamma_2(v')$ are involutions, and $\gamma_2(f')\gamma_2(v')=X\oplus X=\gamma_1(x)$. Hence
+$\gamma_2(f'Z'_sf's'^{-1})=\gamma_1(xsx^{-1}s'^{-1})$: every relation keeps its residual. The relations $v'sv'=Z'_s$ hold exactly, and
+${Z'_s}^2$ is conjugate to $s^2$. So $\gamma_2$ is an $e_m$-representation, on $\C^{2d}$, of a presentation all of whose generators are
+involutions, and still $\gamma_2(c)=(-I_d)\oplus I_d$.
+
+\emph{Step 3: the commutator}~\cite[proof of Proposition~6.2]{SV18}. Adjoin the central involution $J$ and an involution $t$ with
+$tct=cJ$. In linear-plus-conjugacy form this takes one more involution $u$, with the linear relation $cu=J$ and the conjugacy relation
+$tct=u$, as in Step~2 of the proof of \cref{lem:gadget}; Slofstra and Vidick leave this encoding implicit, and any encoding through
+auxiliary involutions that are determined by $t$, $c$ and $J$ works the same way. Put $\gamma_3(J)=-I$, let $\gamma_3(t)=\Omega$ exchange the
+two copies of $\C^d$, and put $\gamma_3(u)=-\gamma_2(c)=I_d\oplus(-I_d)$. Because $\gamma_2(c)=(-I_d)\oplus I_d$ has its two eigenvalues with
+equal multiplicities, $\gamma_3(t)\gamma_3(c)\gamma_3(t)=\gamma_3(u)$; also $\gamma_3(c)\gamma_3(u)=-I=\gamma_3(J)$, and $-I$ commutes with
+everything. So all the new relations hold exactly, and $\gamma_3$ is an $e_m$-representation of the resulting linear-plus-conjugacy
+presentation on $\C^{2d}$ with $J\mapsto-I$.
+
+\emph{Step 4: the solution group}~\cite[Lemma~4.4 and Proposition~4.2]{Slo19}. These two steps turn the linear-plus-conjugacy presentation
+into the solution group $\Gamma$. By~\cite[Remark~4.5]{Slo19} they turn every $2d$-dimensional $e$-representation of it into an
+$8d$-dimensional $C_\Gamma e$-representation of $\Gamma$ that restricts to four copies of the given one on its generators, with
+$C_\Gamma\le75$. Applied to $\gamma_3$, this gives $\gamma$, and $\gamma(J)=-I$.
+\end{proof}
+
+The program \texttt{anc/sv\_balanced\_lift.py} builds these four steps for $m\le8$ and evaluates every relator. Steps~1--3 keep every defect at
+most $e_m$, and all $2373$ relators of the solution group so obtained, with the products of the equations taken in every order, have
+defect at most $e_m/\sqrt2$, far below $75e_m$. As a negative control it builds the two literal lifts and confirms the bound
+$\fn{TWT^*+W}^2\ge2$, which a block permutation attains (\cref{cert:what}).
+
+\begin{theorem}[Entanglement of the Slofstra--Vidick game]\label{thm:sv-game}
+There are constants $c_0,C_0>0$ such that $c_0\,\eps^{-1/2}\le\Ent(\Gsv,\eps)\le C_0\,\eps^{-1/2}$ for $0<\eps\le1$.
+\end{theorem}
+
+For the upper bound, \cref{lem:sv-lift} and the return direction with the flat state give strategies on a maximally entangled state of
+local dimension $16m$ that lose with probability $O(1/m^2)$. For the lower bound, a near-optimal strategy gives, by \cref{thm:transfer}, a
+model of $\Gamma$ in Bob's reduced state at precision $O(\sqrt\eps)$, in which $J=-I$. Composed with $\Psi$ it is a model of $K$ in which
+$c$ is visible, by the identity $[\Psi(c),z]=J$; on the sector where the rounding of $\phi(\Psi(c))$ is $-1$ it satisfies the hypotheses
+of \cref{thm:K-profile}, which bounds the Schmidt rank by $\Omega(\eps^{-1/2})$.
+
+\begin{proof}
+\emph{The upper bound.} Let $C_s$ be the constant of \cref{thm:return} and $C_\Gamma$ that of \cref{lem:sv-lift}. For $m\ge1$,
+\cref{lem:sv-lift} gives a $C_\Gamma e_m$-representation of $\Gamma$ on $\C^{16m}$ with $J\mapsto-I$, where
+$e_m=\sqrt2\sin(\pi/(2m))\le\pi/(\sqrt2\,m)$. By \cref{thm:return} with the flat state, the strategy built there on $\Phi_{16m}$ loses every
+question pair, hence a random one, with probability at most $C_sC_\Gamma^2e_m^2\le\pi^2C_sC_\Gamma^2/(2m^2)$. Given $0<\eps\le1$, take
+$m=\lceil\pi C_\Gamma\sqrt{C_s/(2\eps)}\,\rceil$. Then the losing probability is at most $\eps$, and since $\eps\le1$,
+\[
+\Ent(\Gsv,\eps)\ \le\ \Entme(\Gsv,\eps)\ \le\ 16m\ \le\ 16\Bigl(\pi C_\Gamma\sqrt{C_s/2}+1\Bigr)\eps^{-1/2}.
+\]
+This is the upper bound of~\cite[Theorem~1.1]{SV18}, with $C_0=16(\pi C_\Gamma\sqrt{C_s/2}+1)$; it also shows $\omq(\Gsv)=1$ once more.
+
+\emph{The lower bound.} Take a strategy that wins with probability at least $1-\eps$, with
+Schmidt rank $r$, and let $\phi$ and $\rho$ on $\C^r$ be as in \cref{thm:transfer}, with $\theta=2\sqrt{mn\eps}$ and $e_0=\max(s,4)\theta$.
+Put $\phi_K=\phi\circ\Psi$ and $W=\phi_K(c)$.
+
+\emph{Constants.} The following words are trivial in $\Gamma$: $\Psi(r)$ for each relator $r$ of~\eqref{eq:K}; $\Psi([u,c])$ for
+$u\in\{a,b,c,x,y\}$, as $c$ is central in $K$; and $[\Psi(c),z]J^{-1}$. Fix for each of them an expression as a product of conjugates of
+relators of $\Gamma$. These finitely many expressions do not depend on $\eps$ or on the strategy. By \cref{lem:calculus}(d),(a) and
+\cref{thm:transfer}, which bounds the defects of the relators of $\Gamma$ by $e_0$ and the state commutators of the letters $x_j$ by
+$\sqrt2\theta$ (and $\phi(J)=-I$ commutes with $\xi$), there is a constant $C_1$, depending only on $\Gsv$ and the chosen expressions, such that each of these words has
+defect $\hs{(\phi(\cdot)-I)\xi}\le C_1\theta$, and $\hs{[\phi_K(u),\xi]},\ \hs{[\phi(z),\xi]}\le C_1\theta$ for $u\in\{a,b,c,x,y\}$.
+
+\emph{Visibility.} Let $V=\phi(z)$ and $\tau=\hs{(W-I)\xi}$. Since $\phi(J)=-I$, $\phi([\Psi(c),z]J^{-1})=-WVW^*V^*$, so
+$\hs{(WVW^*V^*+I)\xi}\le C_1\theta$. From $WVW^*V^*-I=(W-I)+WV(W^*-I)V^*$,
+\[
+\hs{(WVW^*V^*-I)\xi}\le\tau+\hs{(W^*-I)(\xi V^*+[V^*,\xi])}\le2\tau+2\hs{[V,\xi]}\le2\tau+2C_1\theta .
+\]
+As $2=\hs{2\xi}$, we get $\tau\ge1-\frac32C_1\theta$.
+
+\emph{The sector.} Let $J'=\mathrm r(W)$. By \cref{lem:rounding} and the relator $c^2$, $\hs{(J'-W)\xi}\le C_1\theta$ and
+$\hs{[J',\xi]}\le3C_1\theta$. Let $P_-=\frac12(I-J')$ and $p_-=\Tr(P_-\rho)=\frac14\hs{(I-J')\xi}^2$. Then $\hs{(I-J')\xi}\ge\tau-C_1\theta\ge1-\frac52C_1\theta$,
+so $p_-\ge\frac1{16}$ when $\theta\le1/(5C_1)$; assume this. For $u\in\{a,b,c,x,y\}$ and $U=\phi_K(u)$, the group commutator
+$UWU^*W^*=\phi(\Psi([u,c]))$ has defect at most $C_1\theta$, so $\hs{[U,W]\xi}=\hs{(UWU^*W^*-I)WU\xi}\le C_1\theta+4C_1\theta$. With
+$N=J'-W$, $\op N\le2$ and $\hs{[U,N]\xi}\le\hs{N\xi}+\hs{N\xi}+\op N\hs{[U,\xi]}\le4C_1\theta$, so $\hs{[U,J']\xi}\le9C_1\theta$.
+
+\emph{The profile in the sector.} Let $\rho_-$ and $\xi_-$ be as in \cref{lem:sector-state}, with $\sqrt{p_-}\ge\frac14$. By
+\cref{lem:sector-state}(c), $\hs{[U,\xi_-]}\le4(9+3+3)C_1\theta=60C_1\theta$ for $U=\phi_K(u)$. By \cref{lem:sector-state}(b) with
+$\op{\phi_K(r)-I}\le2$, every relator of~\eqref{eq:K} has $\hs{(\phi_K(r)-I)\xi_-}\le4(C_1+6C_1)\theta=28C_1\theta$. Finally $(J'+I)P_-=0$,
+so $(J'+I)\xi_-=(J'+I)(\xi_--P_-\xi P_-/\sqrt{p_-})$, of norm at most $\hs{[J',\xi]}/\sqrt{p_-}$ by \cref{lem:sector-state}(a), and
+\[
+\hs{(W+I)\xi_-}\le\hs{(W-J')\xi_-}+\hs{(J'+I)\xi_-}\le4(C_1+6C_1)\theta+12C_1\theta=40C_1\theta .
+\]
+So $\phi_K$ and $\rho_-$ satisfy (i)--(iii) of \cref{thm:K-profile} on $\C^r$ with $e=60C_1\theta$, and
+$r\ge1/(1740\,C_1\theta)=\eps^{-1/2}/(3480\,C_1\sqrt{mn})$.
+
+If $\theta>1/(5C_1)$, that is $\eps>\eps_0=1/(100C_1^2mn)$, then $\Ent(\Gsv,\eps)\ge1\ge\sqrt{\eps_0}\,\eps^{-1/2}$. So the lower bound
+holds for all $\eps>0$ with $c_0=\min\bigl(1/(3480C_1\sqrt{mn}),\sqrt{\eps_0}\bigr)$, since a strategy of local dimension $d$ has Schmidt rank
+at most $d$.
+\end{proof}
+
+\begin{remark}\label{rates:rem-sv}
+The lower bound $C\eps^{-1/6}$ of~\cite[Theorem~1.1]{SV18} passes from the state to a spectral projection of it, and from the
+normalized norm to the operator norm; the proof above keeps the state throughout. The bound is on the Schmidt rank, and so on the local
+dimension: $\log\Ent(\Gsv,\eps)=\frac12\log(1/\eps)+O(1)$. It is not a bound on the entanglement entropy, since \cref{thm:K-profile} counts
+the atoms of a spectral measure, whose masses may be unequal.
+\end{remark}
+
+\emph{Theorem~F is \cref{cor:K-profile} with \cref{thm:sv-game}.}

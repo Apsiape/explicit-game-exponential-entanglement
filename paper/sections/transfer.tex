@@ -1,0 +1,235 @@
+%======================================================================
+\section{Linear system games keep the state}\label{sec:transfer}
+%======================================================================
+
+Slofstra and Vidick showed that near-optimal strategies for a linear system game give approximate representations of its solution group,
+and that the entanglement of the game is controlled by the hyperlinear profile of $J$~\cite{SV18}. For a general state their
+representation is accurate only to order $\eps^{1/4}$: winning with probability $1-\eps$ controls the relations, and the commutators of
+Bob's observables with $\rho^{1/2}$, to order $\sqrt\eps$ in the state~\cite[Proposition~5.4]{SV18}, and the passage to a spectral
+projection of $\rho$ halves the exponent again~\cite[Theorem~5.1 and Corollary~5.2]{SV18}. This section keeps the state, in both
+directions. \Cref{thm:transfer} records, with explicit constants, that a strategy gives a state-weighted model of the solution group at
+precision $O(\sqrt\eps)$ in Bob's reduced state; lower bounds on the state-weighted profile then transfer to the game with no loss.
+\Cref{thm:return} proves the converse: a model at precision $e$ gives a strategy that loses with probability $O(e^2)$ on the canonical
+purification of the same state. So the game and the state-weighted profile determine each other up to constant factors in the precision,
+in dimension and in entropy (\cref{cor:two-sided}). In this paper \cref{thm:transfer} feeds the lower bounds of
+\cref{sec:game,sec:rates}, and \cref{thm:return} with the flat state gives the upper bound of \cref{sec:game}.
+
+Throughout, $G=G(A,b)$ is a linear system game with question distribution $\pi$ (\cref{def:lcs}), $s=\max_i\abs{V_i}$, and
+$\Gamma=\Gamma(A,b)$ is presented as in \cref{def:lcs}(a), with $w=J$.
+
+\subsection{From strategies to models}
+
+\begin{theorem}[Transfer]\label{thm:transfer}
+Let a strategy win $G$ with probability at least $1-\eps$, let $r$ be the Schmidt rank of its state, and put
+$\theta=2\sqrt{\eps/\pi_{\min}}$. There are a homomorphism $\phi:F(x_1,\dots,x_n,J)\to\U(r)$ and a density matrix $\rho$ of full rank on
+$\C^r$ such that $\phi(J)=-I$, every $\phi(x_j)$ is an involution, and, with $\xi=\rho^{1/2}$,
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\hs{(\phi(R)-I)\xi}\le\max(s,4)\,\theta$ for every relator $R$ of $\Gamma$;
+\item $\hs{[\phi(x_j),\xi]}\le\sqrt2\,\theta$ for every $j$.
+\end{enumerate}
+The density matrix $\rho$ is Bob's reduced density matrix restricted to its support. In particular $(\phi,\rho)$ is a model of $(\Gamma,J)$
+at precision $\max(s,4)\theta$, so $r\ge\hlps_\Gamma(J;\max(s,4)\theta)$, and, if $\omq(G)=1$,
+\[
+\Ent(G,\eps)\ \ge\ \hlps_\Gamma\bigl(J;\,2\max(s,4)\sqrt{\eps/\pi_{\min}}\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: reductions.} Let $\Pi$ be the support projection of Bob's reduced density matrix, of rank $r$. Since $\psi=(I\otimes\Pi)\psi$,
+replacing each $Q^j_c$ by $\Pi Q^j_c\Pi$ on the range of $\Pi$, identified with $\C^r$, gives POVMs with the same probabilities
+(\cref{rem:local-dimension}). With everything else fixed, the winning probability is $\Tr(B_jM_j)+\mathrm{const}$ for the Hermitian operator
+$M_j=\sum_{i:\,j\in V_i}\frac{\pi(i,j)}2\Tr_A\bigl((A_{ij}\otimes I)|\psi\rangle\langle\psi|\bigr)$ on $\C^r$, so replacing $B_j$ by the
+involution $\sgn(M_j)$ (with $\sgn(0)=1$), that is, Bob's measurement by $\{\frac12(I\pm\sgn(M_j))\}$, does not lower it; we do this for each
+$j$ in turn. Finally we replace Alice's POVMs by Naimark dilations (\cref{rem:local-dimension}), which changes neither Bob's reduced state
+nor any probability. Now Bob's observables $B_j$ are involutions on $\C^r$, Bob's reduced density matrix $\rho$ has full rank on $\C^r$,
+and, for each $i$, the $A_{ij}$ ($j\in V_i$) are commuting involutions with $\prod_{j\in V_i}A_{ij}=(-1)^{b_i}I$, because every answer
+satisfies the equation. The strategy still wins with probability at least $1-\eps$.
+
+\emph{Step 2: consistency.} A pair $(i,j)$ with $j\in V_i$ is lost with probability $\ell_{ij}\le\eps/\pi_{\min}$, and, as $A_{ij}$ and
+$B_j$ are involutions, $\norm{(A_{ij}\otimes I-I\otimes B_j)\psi}^2=2-2\langle\psi,(A_{ij}\otimes B_j)\psi\rangle=4\ell_{ij}\le\theta^2$. If
+$Y_1,\dots,Y_q$ are contractions on Alice's space with $\norm{(Y_l\otimes I-I\otimes B_{j_l})\psi}\le\theta$, then
+\[
+\bigl\|(I\otimes B_{j_1}\cdots B_{j_q})\psi-(Y_q\cdots Y_1\otimes I)\psi\bigr\|\le q\theta :
+\]
+replace $(I\otimes B_{j_q})\psi$ by $(Y_q\otimes I)\psi$, at cost $\theta$ since the $B$'s are contractions, move $Y_q\otimes I$ to the left
+past $I\otimes B_{j_1}\cdots B_{j_{q-1}}$, and induct.
+
+\emph{Step 3: the relations, (a).} Put $\phi(x_j)=B_j$ if $j$ lies in some $V_i$, $\phi(x_j)=I$ otherwise, and $\phi(J)=-I$. The relators
+$x_j^2$, $J^2$ and $[x_j,J]$ are mapped to $I$. By \cref{lem:standard-form}(a), $\hs{(\phi(R)-I)\xi}=\norm{(I\otimes(\phi(R)-I))\psi}$. For
+$j,k\in V_i$, the estimate of Step~2 with $(j_1,j_2,j_3,j_4)=(j,k,j,k)$, $Y_l=A_{ij_l}$ and $Y_4Y_3Y_2Y_1=A_{ik}A_{ij}A_{ik}A_{ij}=I$ gives
+$\hs{(B_jB_kB_jB_k-I)\xi}\le4\theta$, and $\phi([x_j,x_k])=B_jB_kB_jB_k$. For $V_i=\{j_1<\dots<j_r\}$, the estimate with $Y_l=A_{ij_l}$ and
+$A_{ij_r}\cdots A_{ij_1}=(-1)^{b_i}I$ gives $\hs{((-1)^{b_i}B_{j_1}\cdots B_{j_r}-I)\xi}\le r\theta\le s\theta$, and
+$\phi(J^{b_i}x_{j_1}\cdots x_{j_r})=(-1)^{b_i}B_{j_1}\cdots B_{j_r}$.
+
+\emph{Step 4: the state commutators, (b).} For $j\in V_i$, \cref{lem:standard-form}(b) gives a Hermitian $\tilde A$ on $\C^r$ with
+$\hs{B_j\xi-\xi\tilde A}\le\norm{(A_{ij}\otimes I-I\otimes B_j)\psi}\le\theta$, and \cref{lem:consistency} gives
+$\hs{[B_j,\xi]}\le\sqrt2\,\theta$. For $j$ in no $V_i$, $\phi(x_j)=I$.
+
+\emph{Conclusion.} Since $\phi(J)=-I$ commutes with $\xi$ and $\sqrt2\le\max(s,4)$, the pair $(\phi,\rho)$ satisfies~\ref{prelim:S1}--\ref{prelim:S3}
+for $w=J$ at precision $e=\max(s,4)\theta$, so $r\ge\hlps_\Gamma(J;e)$. Every strategy with $H_A=H_B=\C^d$ has Schmidt rank at most $d$,
+which gives the bound on $\Ent(G,\eps)$.
+\end{proof}
+
+\begin{remark}[Credits]\label{transfer:credits}
+For the default distribution $\pi_{\min}\ge1/(ms)$, so the precision is at most $2\max(s,4)\sqrt{ms\,\eps}$. For the flat state, (a) is
+\cite[Proposition~4.4(b)]{SV18} up to constants. For a general state, \cite[Proposition~5.4]{SV18} proves (a) and (b) with unspecified
+constants and then passes to a spectral projection of $\rho$, which gives $\hlp_\Gamma(J;2,C\eps^{1/4})\le\Ent(G,\eps)$~\cite[Corollary~5.2]{SV18}.
+\Cref{thm:transfer} stops before that step. It is bookkeeping; what it adds is that lower bounds on $\hlps$, such as those of
+\cref{thm:sector,thm:sv-game}, apply at the natural precision $\sqrt\eps$. A square root is also lost when near-optimal strategies for
+boolean constraint system games are rounded to strategies on a maximally entangled state~\cite[Corollary~1.3]{Pad22}.
+\end{remark}
+
+\subsection{From models to strategies}
+
+Conversely, a model that satisfies~\ref{prelim:S1}--\ref{prelim:S3} at precision $e$ gives a strategy that loses with probability
+$O(e^2)$, on a purification of the same state. For the flat state this is the classical direction of the
+correspondence~\cite[Proposition~4.4(a)]{SV18}. The point here is that the state, and with it its spectrum, is kept.
+
+Let $\rho$ be a density matrix on $\C^d$ and $\xi=\rho^{1/2}$, and let ${}^T$ be the transpose in the standard basis. The map
+$\Theta:\C^d\otimes\C^d\to M_d(\C)$ with $\Theta(v\otimes w)=wv^T$ is an isometry for $\hs{\cdot}$ and satisfies
+$\Theta((Q\otimes I)x)=\Theta(x)Q^T$ and $\Theta((I\otimes Y)x)=Y\Theta(x)$. The \emph{canonical purification} of $\rho$ is
+$\psi_\rho=\Theta^{-1}(\xi)$. Bob's reduced state is $\rho$, Alice's is $\rho^T$, and we write $\eta=\xi^T$ for its square root. So
+$\norm{(C\otimes I)\psi_\rho}=\hs{\xi C^T}=\hs{C\eta}$ for operators $C$ on Alice's side, and, for an operator $B$ on Bob's side,
+\begin{equation}\label{transfer:mimic}
+\norm{(B^T\otimes I-I\otimes B)\psi_\rho}=\hs{\xi B-B\xi}=\hs{[B,\xi]} .
+\end{equation}
+Alice therefore imitates Bob's observable $B$ by measuring $B^T$, at a cost equal to its state commutator. For the flat state,
+$\psi_{I/d}=d^{-1/2}\sum_ke_k\otimes e_k=\Phi_d$ is the maximally entangled state.
+
+\begin{lemma}[Sequential measurements]\label{lem:sequential}
+Let $B_1,\dots,B_k$ be involutions on $\C^d$, $c_j=\hs{[B_j,\xi]}$ and $\kappa_{jl}=\hs{[B_j,B_l]\xi}$. On $\psi_\rho$, let Alice measure
+$\{\frac12(I+aB_1^T)\}_{a=\pm1}$, then $\{\frac12(I+aB_2^T)\}_{a=\pm1}$, and so on up to $B_k^T$, recording the outcomes $a_1,\dots,a_k$, and
+let Bob measure one of the $B_j$, with outcome $b_j$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item Put $d_j=2\Pr[a_j\ne b_j]^{1/2}$, so that $\Pr[a_j\ne b_j]=d_j^2/4$. Then
+$d_j\le c_j+\sum_{l<j}\bigl(\kappa_{jl}/\sqrt2+\sum_{t<l}c_t\bigr)$.
+\item For a sign $\sigma$ put $\tau=\hs{(B_1\cdots B_k-\sigma I)\xi}$. Then $\Pr[a_1\cdots a_k\ne\sigma]\le\frac14\bigl(\tau+\sum_jd_j\bigr)^2$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Put $Q_j=B_j^T$, $P^a_j=\frac12(I+aQ_j)$ and, for $a\in\{\pm1\}^l$, $K_a=P^{a_l}_l\cdots P^{a_1}_1$. Then
+$\sum_aK_a^*K_a=\sum_aK_aK_a^*=I$, by induction on $l$. The coherent form of Alice's procedure is the isometry
+$Vy=\sum_{a\in\{\pm1\}^k}K_ay\otimes|a\rangle$ into $\C^d\otimes\C^{2^k}$, and $a_j$ is the eigenvalue of the record observable $Z_j$, which
+multiplies $|a\rangle$ by $a_j$. Since $Z_j$ and $B_j$ are commuting involutions on different systems, $\Pr[a_j\ne b_j]=\frac14d_j^2$ with
+$d_j=\norm{(Z_j\otimes I-I\otimes B_j)(V\otimes I)\psi_\rho}$.
+
+\emph{Branch commutators.} Let $D_l=\bigl(\sum_{a\in\{\pm1\}^l}\hs{[K_a,\eta]}^2\bigr)^{1/2}$, so $D_0=0$. Writing $K_a=P^{a_l}_lK_{a'}$,
+$[K_a,\eta]=P^{a_l}_l[K_{a'},\eta]+[P^{a_l}_l,\eta]K_{a'}$ and $[P^{a_l}_l,\eta]=\frac{a_l}2[Q_l,\eta]$. Minkowski's inequality and the two
+completeness relations give $D_l\le D_{l-1}+\hs{[Q_l,\eta]}/\sqrt2$, and $\hs{[Q_l,\eta]}=\hs{(\xi B_l-B_l\xi)^T}=c_l$. Hence
+$D_l\le\sum_{t\le l}c_t/\sqrt2$. For an operator $C$ on $\C^d$, $CK_a\eta=C\eta K_a+C[K_a,\eta]$, and
+$\sum_a\hs{C\eta K_a}^2=\Tr(\eta C^*C\eta\sum_aK_aK_a^*)=\hs{C\eta}^2$, so
+\begin{equation}\label{transfer:branch}
+\Bigl(\sum_{a\in\{\pm1\}^l}\hs{CK_a\eta}^2\Bigr)^{1/2}\le\hs{C\eta}+\op{C}D_l .
+\end{equation}
+
+\emph{(a).} The component of $(Z_j\otimes I-I\otimes B_j)(V\otimes I)\psi_\rho$ along $|a\rangle$ is $(a_jK_a\otimes I-K_a\otimes B_j)\psi_\rho$.
+Write $K_a=L_aR_a$ with $L_a=P^{a_k}_k\cdots P^{a_j}_j$ and $R_a=P^{a_{j-1}}_{j-1}\cdots P^{a_1}_1$; since $a_jP^{a_j}_j=P^{a_j}_jQ_j$,
+$a_jK_a=L_aQ_jR_a$. For fixed $a'=(a_1,\dots,a_{j-1})$, $\sum_{a_j,\dots,a_k}L_a^*L_a=I$, so
+\[
+d_j^2=\sum_{a'\in\{\pm1\}^{j-1}}\bigl\|(Q_jR_{a'}\otimes I-R_{a'}\otimes B_j)\psi_\rho\bigr\|^2 .
+\]
+Now $Q_jR_{a'}=R_{a'}Q_j+[Q_j,R_{a'}]$. The vectors $(R_{a'}\otimes I)(Q_j\otimes I-I\otimes B_j)\psi_\rho$ have total squared norm $c_j^2$, by
+completeness and~\eqref{transfer:mimic}, and $\norm{([Q_j,R_{a'}]\otimes I)\psi_\rho}=\hs{[Q_j,R_{a'}]\eta}$. Expanding
+$[Q_j,R_{a'}]=\sum_{l<j}P^{a_{j-1}}_{j-1}\cdots P^{a_{l+1}}_{l+1}\,\frac{a_l}2[Q_j,Q_l]\,K_{(a_1,\dots,a_{l-1})}$ and using Minkowski's
+inequality over $l$, completeness of the left factors and the two values of $a_l$,
+\[
+\Bigl(\sum_{a'}\hs{[Q_j,R_{a'}]\eta}^2\Bigr)^{1/2}\le\sum_{l<j}\frac1{\sqrt2}\Bigl(\sum_{a''\in\{\pm1\}^{l-1}}\hs{[Q_j,Q_l]K_{a''}\eta}^2\Bigr)^{1/2}
+\le\sum_{l<j}\frac{\kappa_{jl}+2D_{l-1}}{\sqrt2},
+\]
+by~\eqref{transfer:branch} with $\op{[Q_j,Q_l]}\le2$ and $\hs{[Q_j,Q_l]\eta}=\hs{(\xi[B_l,B_j])^T}=\kappa_{jl}$. With Minkowski's inequality
+and the bound on $D_{l-1}$ this proves (a).
+
+\emph{(b).} $\Pr[a_1\cdots a_k\ne\sigma]=\frac14\norm{(Z_1\cdots Z_k-\sigma)(V\otimes I)\psi_\rho}^2$. The record observables commute with each
+other and with Bob's operators, so
+\[
+Z_1\cdots Z_k-B_1\cdots B_k=\sum_jB_1\cdots B_{j-1}Z_{j+1}\cdots Z_k(Z_j-B_j),
+\]
+which has norm at most $\sum_jd_j$ on $(V\otimes I)\psi_\rho$. Bob's operators commute with $V\otimes I$, so
+$\norm{(B_1\cdots B_k-\sigma)(V\otimes I)\psi_\rho}=\norm{(I\otimes(B_1\cdots B_k-\sigma))\psi_\rho}=\tau$.
+\end{proof}
+
+\begin{theorem}[Return]\label{thm:return}
+Let $(\phi,\rho)$ be a model of $(\Gamma,J)$ at precision $e$ on $\C^d$, and put $B_j=\mathrm r(\phi(x_j))$ (\cref{lem:rounding}). Consider
+the strategy on $\psi_\rho$ in which Bob, on question $j$, measures $B_j$, and Alice, on question $i$ with $V_i=\{j_1<\dots<j_r\}$,
+measures $B_{j_1}^T,\dots,B_{j_r}^T$ in turn as in \cref{lem:sequential} and answers the recorded signs, flipping the last one if their
+product is not $(-1)^{b_i}$. Every question pair $(i,j)$ with $j\in V_i$ is lost with probability at most $C_se^2$, where
+\[
+\nu_l=3\Bigl(1+\frac{(l-1)(l-2)}2\Bigr)+\frac{13(l-1)}{\sqrt2},\qquad C_s=\frac14\Bigl[\nu_s^2+\Bigl(s^2+2+\sum_{l=1}^s\nu_l\Bigr)^2\Bigr];
+\]
+for instance $C_3<788.2$. The strategy has local dimensions $d$, Bob's reduced state is $\rho$, and its entanglement entropy is $S(\rho)$.
+For $\rho=I/d$ the state is $\Phi_d$: every $e$-representation of $\Gamma$ on $\C^d$ with $\phi(J)=-I$ gives a strategy on $\Phi_d$ that loses
+every question pair with probability at most $C_se^2$, and hence $\Entme(G,\eps)\le\hlp_\Gamma\bigl(J;2,\sqrt{\eps/C_s}\bigr)$ for every
+$\eps>0$.
+\end{theorem}
+
+\begin{proof}
+\emph{Step 1: rounding and pairs.} Write $U_j=\phi(x_j)$. By \cref{lem:rounding}, the relator $x_j^2$ and~\ref{prelim:S2},
+$\hs{(B_j-U_j)\xi}\le e$ and $\hs{[B_j,\xi]}\le3e$. For $j,l$ in one equation let $R=U_jU_lU_j^*U_l^*=\phi([x_j,x_l])$. Then
+$[U_j,U_l]=(R-I)U_lU_j$, so $\hs{[U_j,U_l]\xi}\le e+2\cdot2e=5e$. Also $B_jB_l-U_jU_l=B_j(B_l-U_l)+(B_j-U_j)U_l$ has
+$\hs{(B_jB_l-U_jU_l)\xi}\le e+(e+2e)=4e$, and the same holds in the other order, so $\kappa_{jl}=\hs{[B_j,B_l]\xi}\le13e$.
+
+\emph{Step 2: the parity of an equation.} For equation $i$ let $U=U_{j_1}\cdots U_{j_r}$ and $U_J=\phi(J)$. The relator gives
+$\hs{(U_J^{b_i}U-I)\xi}\le e$; if $b_i=1$, then $U+I=U_J^*(U_JU-I)+U_J^*(U_J+I)$ and~\ref{prelim:S3} give $\hs{(U+I)\xi}\le2e$. Replacing the
+$r$ factors by the $B$'s costs at most $\sum_{l=1}^r(e+2(r-l)e)=r^2e$, by \cref{lem:calculus}(e) with the state commutators
+$\hs{[U_{j_l},\xi]}\le e$. So $\hs{(B_{j_1}\cdots B_{j_r}-(-1)^{b_i})\xi}\le(r^2+2)e$.
+
+\emph{Step 3: the losing probability.} By \cref{lem:sequential}(a), with $c_t\le3e$ and $\kappa\le13e$,
+$d_l\le\bigl(3+13(l-1)/\sqrt2+3(l-1)(l-2)/2\bigr)e=\nu_le$ for the $l$-th variable of the equation. Flipping the last record changes
+Alice's answer only on the event of wrong parity, so by \cref{lem:sequential} the pair $(i,j_l)$ is lost with probability at most
+$\frac14d_l^2+\frac14\bigl((r^2+2)e+\sum_{l'}d_{l'}\bigr)^2\le C_se^2$, as $\nu_l$ increases with $l$ and $r\le s$. Alice's procedure is a
+measurement on $\C^d$ followed by a classical function of its outcomes, and it always answers an assignment that satisfies equation $i$.
+
+\emph{The flat state.} For $\rho=I/d$, $\psi_\rho=\Phi_d$, condition~\ref{prelim:S2} is empty, and~\ref{prelim:S1},~\ref{prelim:S3} say
+$\fn{\phi(R)-I}\le e$ for the relators $R$ and $\fn{\phi(J)+I}\le e$; an $e$-representation with $\phi(J)=-I$ satisfies them. Given $\eps>0$,
+let $e=\sqrt{\eps/C_s}$; if $\hlp_\Gamma(J;2,e)=d<\infty$, the strategy just built lives on $\Phi_d$ and loses with probability at most
+$C_se^2=\eps$, so $\Entme(G,\eps)\le d$.
+\end{proof}
+
+Numerically, $\nu_1=3$, $\nu_2=3+13/\sqrt2<12.193$ and $\nu_3=6+26/\sqrt2<24.385$, so $C_3<\frac14(24.385^2+50.578^2)<788.2$. The
+constant is far from optimal. Nothing is postselected: every run of Alice's procedure produces a valid answer, and the shared state is
+$\psi_\rho$ itself.
+
+\subsection{The two-sided correspondence}
+
+\begin{corollary}[Two-sided correspondence]\label{cor:two-sided}
+Let $\omq(G)=1$, put $C_G=2\max(s,4)/\sqrt{\pi_{\min}}$, and let $C_s$ be as in \cref{thm:return}.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For every $\eps>0$, $\hlps_\Gamma\bigl(J;C_G\sqrt\eps\bigr)\le\Ent(G,\eps)\le\hlps_\Gamma\bigl(J;\sqrt{\eps/C_s}\bigr)$.
+\item Let $q(\eps)$ be the infimum of the entanglement entropies of the strategies that win with probability at least $1-\eps$. Then
+$\hS_\Gamma\bigl(C_G\sqrt\eps\bigr)\le q(\eps)\le\hS_\Gamma\bigl(\sqrt{\eps/C_s}\bigr)$.
+\item Let $e_\Gamma(d)$ be the infimum of the precisions $e$ with $\hlps_\Gamma(J;e)\le d$, and $\ell_G(d)$ the infimum of the losing
+probabilities of strategies with $H_A=H_B=\C^d$. Then $e_\Gamma(d)^2/C_G^2\le\ell_G(d)\le C_s\,e_\Gamma(d)^2$ for every $d$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+The first inequalities of (a) and (b) are \cref{thm:transfer}, whose model lives on the Schmidt support with $\rho$ equal to Bob's reduced
+state there, so that $S(\rho)$ is the entanglement entropy. The second inequalities follow from \cref{thm:return} with $e=\sqrt{\eps/C_s}$:
+the strategy on $\psi_\rho$ has local dimension $d$, entanglement entropy $S(\rho)$, and losing probability at most $C_se^2=\eps$. For (c),
+a strategy on $\C^d\otimes\C^d$ with losing probability $\ell$ has Schmidt rank $r\le d$, and \cref{thm:transfer} gives a model on $\C^r$ at
+precision $C_G\sqrt\ell$. Replacing $\phi(x_j)$ by $\phi(x_j)\oplus I$, $\phi(J)$ by $-I_d$ and $\rho$ by $\rho\oplus0$ gives a model on
+$\C^d$ with the same state-weighted quantities, since $\xi\oplus0$ vanishes on the added block; so $e_\Gamma(d)\le C_G\sqrt{\ell_G(d)}$.
+Conversely, for every $e>e_\Gamma(d)$ there is a model on some $\C^{d'}$, $d'\le d$, at precision $e$, and \cref{thm:return} gives a strategy
+with local dimension $d'$ and losing probability at most $C_se^2$, which we pad to $\C^d$.
+\end{proof}
+
+The state commutators in~\ref{prelim:S2} are needed for the return direction, not only for counting.
+
+\begin{example}[The return needs the state commutators]\label{ex:return-needs-commutators}
+Let $B_1=B_2=\sigma_Z$ on $\C^2$, $\rho=|{+}\rangle\langle{+}|$, and consider the single equation $x_1+x_2=0$, with $\phi(x_1)=\phi(x_2)=\sigma_Z$
+and $\phi(J)=-I$. The relations hold exactly, $B_1B_2=I$, but $\hs{[B_j,\xi]}=\sqrt2$. The canonical purification is the product state
+$|{+}\rangle\otimes|{+}\rangle$; Alice's two sequential measurements of $\sigma_Z$ agree with each other, and Bob's measurement of
+$\sigma_Z$ is independent of them, so the strategy of \cref{thm:return} loses with probability $\frac12$. The game itself is classically
+winnable; what fails is the construction without its hypothesis.
+\end{example}
+
+\begin{remark}[Credits]\label{transfer:credits-return}
+That flat approximate representations give strategies with quadratically small loss on a maximally entangled state is due to Slofstra and
+Vidick~\cite[Proposition~4.4(a)]{SV18}, following~\cite[Proposition~3.4]{Slo19}; the two-sided flat correspondence for maximally
+entangled strategies is~\cite[Corollary~4.6]{SV18}. Paddock develops the correspondence between near-optimal strategies and approximate
+representations, including rounding to maximally entangled strategies~\cite{Pad22}. What \cref{thm:return} and \cref{cor:two-sided} add is
+that an arbitrary state, with its spectrum, is kept in both directions at the natural precision $e\asymp\sqrt\eps$. So the dimension, the
+entanglement entropy, or any other function of the spectrum that does not change when zero eigenvalues are added can be read off the
+state-weighted profile.
+\end{remark}

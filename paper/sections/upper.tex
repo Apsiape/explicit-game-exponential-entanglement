@@ -1,0 +1,374 @@
+%======================================================================
+\section{Hash models: the upper bound}\label{sec:upper}
+%======================================================================
+
+This section proves the upper bound of Theorem~B: $\GPp$ has $\eps$-representations in which $J$ acts as $-I$ exactly, in dimension
+$\exp(C\eps^{-2}\log(1/\eps))$ (\cref{prop:hash-models,thm:upper}). Together with \cref{thm:sector} this determines the profile of $J$,
+flat and state-weighted, up to $\eps^{o(1)}$ in the exponent (\cref{thm:profile}). In \cref{sec:game} the same models, applied to the
+words of the presentation $\Pres$, give the upper bound of Theorem~A.
+
+\paragraph{The idea.} Since $\GPp$ is amenable (\cref{lem:GPp}), F\o lner sets give such models, but they record every lamp of a large
+part of $V$, so their dimension is exponential in the number of configurations they see; for $S_3$ lamps they are doubly
+exponential~\cite[Proposition~7.3]{DM-lamps}. A model of a short word needs only the lamps that the word lights. We
+keep these on a register of qubits through a random affine hash $\eta$ of the configurations: the lamp at the site $v$ acts as the Pauli
+pair on the qubit $\eta(v)$. Affine maps act on hashes by precomposition, so the lighter moves the hash covariantly. Two lit lamps
+collide only if $\eta$ identifies their sites, which happens with probability about $\ell^22^{-k}$ for $k$ hash bits. The quotient $\Z^2$
+of $\GP$ is handled by a clock, a box of side $2m+1$, which a word of length $\ell$ leaves only from a boundary layer of relative size
+about $\ell/m$. A fraction $\nu$ of bad blocks costs a defect $\sqrt{4\nu}$ in the normalized norm, so we take $m\approx\eps^{-2}$ and
+$2^k\approx\eps^{-2}$. The hashes are affine maps on a space of dimension about $6m$, so there are about $2^{6mk}$ of them, whence the
+dimension $\exp(C\eps^{-2}\log(1/\eps))$. Since $J=(xz)^2$ is made of the Pauli pair at the site $0$, which no hash can split, $J$ acts as
+$-I$ on every block. For $S_3$ lamps and permutation models, the analogous construction is \cite[Lemmas~6.1, 6.2 and
+Proposition~6.3]{DM-lamps}; here the register holds qubits, on which all lamp centres act by the same scalar $-1$, the clock also carries
+$\iota$, and errors are measured in the normalized Hilbert--Schmidt norm.
+
+\subsection{Pauli registers and affine hashing}\label{sec:upper-hash}
+
+Let $W$ be a finite-dimensional vector space over $\F_2$, whose elements we call sites. As in \cref{sec:group}, let $E_W$ be the set
+$\F_2\times\F_2^W\times\F_2^W$ with the product~\eqref{eq:EV-product}: the central product of Pauli lamps $x_w,z_w$ at the sites $w\in W$,
+with all centres identified with $J=(1,0,0)$. The \emph{support} of $\lambda=(s,a,b)\in E_W$ is $\supp\lambda=\supp a\cup\supp b\subseteq W$,
+and for $\Omega\subseteq W$ we write $E_\Omega$ for the subgroup of elements supported in $\Omega$. The affine group
+$\operatorname{AGL}(W)$ acts on $E_W$ by moving sites, $g\cdot(s,a,b)=(s,a\circ g^{-1},b\circ g^{-1})$, and
+$\mathcal K_W=E_W\rtimes\operatorname{AGL}(W)$ has the product $(\lambda,g)(\mu,h)=(\lambda\cdot(g\cdot\mu),gh)$.
+
+\emph{The register.} Fix $k\ge1$ and let $\mathcal H_k=(\C^2)^{\otimes\F_2^k}$, a register of $2^k$ qubits indexed by $\F_2^k$. For
+$\alpha\in\F_2^{\F_2^k}$ let $X^\alpha$ be the tensor product of $\sigma_X$ on the qubits $c$ with $\alpha(c)=1$ and of $I$ on the others,
+and define $Z^\alpha$ in the same way with $\sigma_Z$. Since $\sigma_Z\sigma_X=-\sigma_X\sigma_Z$ and operators on different qubits commute,
+\begin{equation}\label{eq:upper-register}
+Z^{\alpha'}X^\alpha=(-1)^{\langle\alpha',\alpha\rangle}X^\alpha Z^{\alpha'},\qquad\langle\alpha',\alpha\rangle=\sum_{c\in\F_2^k}\alpha'(c)\alpha(c),
+\end{equation}
+and $X^\alpha X^{\alpha'}=X^{\alpha+\alpha'}$, $Z^\alpha Z^{\alpha'}=Z^{\alpha+\alpha'}$. We write $X_c$ and $Z_c$ when $\alpha$ is the
+indicator function of $\{c\}$.
+
+\emph{Hashes.} Let $\operatorname{Aff}(W,\F_2^k)$ be the set of affine maps $W\to\F_2^k$; it has $2^{k(\dim W+1)}$ elements. For
+$\eta\in\operatorname{Aff}(W,\F_2^k)$ and $a\in\F_2^W$ let $\eta_*a\in\F_2^{\F_2^k}$ be the push-forward, $(\eta_*a)(c)=\sum_{w:\,\eta(w)=c}a(w)$;
+it is additive in $a$. Put
+\[
+\chi_\eta(s,a,b)=(-1)^s\,X^{\eta_*a}Z^{\eta_*b}\qquad\bigl((s,a,b)\in E_W\bigr),
+\]
+a unitary on $\mathcal H_k$. Thus $\chi_\eta$ puts the lamp at the site $w$ on the qubit $\eta(w)$. When two lit sites share a hash,
+$\chi_\eta$ need not be multiplicative.
+
+\begin{lemma}[Pauli hashing]\label{lem:pauli-hash}
+Let $\eta\in\operatorname{Aff}(W,\F_2^k)$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\chi_\eta(J)=-I$, $\chi_\eta(x_w)=X_{\eta(w)}$ and $\chi_\eta(z_w)=Z_{\eta(w)}$ for $w\in W$.
+\item $\chi_{\eta\circ g}(\lambda)=\chi_\eta(g\cdot\lambda)$ for $g\in\operatorname{AGL}(W)$ and $\lambda\in E_W$.
+\item If $\eta$ is injective on $\Omega\subseteq W$, then $\chi_\eta$ restricts to a homomorphism $E_\Omega\to\U(\mathcal H_k)$.
+\item If $\Omega\subseteq W$ has at most $n$ elements and $\eta$ is uniformly distributed on $\operatorname{Aff}(W,\F_2^k)$, then $\eta$ is
+injective on $\Omega$ except with probability at most $\binom n2 2^{-k}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) is the definition. (b) For $c\in\F_2^k$, substituting $u=g(w)$,
+$((\eta\circ g)_*a)(c)=\sum_{w:\,\eta(g(w))=c}a(w)=\sum_{u:\,\eta(u)=c}a(g^{-1}(u))=(\eta_*(a\circ g^{-1}))(c)$; the same holds for $b$, and the
+sign is unchanged.
+
+(c) Let $\lambda=(s,a,b)$ and $\lambda'=(s',a',b')$ lie in $E_\Omega$. By~\eqref{eq:upper-register} and additivity of $\eta_*$, respectively
+by~\eqref{eq:EV-product},
+\begin{gather*}
+\chi_\eta(\lambda)\chi_\eta(\lambda')=(-1)^{s+s'+\langle\eta_*b,\eta_*a'\rangle}X^{\eta_*(a+a')}Z^{\eta_*(b+b')},\\
+\chi_\eta(\lambda\lambda')=(-1)^{s+s'+\langle b,a'\rangle}X^{\eta_*(a+a')}Z^{\eta_*(b+b')}.
+\end{gather*}
+Expanding, $\langle\eta_*b,\eta_*a'\rangle=\sum b(w)a'(w')$ over the pairs $(w,w')$ with $\eta(w)=\eta(w')$. A pair contributes only if
+$w\in\supp b$ and $w'\in\supp a'$, so both lie in $\Omega$; since $\eta$ is injective on $\Omega$, only the pairs with $w=w'$ contribute,
+and the sum is $\langle b,a'\rangle$.
+
+(d) Write $\eta=\eta_0+c_0$ with $\eta_0$ linear and $c_0\in\F_2^k$; then $\eta_0$ is uniform on the linear maps. For $w\ne w'$ we have
+$\eta(w)=\eta(w')$ if and only if $\eta_0(w-w')=0$. Since $w-w'\ne0$ extends to a basis of $W$, the linear map $\eta_0\mapsto\eta_0(w-w')$
+is onto $\F_2^k$, so $\eta_0(w-w')$ is uniform on $\F_2^k$ and vanishes with probability $2^{-k}$. Sum over the $\binom n2$ pairs.
+\end{proof}
+
+\emph{The hash action.} For $\gamma=(\lambda,g)\in\mathcal K_W$ define a unitary $\Theta_\gamma$ on
+$\ell^2(\operatorname{Aff}(W,\F_2^k))\otimes\mathcal H_k$ by
+\[
+\Theta_\gamma(\delta_\eta\otimes v)=\delta_{\eta\circ g^{-1}}\otimes\chi_{\eta\circ g^{-1}}(\lambda)\,v .
+\]
+It is unitary because $\eta\mapsto\eta\circ g^{-1}$ is a bijection of $\operatorname{Aff}(W,\F_2^k)$ and each $\chi_\eta(\lambda)$ is
+unitary. We call the subspaces $\delta_\eta\otimes\mathcal H_k$ the \emph{blocks}; each $\Theta_\gamma$ maps every block onto a block.
+
+\begin{lemma}[Products]\label{lem:hash-product}
+Let $\gamma_i=(\lambda_i,g_i)\in\mathcal K_W$ for $i=1,\dots,L$, put $h_i=g_1\cdots g_{i-1}$ (so $h_1=1$), $g=g_1\cdots g_L$ and
+$\Omega=\bigcup_ih_i(\supp\lambda_i)$. Then $\Theta_{\gamma_1}\cdots\Theta_{\gamma_L}$ maps the block of $\eta$ onto the block of
+$\eta\circ g^{-1}$, and it agrees with $\Theta_{\gamma_1\cdots\gamma_L}$ on the block of every $\eta$ for which $\eta\circ g^{-1}$ is
+injective on $\Omega$. In particular, if $\lvert\supp\lambda\rvert\le1$, then $\Theta_{(\lambda,g)}^{-1}=\Theta_{(\lambda,g)^{-1}}$.
+\end{lemma}
+
+\begin{proof}
+Put $\eta'=\eta\circ g^{-1}$. The factor $\Theta_{\gamma_i}$ is applied to the block of $\eta\circ(g_{i+1}\cdots g_L)^{-1}$ and produces the
+hash $\eta\circ(g_i\cdots g_L)^{-1}=\eta'\circ h_i$. So, by \cref{lem:pauli-hash}(b),
+\[
+\Theta_{\gamma_1}\cdots\Theta_{\gamma_L}(\delta_\eta\otimes v)=\delta_{\eta'}\otimes\chi_{\eta'\circ h_1}(\lambda_1)\cdots\chi_{\eta'\circ h_L}(\lambda_L)\,v
+=\delta_{\eta'}\otimes\chi_{\eta'}(h_1\cdot\lambda_1)\cdots\chi_{\eta'}(h_L\cdot\lambda_L)\,v .
+\]
+On the other hand $\gamma_1\cdots\gamma_L=\bigl((h_1\cdot\lambda_1)\cdots(h_L\cdot\lambda_L),\,g\bigr)$, by induction on $L$ from the product
+rule of $\mathcal K_W$, so $\Theta_{\gamma_1\cdots\gamma_L}(\delta_\eta\otimes v)=\delta_{\eta'}\otimes
+\chi_{\eta'}\bigl((h_1\cdot\lambda_1)\cdots(h_L\cdot\lambda_L)\bigr)v$. The elements $h_i\cdot\lambda_i$ are supported in
+$h_i(\supp\lambda_i)\subseteq\Omega$, so if $\eta'$ is injective on $\Omega$ the two expressions agree by \cref{lem:pauli-hash}(c). For the
+last claim apply this to $\gamma_1=\gamma=(\lambda,g)$ and $\gamma_2=\gamma^{-1}=(g^{-1}\cdot\lambda^{-1},g^{-1})$: here $g_1g_2=1$ and
+$\Omega=\supp\lambda$ has at most one element, so every hash is injective on it, and $\Theta_\gamma\Theta_{\gamma^{-1}}=\Theta_1=I$.
+\end{proof}
+
+\subsection{The clock}\label{sec:upper-clock}
+
+Let $\mathcal Q=\Z^2\rtimes\Z/2$, where the generator of $\Z/2$ exchanges the two coordinates. We write its elements as $(n,j)$ with
+$n=(n_1,n_2)\in\Z^2$ and $j\in\{0,1\}$, and $\varsigma(n_1,n_2)=(n_2,n_1)$, so that $(n,j)(n',j')=(n+\varsigma^jn',j+j')$. Let $\pi:\GP\to\Z^2$ be the homomorphism of \cref{prop:GP-amenable}, the composite $\GP\to A\to L\to
+L/\GL_{\rm fin}(Y)\cong H/\FSym(Y)\cong\Z^2$ with the last map~\eqref{eq:H-to-Z2}, and let $\pi^+:\GPp\to\mathcal Q$ be
+$\pi^+(g\iota^j)=(\pi(g),j)$ for $g\in\GP$. It is a homomorphism because $\pi(\iota g\iota)=\varsigma\pi(g)$ for $g\in\GP$, which it
+suffices to check on generators: by \cref{lem:GPp} and~\eqref{eq:H-to-Z2}, $\iota p\iota=q$, $\iota q\iota=p$, $\pi(p)=(1,0)$ and
+$\pi(q)=(0,1)$, while $t,d,x,z$ commute with $\iota$ and lie in $\ker\pi$. The kernel of $\pi^+$ is $\ker\pi=\EV\rtimes(V\rtimes\GL_{\rm
+fin}(Y))$, a locally finite group (\cref{prop:GP-amenable}). For $\mathsf c=(n,j)\in\mathcal Q$ and $g\in\GPp$ put
+\[
+g_{\mathsf c}=p^{n_1}q^{n_2}\iota^j,\qquad \zeta(g,\mathsf c)=g_{\pi^+(g)\mathsf c}^{-1}\,g\,g_{\mathsf c}\ \in\ker\pi^+ .
+\]
+Then $\pi^+(g_{\mathsf c})=\mathsf c$ and $\zeta(1,\mathsf c)=1$, and $\zeta$ is a cocycle:
+\begin{equation}\label{eq:cocycle}
+\zeta(gh,\mathsf c)=\zeta\bigl(g,\pi^+(h)\mathsf c\bigr)\,\zeta(h,\mathsf c),\qquad\text{in particular}\qquad\zeta(g^{-1},\mathsf c)=\zeta\bigl(g,\pi^+(g)^{-1}\mathsf c\bigr)^{-1}.
+\end{equation}
+
+For $r\ge1$ let $Y_r\subset Y$ be the set of the $3r$ points of height at most $r$, and $W_r=\F_2^{Y_r}\subseteq V$, the configurations
+supported in $Y_r$. Let $\mathcal K_r\le\ker\pi^+$ be the set of elements whose lamps lie at sites in $W_r$ and whose affine part
+$v\mapsto Mv+u$ has $u\in W_r$, $M(W_r)=W_r$ and $Me_y=e_y$ for $y\notin Y_r$. It is a finite subgroup, and restriction to $W_r$ is an
+isomorphism onto $\mathcal K_{W_r}$: the product $(\lambda,g)(\mu,h)=(\lambda\cdot(g\cdot\mu),gh)$ involves $g$ only on $W_r$, every affine
+map of $W_r$ extends by the identity on the other basis vectors, and the kernel is trivial. For $m\ge1$ let $B_m=\{-m,\dots,m\}^2$ and
+$F_m=B_m\times\{0,1\}\subset\mathcal Q$.
+
+\begin{lemma}[The clock]\label{lem:clock}
+Let $m\ge1$, $r=2m+3$, $\mathsf c\in F_m$ and $s\in\{p,q,\iota,t,d,x,z\}^{\pm1}$ with $\pi^+(s)\mathsf c\in F_m$. Then $\zeta(s,\mathsf c)\in
+\mathcal K_r$; its lamp part is trivial if $s\notin\{x,z\}^{\pm1}$, and $\zeta(x^{\pm1},\mathsf c)=x$, $\zeta(z^{\pm1},\mathsf c)=z$.
+Moreover $\pi^+(s)F_m=F_m$ for $s\notin\{p,q\}^{\pm1}$.
+\end{lemma}
+
+\begin{proof}
+We use three facts about the permutations $p,q,\iota$ of $Y$. Each of $p^{\pm1},q^{\pm1}$ changes the height of a point by at most one,
+and $\iota$ preserves heights. On the points of height at least $2$, $p^{\pm1}$ and $q^{\pm1}$ act as translations along the three rays,
+by $\pm(1,-1,0)$ and $\pm(1,0,-1)$, and these translations commute. Consequently, for integers $a,b$ the commutator $[p^a,q^b]$ fixes every
+point of height at least $\lvert a\rvert+\lvert b\rvert+2$: while its letters are applied, such a point is moved on each ray by at most
+$\lvert a\rvert+\lvert b\rvert$ steps away from its starting height, so it stays at height at least $2$, every letter acts as a
+translation, and the translations add up to zero. So $[p^a,q^b]$, and likewise $[q^a,p^b]$, is a finitary permutation of $Y$ supported in
+heights at most $\lvert a\rvert+\lvert b\rvert+1$. A finitary permutation of $Y$ supported in $Y_r$ acts on $V$ by a permutation matrix
+that preserves $W_r$ and fixes $e_y$ for $y\notin Y_r$, so it lies in $\mathcal K_r$, without lamps.
+
+Let $\mathsf c=(n,j)$, so $\lvert n_1\rvert,\lvert n_2\rvert\le m$. Recall $\iota^{-1}=\iota$ and $\iota p^aq^b=q^ap^b\iota$.
+
+\emph{$s=p^{\pm1}$.} Then $\pi^+(s)\mathsf c=((n_1\pm1,n_2),j)$ and
+$\zeta(s,\mathsf c)=\iota^jq^{-n_2}p^{-n_1\mp1}\,p^{\pm1}\,p^{n_1}q^{n_2}\iota^j=1$.
+
+\emph{$s=q^{\pm1}$.} Then $\pi^+(s)\mathsf c=((n_1,n_2\pm1),j)$ and
+\[
+\zeta(s,\mathsf c)=\iota^jq^{-n_2\mp1}p^{-n_1}q^{\pm1}p^{n_1}q^{n_2}\iota^j=\iota^j\,q^{-(n_2\pm1)}\,[p^{-n_1},q^{\pm1}]\,q^{n_2\pm1}\,\iota^j .
+\]
+The commutator is supported in heights at most $\lvert n_1\rvert+2$; conjugating by $q^{-(n_2\pm1)}$ moves its support by at most
+$\lvert n_2\pm1\rvert\le m$ in height, because $\pi^+(s)\mathsf c\in F_m$, and $\iota$ preserves heights. So $\zeta(s,\mathsf c)$ is a
+finitary permutation supported in heights at most $2m+2<r$.
+
+\emph{$s=\iota^{\pm1}$.} As an element of $\GPp$, $s=\iota$, and $\pi^+(\iota)\mathsf c=(\varsigma n,j+1)$. Using $\iota
+p^{n_1}q^{n_2}=q^{n_1}p^{n_2}\iota$,
+\[
+\zeta(\iota,\mathsf c)=\iota^{j+1}q^{-n_1}p^{-n_2}\,\iota\, p^{n_1}q^{n_2}\iota^j=\iota^{j+1}\,[q^{-n_1},p^{-n_2}]\,\iota^{j+1},
+\]
+a finitary permutation supported in heights at most $2m+1$.
+
+\emph{$s\in\{t,d,x,z\}^{\pm1}$.} Here $\pi^+(s)$ is trivial, $s^{-1}=s$ in $\GPp$, and $\zeta(s,\mathsf c)=h\,s\,h^{-1}$ with
+$h=g_{\mathsf c}^{-1}=\iota^jq^{-n_2}p^{-n_1}$, a permutation of $Y$ that moves the points $(1,1)$ and $(1,2)$ to points $y_1=h(1,1)$ and
+$y_2=h(1,2)$ of height at most $2m+2$. By~\eqref{eq:affine-id}, which holds for every permutation of $Y$, $hth^{-1}=\tau_{e_{y_1}}$ and
+$hdh^{-1}=E_{y_2\leftarrow y_1}$, which lie in $\mathcal K_r$ without lamps. The permutation $h$ is linear on $V$, so it fixes the site $0$,
+and $hxh^{-1}=x$, $hzh^{-1}=z$.
+
+The last claim holds because $\pi^+(s)$ is trivial for $s\in\{t,d,x,z\}^{\pm1}$, $\pi^+(\iota)(n,j)=(\varsigma n,j+1)$, and $\varsigma$
+preserves $B_m$.
+\end{proof}
+
+\subsection{Hash models}\label{sec:upper-models}
+
+\begin{proposition}[Pauli hash models]\label{prop:hash-models}
+Let $\mathcal W$ be a finite set of words in the letters $p,q,\iota,t,d,x,z$, each of length at most $\ell\ge1$ and each representing $1$
+in $\GPp$. For every $0<\eps\le1$ there are a dimension $D$ with
+\[
+\log D\ \le\ 336\,\ell\,\eps^{-2}\log(2\ell/\eps)+8\,\ell^2\eps^{-2}+4\log(2\ell/\eps)+8\ \le\ 400\,\ell^2\eps^{-2}\log(2\ell/\eps)
+\]
+and a homomorphism $\phi:F(p,q,\iota,t,d,x,z)\to\U(D)$ such that $\fn{\phi(w)-I}\le\eps$ for every $w\in\mathcal W$,
+$\phi(x)^2=\phi(z)^2=I$, and
+\[
+\phi\bigl((xz)^2\bigr)=-I\qquad\text{exactly}.
+\]
+\end{proposition}
+
+The model is a direct sum of blocks indexed by a clock position $\mathsf c$ and a hash $\eta$; each block is a register of qubits. A
+letter moves the clock by $\pi^+$ and acts on the fibre by the hash action of the cocycle $\zeta$. A word that represents $1$ acts as the
+identity on every block whose clock position is far from the boundary of the box and whose hash separates the at most $\ell$ sites that
+the word lights; the other blocks are few.
+
+\begin{proof}
+\emph{Parameters and space.} Let $m=\lceil16\ell\eps^{-2}\rceil$, $r=2m+3$ and $W=W_r$, so $\dim W=3r=6m+9$, and let
+$k=\lceil\log(4\ell^2\eps^{-2})\rceil$. Write $\mathcal A=\operatorname{Aff}(W,\F_2^k)$, and let
+\[
+\mathcal H=\ell^2(F_m)\otimes\ell^2(\mathcal A)\otimes\mathcal H_k .
+\]
+The \emph{blocks} of $\mathcal H$ are the subspaces $\delta_{\mathsf c}\otimes\delta_\eta\otimes\mathcal H_k$, $(\mathsf c,\eta)\in
+F_m\times\mathcal A$; each has dimension $2^{2^k}$. Through the identification of $\mathcal K_r$ with $\mathcal K_W$, every
+$\gamma\in\mathcal K_r$ defines the unitary $\Theta_\gamma$ of \cref{sec:upper-hash} on $\ell^2(\mathcal A)\otimes\mathcal H_k$.
+
+\emph{The generators.} Let $s\in\{p,q,\iota,t,d,x,z\}$ and $F_s=F_m\cap\pi^+(s)^{-1}F_m$. For $\mathsf c\in F_s$ and
+$v\in\ell^2(\mathcal A)\otimes\mathcal H_k$ put
+\[
+\phi(s)(\delta_{\mathsf c}\otimes v)=\delta_{\pi^+(s)\mathsf c}\otimes\Theta_{\zeta(s,\mathsf c)}v ,
+\]
+which makes sense by \cref{lem:clock}. The sets $F_m\setminus F_s$ and $F_m\setminus\pi^+(s)F_m$ have the same size; fix a bijection
+$b_s$ between them and put $\phi(s)(\delta_{\mathsf c}\otimes v)=\delta_{b_s(\mathsf c)}\otimes v$ for $\mathsf c\in F_m\setminus F_s$. Then
+$\phi(s)$ permutes the clock basis $(\delta_{\mathsf c})$ and acts unitarily on each fibre, so it is unitary, and it maps blocks onto blocks.
+By \cref{lem:clock}, $F_s=F_m$, and no $b_s$ is needed, unless $s\in\{p,q\}$. Extend $\phi$ to $F(p,q,\iota,t,d,x,z)$.
+
+\emph{Step 1: $J$ is exact.} By \cref{lem:clock}, $\zeta(x,\mathsf c)=x=(x_0,1)$ for every $\mathsf c\in F_m$, so by
+\cref{lem:pauli-hash}(a) $\phi(x)(\delta_{\mathsf c}\otimes\delta_\eta\otimes v)=\delta_{\mathsf c}\otimes\delta_\eta\otimes X_{\eta(0)}v$, and
+likewise $\phi(z)$ acts by $Z_{\eta(0)}$. Hence $\phi(x)^2=\phi(z)^2=I$, and on every block $\phi((xz)^2)$ acts by
+$(X_{\eta(0)}Z_{\eta(0)})^2=-I$, since $(\sigma_X\sigma_Z)^2=-I$. So $\phi((xz)^2)=-I$.
+
+\emph{Step 2: letters and inverse letters.} Let $s\in\{p,q,\iota,t,d,x,z\}^{\pm1}$ and $\mathsf c\in F_m$ with $\pi^+(s)\mathsf c\in F_m$. We
+claim
+\begin{equation}\label{eq:upper-letter}
+\phi(s)(\delta_{\mathsf c}\otimes v)=\delta_{\pi^+(s)\mathsf c}\otimes\Theta_{\zeta(s,\mathsf c)}v .
+\end{equation}
+For a letter this is the definition. For an inverse letter $s=u^{-1}$ let $\mathsf c'=\pi^+(u)^{-1}\mathsf c$; it lies in $F_m$ and
+$\pi^+(u)\mathsf c'=\mathsf c\in F_m$, so $\mathsf c'\in F_u$. Since $\phi(u)$ is unitary and maps the fibre over $\mathsf c'$ onto the fibre
+over $\mathsf c$ by $\Theta_{\zeta(u,\mathsf c')}$, we get $\phi(u)^{-1}(\delta_{\mathsf c}\otimes v)=\delta_{\mathsf
+c'}\otimes\Theta_{\zeta(u,\mathsf c')}^{-1}v$. The lamp part of $\zeta(u,\mathsf c')$ is supported in at most one site (\cref{lem:clock}),
+so $\Theta_{\zeta(u,\mathsf c')}^{-1}=\Theta_{\zeta(u,\mathsf c')^{-1}}$ by \cref{lem:hash-product}, and $\zeta(u,\mathsf
+c')^{-1}=\zeta(u^{-1},\mathsf c)$ by~\eqref{eq:cocycle}.
+
+\emph{Step 3: a word on a good block.} Let $w=s_1\cdots s_L\in\mathcal W$, with $s_i\in\{p,q,\iota,t,d,x,z\}^{\pm1}$ and $L\le\ell$. For
+$\mathsf c\in F_m$ put $\mathsf c_{L+1}=\mathsf c$ and $\mathsf c_i=\pi^+(s_i)\mathsf c_{i+1}$. Each letter changes the $\Z^2$-coordinate of
+the clock by a unit vector, by the swap $\varsigma$, or not at all, so it changes its sup norm by at most one. Hence if $\mathsf
+c=(n,j)$ with $n\in B_{m-\ell}$, all $\mathsf c_i$ lie in $F_m$; call such $\mathsf c$ \emph{interior}. For interior $\mathsf c$,
+\eqref{eq:upper-letter} and induction give
+\[
+\phi(w)(\delta_{\mathsf c}\otimes v)=\delta_{\mathsf c_1}\otimes\Theta_{\gamma_1}\cdots\Theta_{\gamma_L}v,\qquad\gamma_i=\zeta(s_i,\mathsf c_{i+1})\in\mathcal K_r .
+\]
+Since $w$ represents $1$ in $\GPp$, we have $\mathsf c_1=\pi^+(w)\mathsf c=\mathsf c$, and by~\eqref{eq:cocycle}
+$\gamma_1\cdots\gamma_L=\zeta(w,\mathsf c)=g_{\mathsf c}^{-1}g_{\mathsf c}=1$. Write $\gamma_i=(\lambda_i,g_i)$; then $g_1\cdots g_L=1$. Each
+$\lambda_i$ is trivial or the lamp $x_0$ or $z_0$ (\cref{lem:clock}), so the set $\Omega_{\mathsf c}=\bigcup_ih_i(\supp\lambda_i)$ of
+\cref{lem:hash-product} consists of points $h_i(0)$, one for each letter $x^{\pm1},z^{\pm1}$ of $w$, and has at most $\ell$ elements. By
+\cref{lem:hash-product}, $\phi(w)$ acts as the identity on the block of $(\mathsf c,\eta)$ whenever $\mathsf c$ is interior and $\eta$ is
+injective on $\Omega_{\mathsf c}$.
+
+\emph{Step 4: the defect.} Call a block bad if $\phi(w)$ does not act on it as the identity. The fraction of non-interior $\mathsf c\in F_m$
+is $1-\bigl(\frac{2m-2\ell+1}{2m+1}\bigr)^2\le\frac{4\ell}{2m+1}<\frac{2\ell}m$, and for each interior $\mathsf c$ the fraction of $\eta$ that
+are not injective on $\Omega_{\mathsf c}$ is at most $\binom\ell2 2^{-k}<\ell^22^{-k-1}$ by \cref{lem:pauli-hash}(d). So the fraction $\nu$
+of bad blocks satisfies $\nu<2\ell/m+\ell^22^{-k-1}\le\eps^2/8+\eps^2/8=\eps^2/4$, by the choice of $m$ and $k$. The operator $\phi(w)$ maps
+blocks onto blocks. On a block $\mathsf b$ that is not bad, $(\phi(w)-I)|_{\mathsf b}$ vanishes, while on a bad block
+$\lVert(\phi(w)-I)v\rVert\le2\lVert v\rVert$, so $\hs{(\phi(w)-I)|_{\mathsf b}}\le2(\dim\mathsf b)^{1/2}$. Summing over the blocks, which all
+have the same dimension,
+\[
+\fn{\phi(w)-I}^2=\frac1{\dim\mathcal H}\sum_{\mathsf b}\hs{(\phi(w)-I)|_{\mathsf b}}^2\le4\nu\le\eps^2 .
+\]
+
+\emph{Step 5: the dimension.} We have $\dim\mathcal H=\lvert F_m\rvert\cdot\lvert\mathcal
+A\rvert\cdot2^{2^k}=2(2m+1)^2\cdot2^{k(6m+10)}\cdot2^{2^k}$. Put $\Lambda_\eps=\log(2\ell/\eps)\ge1$. Since $m\le17\ell\eps^{-2}$, we have
+$6m+10\le112\ell\eps^{-2}$ and $2m+1\le35\ell\eps^{-2}\le9(2\ell/\eps)^2$; and $2^k<8\ell^2\eps^{-2}$, $k<1+2\Lambda_\eps\le3\Lambda_\eps$.
+Hence
+\[
+\log\dim\mathcal H\le1+2(\log9+2\Lambda_\eps)+336\,\ell\Lambda_\eps\eps^{-2}+8\ell^2\eps^{-2},
+\]
+which is the first bound, since $1+2\log9<8$. As $\ell,\Lambda_\eps,\eps^{-1}\ge1$, it is at most
+$(8+4+336+8)\,\ell^2\Lambda_\eps\eps^{-2}\le400\,\ell^2\Lambda_\eps\eps^{-2}$. Take $D=\dim\mathcal H$.
+\end{proof}
+
+The main term of $\log D$ is $k\dim W\le336\,\ell\eps^{-2}\log(2\ell/\eps)$, the logarithm of the number of hashes; $\ell^2$ enters only
+through the register, as $8\ell^2\eps^{-2}$ without a logarithm. The factor $\log(1/\eps)$ comes from the $k\approx2\log(1/\eps)$ bits of
+the covariant hash family.
+
+\subsection{The profile of \texorpdfstring{$J$}{J}}
+
+\begin{theorem}[Upper bound for the profile]\label{thm:upper}
+Let $S'\subseteq\{p,q,\iota,t,d,x,z\}$ contain $x$ and $z$, and let $R$ be a finite set of words in $S'$, each representing $1$ in $\GPp$,
+whose free reductions have length at most $\ell\ge1$. Write $\hlp=\hlp_R$ for the profile of $\langle S'\mid R\rangle$ and $J=(xz)^2$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For $0<\eps\le1$, $\hlp(J;2,\eps)\le2^{\,400\,\ell^2\eps^{-2}\log(2\ell/\eps)}$, realized by an $\eps$-representation with
+$\phi(J)=-I$.
+\item For $0<\delta\le2$ and $0<\eps\le\delta/\sqrt2$,
+\[
+\hlp(J;\delta,\eps)\ \le\ \frac4{\delta^2}\cdot2^{\,200\,\ell^2\,\delta^2\eps^{-2}\log(3\ell/\eps)} .
+\]
+\end{enumerate}
+This applies to $R=\RP$ with $\ell=22$ (\cref{def:RP,lem:RP-valid}), and to every finite set of relators of $\GP$ on $p,q,t,d,x,z$ or of
+$\GPp$ on $p,\iota,t,d,x,z$ or $p,q,\iota,t,d,x,z$.
+\end{theorem}
+
+\begin{proof}
+(a) Since $\phi(r)$ depends only on the free reduction of $r$, we may replace each word of $R$ by its free reduction. Apply
+\cref{prop:hash-models} to $\mathcal W=R$ and restrict $\phi$ to $F(S')$. The defects are at most $\eps$, and
+$\fn{\phi(J)-I}=\fn{-2I}=2$.
+
+(b) Let $N=\lfloor4/\delta^2\rfloor\ge1$ and $\eps_1=\sqrt2\,\eps/\delta\le1$. Let $\phi_1$ be the $\eps_1$-representation of (a), of
+dimension $D_1$ with $\log D_1\le400\ell^2\eps_1^{-2}\log(2\ell/\eps_1)$, and let $\phi=\phi_1\oplus\mathbf 1$, where $\mathbf 1$ sends every
+generator to the identity of $\C^{(N-1)D_1}$. Every word is sent to $I$ by $\mathbf 1$, so $\fn{\phi(u)-I}^2=\frac1N\fn{\phi_1(u)-I}^2$ for
+every word $u$. Hence $\fn{\phi(J)-I}^2=4/N\ge\delta^2$, and, since $N\ge2/\delta^2$ (as $\lfloor y\rfloor\ge y/2$ for $y\ge1$), every
+relator has defect at most $\eps_1/\sqrt N\le\eps_1\delta/\sqrt2=\eps$. The dimension is $ND_1\le(4/\delta^2)D_1$, and
+$400\ell^2\eps_1^{-2}=200\ell^2\delta^2\eps^{-2}$, $\log(2\ell/\eps_1)=\log(\sqrt2\,\ell\delta/\eps)\le\log(3\ell/\eps)$.
+
+The words of $\RP$ represent $1$ in $\GP\le\GPp$ (\cref{lem:RP-valid}), and their free reductions have length at most $22$
+(\cref{def:RP}); relators of $\GP$ or $\GPp$ represent $1$ in $\GPp$.
+\end{proof}
+
+We can now state and prove Theorem~B. Recall that $\hlps_R(J;e)$ is the least dimension of a state-weighted model $(\phi,\rho)$ of
+$\langle p,q,t,d,x,z\mid R\rangle$ satisfying (S1)--(S3) of \cref{def:model} for $w=J$ (\cref{def:state-profile}).
+
+\begin{theorem}[The profile of $J$; Theorem~B]\label{thm:profile}
+Let $R$ be a finite set of words in $p,q,t,d,x,z$ that represent $1$ in $\GP$, with $\RP\subseteq R$, let $\ell\ge22$ bound the lengths of
+their free reductions, and put $C_\ell=400\,\ell^2(2+\log\ell)$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For $0<\delta\le2$ and $0<\eps\le2^{-1071}\delta$,
+\[
+c_1\,\delta^2\eps^{-2}\,\bfun(\eps)\ \le\ \log\hlp_R(J;\delta,\eps)\ \le\ C_\ell\,\delta^2\eps^{-2}\log(1/\eps).
+\]
+\item For $0<e\le2^{-1071}$,
+\[
+3c_1\,e^{-2}\,\bfun(e)\ \le\ \log\hlps_R(J;e)\ \le\ \log\hlp_R(J;2,e)\ \le\ C_\ell\,e^{-2}\log(1/e).
+\]
+\end{enumerate}
+Here $c_1=1/(4.1\cdot10^7)$ and $\bfun(\eps)=2^{-4(24+\log\log(1/\eps))^2}=\eps^{o(1)}$. In particular
+$\log\hlp_R(J;\delta,\eps)=\eps^{-2+o(1)}$ for every fixed $\delta\in(0,2]$, and $\log\hlps_R(J;e)=e^{-2+o(1)}$.
+\end{theorem}
+
+\begin{proof}
+\emph{Lower bounds.} The lower bound in~(a) is \cref{cor:hlp-lower}(a). For~(b), let $(\phi,\rho)$ be a model on $\C^d$ satisfying
+(S1)--(S3) at precision $e$. Then (i) and (ii) of \cref{thm:sector} hold, because $\RP\subseteq R$, and by~(S3)
+\[
+\hs{(\phi(J)-I)\xi}\ \ge\ \hs{2\xi}-\hs{(\phi(J)+I)\xi}\ \ge\ 2-e=:\Delta ,
+\]
+so~(iii) holds with $1\le\Delta\le2$. The hypothesis $e\le2^{-1071}\Delta$ holds because $e\le2^{-1071}$ and $\Delta\ge1$. So
+$\log d\ge\log\rank\rho\ge c_1\Delta^2e^{-2}\bfun(e)\ge3c_1e^{-2}\bfun(e)$, as $\Delta^2\ge(2-2^{-1071})^2\ge3$.
+
+\emph{Comparison.} An $e$-representation $\phi$ with $\fn{\phi(J)-I}\ge2$ has $\phi(J)=-I$ by~\eqref{eq:unitary-distance}; with the flat
+state $\rho=I/d$ it satisfies (S1)--(S3) at precision $e$, since $\hs{Y\xi}=\fn Y$ and all state commutators vanish. So
+$\hlps_R(J;e)\le\hlp_R(J;2,e)$.
+
+\emph{Upper bounds.} By \cref{thm:upper}(a), $\log\hlp_R(J;2,e)\le400\ell^2e^{-2}\log(2\ell/e)$, and
+$\log(2\ell/e)\le(1+\log(2\ell))\log(1/e)$ because $\log(1/e)\ge1$; this gives~(b). For~(a), \cref{thm:upper}(b) applies since
+$\eps\le\delta/\sqrt2$, and gives $\log\hlp_R(J;\delta,\eps)\le\log(4/\delta^2)+200\ell^2\delta^2\eps^{-2}\log(3\ell/\eps)$. Here
+$\log(3\ell/\eps)\le(1+\log(3\ell))\log(1/\eps)$, and, since $\delta\ge2^{1071}\eps$, $4/\delta^2<\eps^{-2}$, so
+$\log(4/\delta^2)<2\log(1/\eps)\le\delta^2\eps^{-2}\log(1/\eps)$. Altogether
+$\log\hlp_R(J;\delta,\eps)\le\bigl(200\ell^2(1+\log(3\ell))+1\bigr)\delta^2\eps^{-2}\log(1/\eps)\le C_\ell\delta^2\eps^{-2}\log(1/\eps)$.
+\end{proof}
+
+\begin{remark}[Other presentations]\label{rem:upper-presentations}
+\leavevmode
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item \emph{Other generators.} Let $S$ be a finite alphabet, fix words $\hat s\in F(p,q,\iota,t,d,x,z)$ for $s\in S$, and let $R\subset F(S)$
+be finite and $w\in F(S)$ be such that the substituted words $\hat r$, $r\in R$, represent $1$ in $\GPp$ and $\hat w$ represents $J$. Apply
+\cref{prop:hash-models} to the words $\hat r$ and $\hat w^{-1}(xz)^2$: the composite $s\mapsto\phi(\hat s)$ is an $\eps$-representation of
+$\langle S\mid R\rangle$ with $\fn{\phi(\hat w)+I}\le\eps$, hence $\fn{\phi(\hat w)-I}\ge1$. Padding as in \cref{thm:upper}(b), with
+$N=\lfloor1/\delta^2\rfloor$, gives $\log\hlp_R(w;\delta,\eps)\le C\delta^2\eps^{-2}\log(1/\eps)$ for $0<\delta\le1$ and $0<\eps\le\eps_0\delta$,
+with $C,\eps_0>0$ depending on the words. If moreover there are words in $F(S)$ for $p,q,t,d,x,z$ as in \cref{cor:hlp-lower}(b), that
+corollary gives the matching lower bound. This covers every finite presentation of $\GP$ or of $\GPp$ and every word representing $J$; such
+presentations exist (\cref{rem:GP-fp}), but Theorem~B does not need them.
+\item \emph{The extension $\GPp$.} For a finite set $R^+$ of words in $p,\iota,t,d,x,z$ valid in $\GPp$ in which the words of $\RP$, with
+$q$ replaced by $\iota p\iota$, have bounded area, both bounds of \cref{thm:profile}(a) hold with other constants: the upper bound by
+\cref{thm:upper}, the lower bound by \cref{cor:hlp-lower}(b).
+\item \emph{State-weighted version.} The lower bound of \cref{thm:profile}(b) also holds, with other constants, for every finite set $R$
+of words in $p,q,t,d,x,z$ in which the words of $\RP$ have finite area. Fix expressions of these words as products of conjugates of words
+of $R^{\pm1}$; there are finitely many, so by \cref{lem:calculus}(d),(a) a model at precision $e$ satisfies (i) and (ii) of
+\cref{thm:sector} at precision $C_Re$, with $C_R$ depending only on the expressions, and (iii) with $\Delta=2-e$ as in the proof of
+\cref{thm:profile}.
+\end{enumerate}
+\end{remark}

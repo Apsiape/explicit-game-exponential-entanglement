@@ -1,0 +1,127 @@
+% An explicit nonlocal game of quantum value one that needs exponential entanglement
+% Build: pdflatex main && bibtex main && pdflatex main && pdflatex main
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage[expansion=false]{microtype}
+\setlength{\emergencystretch}{2em}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,fit,backgrounds}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage{aliascnt}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+
+% ---------- theorem environments (one shared counter, numbered within sections) ----------
+\newcommand{\sharedtheorem}[2]{\newaliascnt{#1}{theorem}\newtheorem{#1}[#1]{#2}\aliascntresetthe{#1}}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\sharedtheorem{proposition}{Proposition}
+\sharedtheorem{corollary}{Corollary}
+\sharedtheorem{lemma}{Lemma}
+\sharedtheorem{question}{Question}
+\theoremstyle{definition}
+\sharedtheorem{definition}{Definition}
+\sharedtheorem{example}{Example}
+\theoremstyle{remark}
+\sharedtheorem{remark}{Remark}
+\crefname{question}{Question}{Questions}
+\crefname{example}{Example}{Examples}
+% lettered theorems of the introduction
+\theoremstyle{plain}
+\newtheorem*{theoremA}{Theorem A}
+\newtheorem*{theoremB}{Theorem B}
+\newtheorem*{theoremC}{Theorem C}
+\newtheorem*{theoremD}{Theorem D}
+\newtheorem*{theoremE}{Theorem E}
+\newtheorem*{theoremF}{Theorem F}
+
+% ---------- shared macros (use these; do not redefine) ----------
+\DeclareMathOperator{\Tr}{Tr}            % unnormalized trace
+\DeclareMathOperator{\tr}{tr}            % normalized trace tr = Tr/d
+\DeclareMathOperator{\Area}{Area}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\FSym}{FSym}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\hlp}{hlp}          % hyperlinear profile
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\GP}{G_{\mathrm P}}          % the Pauli configuration-lamp group
+\newcommand{\GPp}{G_{\mathrm P}^{+}}     % G_P extended by the ray swap iota
+\newcommand{\EV}{E_V}                    % central product of Pauli lamps
+\newcommand{\RP}{R_{\mathrm P}}          % the 27-word certificate
+\newcommand{\Pres}{\mathcal P}           % the EGamma_0 presentation
+\newcommand{\Ent}{\mathcal E}            % entanglement cost E(G,eps): least local dimension
+\newcommand{\Entme}{\mathcal E^{\mathrm{me}}} % ... on a maximally entangled state
+\newcommand{\Gsv}{G_{\mathrm{SV}}}       % the Slofstra--Vidick game
+\newcommand{\U}{\mathrm U}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\T}{\mathbb T}               % the circle R/2piZ
+\newcommand{\E}{\mathbb E}               % expectation
+\newcommand{\fn}[1]{\lVert #1\rVert_f}   % normalized Hilbert-Schmidt norm (Tr A^*A/d)^{1/2}
+\newcommand{\hs}[1]{\lVert #1\rVert_2}   % unnormalized Hilbert-Schmidt norm (Tr A^*A)^{1/2}
+\newcommand{\tn}[1]{\lVert #1\rVert_1}   % trace norm
+\newcommand{\op}[1]{\lVert #1\rVert_{\mathrm{op}}} % operator norm
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\dH}{\delta_{H}}             % Dehn function of Houghton's group H_3
+\newcommand{\omq}{\omega_{q}}
+\newcommand{\omqa}{\omega_{qa}}
+\newcommand{\omqc}{\omega_{qc}}
+\newcommand{\hlps}{\hlp^{\rho}}          % state-weighted profile hlp^rho(w;e)
+\newcommand{\hS}{h^{S}}                  % entropy profile
+\newcommand{\bfun}{\beta}                % the factor beta(eps)=2^{-4(24+loglog(1/eps))^2}
+
+\hypersetup{pdftitle={An explicit nonlocal game of quantum value one that needs exponential entanglement},
+  pdfauthor={Nidhal Mghirbi and Seth Douglas}}
+
+\title{An explicit nonlocal game of quantum value one\\ that needs exponential entanglement}
+\author{Nidhal Mghirbi \and Seth Douglas}
+\date{Version 1.0.0, October 2026}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+
+{\small\setcounter{tocdepth}{1}\tableofcontents}
+
+\input{sections/intro}
+\input{sections/prelim}
+\input{sections/state}
+\input{sections/count}
+\input{sections/transfer}
+\input{sections/group}
+\input{sections/pair}
+\input{sections/sector}
+\input{sections/upper}
+\input{sections/game}
+\input{sections/rates}
+\input{sections/open}
+\input{sections/howdone}
+
+\appendix
+\crefalias{section}{appendix}
+\crefalias{subsection}{subappendix}
+\input{sections/app-dehn}
+\input{sections/app-gadget}
+\input{sections/app-cert}
+
+\bibliographystyle{alpha}
+{\raggedright\bibliography{refs}}
+
+\end{document}

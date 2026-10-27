@@ -1,0 +1,50 @@
+$ python3 -I area_xverify.py .
+PASS  relators_pauli.txt has the 27 words of Table 2, as transcribed here
+ok    slemma [p,q] sigma^-1                      9 factors
+ok    H      s s                                19 factors
+ok    H      s p s P s p s P s p s P            60 factors
+ok    H      s p p s P P s^-1 p p s^-1 P P      44 factors
+ok    H      p s P q s^-1 Q                     28 factors
+ok    Q      t t                                 1 factors
+ok    S      t s p T P s^-1                     23 factors
+ok    S      t s q T Q s^-1                     29 factors
+ok    S      d B s p D P s^-1 B^-1              45 factors
+ok    S      d B s q D Q s^-1 B^-1              51 factors
+ok    C      t1 t2 t1^-1 t2^-1                   6 factors
+ok    A      d t1 D t2^-1 t1^-1                  8 factors
+ok    A      d t2 D t2^-1                        6 factors
+ok    A      d t3 D t3^-1                        8 factors
+ok    Z      p x P X                             3 factors
+ok    Z      p z P Z                             3 factors
+ok    Z      q x Q X                             9 factors
+ok    Z      q z Q Z                             9 factors
+ok    Z      d x D X                             4 factors
+ok    Z      d z D Z                             4 factors
+ok    L      x x                                 1 factors
+ok    L      z z                                 1 factors
+ok    L      x z x z x z x z                     6 factors
+ok    P      x t x T X t X T                    10 factors
+ok    P      x t z T X t Z T                     8 factors
+ok    P      z t x T Z t X T                     8 factors
+ok    P      z t z T Z t Z T                    10 factors
+ok    K      J t J^-1 T                         10 factors
+ok    Jlink  (xz)^2 w^-1                         5 factors
+PASS  replay: all 29 certificates verify; each factor is a conjugate of a relator of P, and the product reduces freely to the target word
+INFO  s-lemma: 9 factors; largest: 60 factors, for H s p s P s p s P s p s P; total over the 29 words: 428
+PASS  cap: every one of the 29 words has at most 60 factors, so area at most 60 (largest 60)
+
+ALL CHECKS PASSED
+[exit status 0]
+
+$ python3 -I area_xverify.py . --negctl
+negative controls: each corruption must be rejected
+PASS  rejected: the certificate of H s p s P s p s P s p s P with one factor dropped  [the product of the factors is not the target word]
+PASS  rejected: the certificate of H s p s P s p s P s p s P padded to 62 factors by a factor and its inverse (replay valid)  [cap: 62 factors]
+PASS  rejected: a factor with sign 2  [bad sign 2]
+PASS  rejected: the presentation with the C_0 triple (sigma, g4, g5) deleted  [not a relator of P: ('C0', 'sigma', 'g4', 'g5')]
+PASS  rejected: a derivation with the move (x, z, g12) replaced by (x, z, g13)  [bad lin ['lin', 0, ['g12', 'g14', 'z']]]
+PASS  rejected: the derivation of L: x x with its resolved sequence replaced by x z  [resolved sequence ['x', 'x'] differs from the recorded ['x', 'z']]
+PASS  rejected: a derivation of the nontrivial word x z by one cancellation  [bad cancel ['cancel', 0, 'x']]
+PASS  rejected: the one-factor certificate x x for the nontrivial word x z  [the product of the factors is not the target word]
+ALL NEGATIVE CONTROLS REJECTED
+[exit status 0]

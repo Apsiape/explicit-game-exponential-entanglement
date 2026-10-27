@@ -1,0 +1,335 @@
+%======================================================================
+\section{Machine checks}\label{app:cert}
+%======================================================================
+
+Four finite statements of this paper are verified by computer, and no proof depends on a computation except these:
+\begin{enumerate}[label=(C\arabic*),itemsep=1pt]
+\item the $27$ words of $\RP$ represent $1$ in $\GP$ (\cref{lem:RP-valid});
+\item the presentation $\Pres$: its relations hold in $\GPp$ under the defining words, and the $29$ derivations behind
+\cref{prop:presentation}(d), with the area bound $A_*=60$;
+\item the linear system $(A,b)$ of the game is the output of \cref{lem:gadget} for $\Pres$ (\cref{rem:game-size});
+\item the area certificates of \cref{rem:A0}, which give $A_0=42$ in \cref{lem:gadget}.
+\end{enumerate}
+Each is checked by at least two programs that share no code. The words of (C1) are evaluated by three programs. In (C2) the relations of
+$\Pres$ are checked in $\GPp$ by three programs and the $29$ derivations are replayed by four; the area bound $60$ is established by two of
+these, \texttt{area\_check.py}, through a fresh search with an exact count of cells, and \texttt{area\_xverify.py}, through explicit products
+of conjugates of relators checked by free reduction, while \texttt{independent\_check.py} gives the weaker bound $335$ and the count kept
+by \texttt{egamma0\_certificate.py} is not a cell count. For (C3), \texttt{game\_Ab\_generate.py} builds the system from $\Pres$ and does not validate
+its input; \texttt{game\_Ab\_check.py} re-derives the system on its own and compares. For (C4), \texttt{a0/a0\_check.py} and
+\texttt{a0/a0\_xverify.py} both replay every certificate and both require at most $42$ factors. Every checking program runs negative controls
+(\cref{cert:what}). Every other statement has a written proof in the paper that does not depend on a computation: in particular the pair areas (\cref{thm:pair-area}), the Dehn bound of
+\cref{app:dehn}, the qubit count, the transfer, the sector theorem, the hash models, \cref{lem:gadget}, \cref{thm:embedding} and
+\cref{lem:sv-lift}. The value of $A_0$ enters only the constants $c$ and $\eps_0$ of Theorem~A. This appendix describes the programs, which are in the ancillary directory \texttt{anc/}, and lists $\Pres$ in full (\cref{cert:presentation}).
+
+\subsection{The files}\label{cert:files}
+
+The programs need Python~3, and \texttt{numpy} and \texttt{scipy} only for the numerical sanity tests, which no proof uses. Each program is
+run inside \texttt{anc/} as \texttt{python3 -I <program> <arguments>}, takes a few seconds (the numerical attacks a few minutes), and exits
+with status $0$ exactly when all its checks pass. In the checks of (C1)--(C3) all arithmetic is exact: words are expanded, freely reduced and evaluated in a faithful model of $\GPp$ with integer and $\F_2$ arithmetic.
+\Cref{cert:tab-files} lists the files.
+
+\begingroup\small\captionsetup{position=below}
+\begin{longtable}{@{}p{0.40\textwidth}p{0.56\textwidth}@{}}
+\toprule
+file & content \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\caption{The files in \texttt{anc/}.}\label{cert:tab-files}\\
+\endlastfoot
+\texttt{relators\_pauli.txt} & the $27$ words of $\RP$, in the abbreviations of \cref{def:RP}, with $J=xzxz$ \\
+\texttt{relators\_pauli\_CORRUPTED.txt} & a negative control: the word $(xz)^4$ replaced by $(xz)^2$ \\
+\texttt{check\_pauli\_lamps.py [file]} & \raggedright the model of $\GP$ and the check of (C1); log \texttt{run.log}, and
+\texttt{negative\_control.log} on the corrupted file \tabularnewline
+\texttt{egamma0\_P.json} & \raggedright $\Pres$: the defining words of the $26$ involutive generators, $C_0$, $C_1$, the linear sets, and the
+$29$ derivations \tabularnewline
+\texttt{egamma0\_certificate.py} & \raggedright modes \texttt{verify} (the default), \texttt{build} and \texttt{negctl}; imports the model of
+\texttt{check\_pauli\_lamps.py} and extends it by $\iota$; logs \texttt{egamma0\_verify.log}, \texttt{egamma0\_build.log},
+\texttt{egamma0\_negctl.log} \tabularnewline
+\texttt{independent\_check.py <dir>} & \raggedright an independent checker of (C1) and (C2); log \texttt{independent\_check.log}
+\tabularnewline
+\texttt{area\_check.py <dir>} & \raggedright a second independent checker of (C2), with an exact area count; log \texttt{area\_check.log}
+\tabularnewline
+\texttt{area\_xverify.py <dir>} & \raggedright a third independent checker of the derivations of (C2): explicit certificates and the cap
+$60$, with eight negative controls (\texttt{--negctl}); log \texttt{area\_xverify.log} \tabularnewline
+\texttt{game\_Ab\_generate.py <dir>} & \raggedright builds $(A,b)$ from \texttt{egamma0\_P.json} by the four steps of \cref{lem:gadget};
+writes \texttt{game\_Ab.json}, log \texttt{game\_Ab\_generate.log} \tabularnewline
+\texttt{game\_Ab.json} & \raggedright the game: $1993$ variables, each with its role in \cref{lem:gadget}, and $1687$ equations with their
+right-hand sides \tabularnewline
+\texttt{game\_Ab\_check.py <dir>} & \raggedright an independent checker of (C3); log \texttt{game\_Ab\_check.log} \tabularnewline
+\texttt{pauli\_sector\_numeric.py} & a numerical sanity test of a flat qubit count; no log \\
+\texttt{numerics/analytic\_checks.py} & \raggedright numerical attacks on \cref{thm:count}, \cref{lem:rounding},
+\cref{lem:sequential,thm:return} (on the magic square game, with a negative control) and \cref{thm:K-profile}; log
+\texttt{numerics/analytic\_checks.log} \tabularnewline
+\texttt{sv\_balanced\_lift.py} & \raggedright a numerical check of \cref{lem:sv-lift}, with the obstruction for the literal lifts as a
+negative control; log \texttt{sv\_balanced\_lift.log} \tabularnewline
+\texttt{a0/a0\_check.py <dir>} & \raggedright rebuilds and checks the certificates of (C4) from \texttt{egamma0\_P.json} and
+\texttt{game\_Ab.json}, with nine negative controls (\texttt{--negctl}); writes \texttt{a0/a0\_certificates.json} with
+\texttt{--dump}; log \texttt{a0/a0\_check.log} \tabularnewline
+\texttt{a0/a0\_xverify.py <dir> <file>} & \raggedright an independent checker of the dumped certificates of (C4), with eight negative
+controls (\texttt{--negctl}); log \texttt{a0/a0\_xverify.log} \tabularnewline
+\texttt{README.md} & how to run everything \\
+\end{longtable}
+\endgroup
+
+For (C1) and (C2) the programs form four independent code bases:
+\begin{itemize}[itemsep=0pt]
+\item \texttt{check\_pauli\_lamps.py} and \texttt{egamma0\_certificate.py}, which share one model of $\GPp$;
+\item \texttt{independent\_check.py}, with its own model of $\GPp$ and its own reading of $\RP$ and of $\Pres$;
+\item \texttt{area\_check.py}, likewise;
+\item \texttt{area\_xverify.py}, which checks the derivations only, with its own transcription of $\RP$.
+\end{itemize}
+The last three import none of the other programs. For (C3), \texttt{game\_Ab\_check.py} imports nothing and re-derives the system on its
+own.
+
+\subsection{The model}\label{cert:model}
+
+An element of $\GPp$ is stored as a pair: a signed Pauli string $J^cX^aZ^b$, with $c\in\F_2$ and $a,b$ finite sets of sites, which is a normal form
+in $\EV$; and an affine bijection of $V$, given by its action on configurations. The letters $p,q,\iota$ act by the permutations of $Y$ of
+\cref{def:houghton,lem:GPp}, $t$ by the translation $\tau_1$, and $d$ by the transvection $E_{(1,2)\leftarrow(1,1)}$; $x,z$ are the Pauli pair
+at the site $0$. A lamp letter read after an affine prefix is moved to the image of its site. A word $u$ is trivial exactly when its Pauli
+part is the identity and its affine part $\alpha$ is the identity.
+
+The programs check $\alpha(0)=0$, and $\alpha(e_y)=e_y$ for every point $y$ of height at most $\abs u+3$ on each ray (or a little higher). This suffices. Once
+$\alpha(0)=0$, $\alpha$ is linear, so it is the composite of the linear parts of its letters: permutations of $Y$ for $p,q,\iota$, the
+identity for $t$, and for $d$ a transvection that moves only configurations containing $(1,1)$. A permutation changes heights by at most
+$1$, so a point of height at least $\abs u+3$ stays at height at least $2$ while the word is applied; there $d$ acts trivially and each
+permutation acts as a translation along a ray or a permutation of rays. Hence $\alpha(e_{(r,h)})=e_{(r',h+k)}$ for all $h\ge\abs u+3$,
+with $r'$ and $k$ independent of $h$, and the check at $h=\abs u+3$ forces $r'=r$ and $k=0$. \texttt{game\_Ab\_check.py} uses a different
+representation: the linear part of an affine map is stored by the ray permutation and translations that it eventually induces, and by its
+values on the basis vectors below the least height from which on it acts so. This form is canonical, so equality of elements is decided
+exactly.
+
+\subsection{What each program checks}\label{cert:what}
+
+\paragraph{(C1).} \texttt{check\_pauli\_lamps.py} evaluates the $27$ words of $\RP$; checks that $J\ne1$ commutes with all six generators,
+that $(x_uz_u)^2=J$ at the eight sites $u$ of a test ladder, and that the $224$ commutators of lamps at distinct sites of the ladder are
+trivial; and rejects four built-in corrupted words. On \texttt{relators\_pauli\_CORRUPTED.txt} it reports the word $xzxz$ as failed and
+exits with status $1$. \texttt{independent\_check.py} evaluates $\RP$ in its own model, both as written and with $q\mapsto\iota p\iota$,
+checks $q=\iota p\iota$ and $[J,\iota]=1$, and rejects twelve test words that are nontrivial in $\GPp$. \texttt{area\_check.py} evaluates
+$\RP$ a third time and finds that its longest freely reduced word has $22$ letters.
+
+\paragraph{(C2): the relations.} \texttt{egamma0\_certificate.py verify} checks that every defining word is an involution in $\GPp$; that
+every relation of $C_0$, $C_1$ and of the linear sets holds in $\GPp$; that every pair inside a linear set is a listed commutation; and that
+$w\mapsto J$, with the $25$ triples $(g,w,w)\in C_0$ and $pwp^{-1}=w\in C_1$ present. \texttt{independent\_check.py} and
+\texttt{area\_check.py} re-check every relation in their own models, together with $w\mapsto J$, the centrality relations and the format
+of \cref{def:EG0}. \texttt{area\_check.py} also checks the counts of \cref{prop:presentation}(a) and the composition $76=32+25+19$ of $C_0$,
+and finds that the $26$ generators represent $26$ distinct elements, that the free reduction of $\vartheta(r)$ has at most $\ell_E=44$
+letters for $r\in R$ ($46$ before free reduction), and that $\iota_1\iota_2\iota_1=\sigma\iota$ (equation~\eqref{game:s-lemma}).
+
+\paragraph{(C2): the derivations.} \texttt{egamma0\_certificate.py verify} replays the $29$ derivations against the lists of $C_0$, $C_1$ and
+linear sets alone, without the model, in the three stages of the proof of \cref{prop:presentation}: the decomposition into $p$-conjugates
+by free reduction, the resolution through $C_1$, and the recorded moves. Its own count, one unit per move and per step of $C_1$, does not
+charge the uses of (E1) and is not used; nor does it check the labels \texttt{area\_bound} stored with the derivations, which no program
+uses. \texttt{independent\_check.py} recomputes the resolved sequence of every derivation from $\RP$ with
+its own front end, and re-justifies each move as a rewriting along a cyclic rotation of a relator; with a generous count of every relator
+application, including the uses of $x^2=e$ hidden in a swap and the s-lemma at each occurrence of $s$, it finds area at most $335$ per word.
+\texttt{area\_check.py} searches afresh, by a shortest-path search over sequences of involutive generators that uses only listed relations,
+for a derivation of each of the $29$ words, and counts cells exactly in the free group on $S_0\sqcup S_1$, charging every relator and every
+use of (E1). Each word has area at most $60$, attained by $(sps\,p^{-1})^3$; the s-lemma costs $9$ cells. It also replays the recorded
+derivations under the same count, with the same maximum $60$. \texttt{area\_xverify.py} turns each recorded derivation into an explicit
+certificate: a list of conjugates $ur^{\pm1}u^{-1}$ of relators $r$ of $\Pres$, one or more per stage and move. Each literal
+$[p,\iota p\iota]$ is replaced by $\sigma$ through the certificate of the s-lemma, each conjugation by $p$ costs one relator of $C_1$ and
+each inverted letter one relator $g^2$, and a move costs one relator, or two or three when a linear set is used out of its listed order.
+The program then checks, separately from this construction, that every factor names a relator of $\Pres$ with sign exactly $+1$ or $-1$
+and that the product reduces freely to the target word, which it builds from its own transcription of \cref{tab:RP}. Word by word its
+counts equal those of the replay in \texttt{area\_check.py}: $9$ for the s-lemma and at most $60$, attained by $(sps\,p^{-1})^3$. It
+requires at most $60$ factors for every word, and reports the replay and this cap separately. The recorded derivations use $32$ triples of
+$C_0$, none among the $25$ triples $(g,w,w)$ or the $19$ added commutations, and both searching checkers confirm that derivations exist
+without the added commutations.
+
+\paragraph{(C2): negative controls.} \texttt{egamma0\_certificate.py negctl} deletes a triple of $C_0$ used by a derivation, falsifies a
+triple of $C_1$, redefines $w$ as $xz$, and deletes a commutation of a linear set; each corrupted file is rejected.
+\texttt{independent\_check.py} rejects the false relation $xtx=txt$, a derivation after deletion of the triple $(\sigma,g_4,g_5)$, a
+falsified triple of $C_1$, an illegal cancellation, and a claimed derivation of the nontrivial word $xz$. \texttt{area\_check.py} rejects the
+false relation $xtx=txt$, finds no derivation of the nontrivial words $xz$ and $(xzx)(ztz)$, and none of the s-lemma once the triple
+$(g_1,g_2,g_3)$ is deleted. \texttt{area\_xverify.py --negctl} rejects a certificate with a factor dropped, a valid certificate padded to
+$62$ factors by a factor and its inverse, which only the cap rejects, a factor with sign $2$, the presentation without the triple
+$(\sigma,g_4,g_5)$, a derivation with one recorded move falsified, one with its resolved sequence falsified, and two claimed certificates
+of the nontrivial word $xz$.
+
+\paragraph{(C3).} \texttt{game\_Ab\_generate.py} applies Steps~1--4 of \cref{lem:gadget} to $\Pres$, with the numbering of their proof. It
+only transforms its input: it does not check that the relations of $\Pres$ hold, and it produces a system from a corrupted presentation as
+well. It finds $40$ generators besides $J$ after Step~2, $97$ conjugacy relations, $234$ nice ones after Step~3, and $283+6\cdot234=1687$ equations in
+$26+12+2+315+1638=1993$ variables. One equation, $x_w+x_u=1$, has two variables and right-hand side $1$; the others have three variables and
+right-hand side $0$. Every product is increasing in the numbering, including those of the eight linear sets of $\Pres$
+(\cref{cert:presentation}), so \cref{lem:gadget} applies. \texttt{game\_Ab\_check.py} checks the format, the
+SHA-256 digest of \texttt{egamma0\_P.json}, and these counts, and that the equations, read as sets of variable roles with their right-hand
+sides, are exactly those of its own derivation of Steps~1--4 from \texttt{egamma0\_P.json}. In its own model of $\GPp$ it re-checks every
+relation of $\Pres$, and forms the representations $\gamma,\gamma_1,\gamma_2$ of the proof of \cref{lem:gadget} from the defining words, with
+the central involution $J$ of $\GPp$ in place of $-1$: every variable becomes an $8\times8$ block-monomial matrix over $\GPp$. The $1993$
+squares, the $1993$ commutators with $J$, the $5059$ commutators within equations and the $1687$ product relators of $\Gamma(A,b)$ all
+evaluate to the identity, while $J$ goes to $J\,I_8\ne I$; so this is a homomorphism $\Gamma(A,b)\to\GPp\wr\Sym(8)$ in which $J\ne1$. It also
+checks by Gaussian elimination that $Ax=b$ has no solution over $\F_2$ ($A$ has rank $1512$). It rejects a gadget equation with the wrong
+right-hand side or with a wrong variable, a deleted equation, and the system with $b=0$ in the equation $x_w+x_u=1$, which becomes solvable.
+
+\paragraph{(C4).} \texttt{a0/a0\_check.py} finds every variable of the game through the role recorded for it in \texttt{game\_Ab.json},
+so it does not depend on the numbering. For each of the $121$ words of (G1) and (G2), namely the $120$ relators of $\Pres$ and the word
+$[x_w,x_{t^*}]J$, it instantiates the template of \cref{rem:A0} for the type of the word and records each cell as a conjugate of a
+relator. It then checks the certificate. Every factor must be a square, a commutator of two variables that share an equation, or the
+product relator of an equation of the file, and the product of the conjugates must reduce freely to $\Psi(r)$, which is computed directly
+from \texttt{egamma0\_P.json}. The largest number of factors is $42$, attained by the relations of $C_1$. A valid certificate stays valid
+when a factor and its inverse are appended, so the replay alone does not bound the area; the program therefore also requires every
+certificate to have at most $42$ factors, and reports the replay and this cap separately. It rejects nine corruptions: a factor inverted or
+dropped, a commutator of variables in no common equation, a wrong variable in a gadget equation, a deleted equation, the system with $b=0$
+in $x_w+x_u=1$, a false triple of $C_0$, a true certificate checked against a corrupted game, and a true certificate of $42$ factors padded
+to $44$ by a factor and its inverse, which only the cap rejects. \texttt{a0/a0\_xverify.py} shares no code with it. Before it builds any
+word, it validates every factor of the dumped certificates against the game: the key of the relator must have its exact form and length,
+with integer indices that name a variable, an equation, or two distinct variables of one equation; the sign must be exactly $+1$ or $-1$;
+and every letter of the conjugator must be one of $x_1^{\pm1},\dots,x_n^{\pm1},J^{\pm1}$. It then rebuilds every factor from
+\texttt{game\_Ab.json}, forms the target words from \texttt{egamma0\_P.json} on its own, repeats the comparison, and requires the same cap of
+$42$ factors. With \texttt{--negctl} it rejects a dump padded in the same way, factors with signs $2$ and $0$, a dropped factor, and four
+dumps that only the validation rejects: in each, a factor and its inverse, which cancel freely, are appended to a certificate of one
+factor, and they name the square of a variable that the game does not have, the relator $[x_j,J]$ for $j$ one past the last variable, the
+equation of index $-1$, or a conjugate by a letter outside this alphabet.
+
+\paragraph{Numerical tests.} Part~2 of \texttt{check\_pauli\_lamps.py} and \texttt{pauli\_sector\_numeric.py} test, on random near-Pauli
+instances and on exact Pauli instances, a flat qubit count of the form $\log_2D\ge\sum_i\bigl[1-b_i^2/(2\ln2)-h(\min(a_i^2/2,\frac12))\bigr]$, a
+variant of \cref{cor:count-flat}, and a scalar entropy inequality on a grid. They are sanity tests, and no proof uses them.
+\texttt{sv\_balanced\_lift.py} checks \cref{lem:sv-lift} for $m\le8$. It confirms that the model of \cref{ex:K-model} has the single
+inexact relator stated there; that the literal lifts of~\cite[Prop.~4.8]{Slo19} are approximate representations whose marked involution
+$W$ has the eigenvalues $-1$ and $+1$ with multiplicities $d$ and $3d$, and that $\fn{TWT^*+W}^2\ge2$ for the exchange of the two halves,
+for all $24$ block permutations and for random unitaries, with equality for a block permutation, so that the relator $tctu^{-1}$ keeps
+defect $\sqrt2$; that $\tau$, $f'$ and $v'$ have the stated properties, that Steps~1--3 keep every defect at most $e_m$, and that the
+marker is balanced; and that the solution group built in Step~4, here with $262$ variables and $206$ equations, gets an $8d$-dimensional
+lift with $J\mapsto-I$ in which all $2373$ relators have defect at most $e_m/\sqrt2$. No proof uses it.
+
+\subsection{Rerunning and regenerating}\label{cert:rerun}
+
+The following runs, made inside \texttt{anc/} with \texttt{python3 -I}, reproduce the shipped logs. In
+\texttt{run.log}, \texttt{negative\_control.log}, \texttt{independent\_check.log} and the three \texttt{egamma0} logs, the last line
+\texttt{exit $N$} records the exit status and was appended by the shell.
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+arguments of \texttt{python3 -I} & log \\
+\midrule
+\texttt{check\_pauli\_lamps.py} & \texttt{run.log} \\
+\texttt{check\_pauli\_lamps.py relators\_pauli\_CORRUPTED.txt} & \texttt{negative\_control.log} (status $1$) \\
+\texttt{egamma0\_certificate.py verify} & \texttt{egamma0\_verify.log} \\
+\texttt{egamma0\_certificate.py build} & \texttt{egamma0\_build.log} \\
+\texttt{egamma0\_certificate.py negctl} & \texttt{egamma0\_negctl.log} \\
+\texttt{independent\_check.py .} & \texttt{independent\_check.log} \\
+\texttt{area\_check.py .} & \texttt{area\_check.log} \\
+\texttt{area\_xverify.py .}, and with \texttt{--negctl} & \texttt{area\_xverify.log} \\
+\texttt{game\_Ab\_generate.py .} & \texttt{game\_Ab\_generate.log} \\
+\texttt{game\_Ab\_check.py .} & \texttt{game\_Ab\_check.log} \\
+\texttt{a0\_check.py ..}, and with \texttt{--negctl}; inside \texttt{a0/} & \texttt{a0/a0\_check.log} \\
+\texttt{a0\_xverify.py .. a0\_certificates.json}; inside \texttt{a0/} & \texttt{a0/a0\_xverify.log} \\
+the same with \texttt{--negctl}; inside \texttt{a0/} & \texttt{a0/a0\_xverify.log} \\
+\texttt{numerics/analytic\_checks.py all} & \texttt{numerics/analytic\_checks.log} \\
+\texttt{sv\_balanced\_lift.py} & \texttt{sv\_balanced\_lift.log} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Both data files are regenerated byte for byte. \texttt{egamma0\_certificate.py build} reconstructs the presentation and its derivations from
+\texttt{relators\_pauli.txt} into a temporary file, reports that it is byte-identical to \texttt{egamma0\_P.json}, deletes it, and verifies
+the shipped file. Its search meets more involutions than the derivations use; it keeps those that occur on the returned derivations, $26$
+in all, and numbers them in the order in which it met them. \texttt{game\_Ab\_generate.py} overwrites \texttt{game\_Ab.json} with a file
+identical to the shipped one. The SHA-256 digests are
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\texttt{egamma0\_P.json} & \texttt{ad0fd91d9378bc956a78e65c813b94fbb93a0e7090b3068b4d76ac6cbc1590f0}\\
+\texttt{game\_Ab.json} & \texttt{c82d4cbbd72b0683ba2a7fceba8c92c346a4c3565e3785ddd2a56415f569c889}
+\end{tabular}
+\end{center}
+and \texttt{game\_Ab\_check.py} checks the first of them. In \texttt{game\_Ab.json}, the product relator of each equation is $J^{b_i}$ times
+the product of its variables in the listed order.
+
+The comments and messages of the programs cite statements of this paper by their numbers here, with their labels in the \LaTeX{} source
+in brackets, such as \cref{lem:gadget} [\texttt{lem:gadget}]. The references to Definition~4.7 and Section~6 of the papers of Slofstra and of
+Slofstra and Vidick are to~\cite{Slo19} and~\cite{SV18}.
+
+\subsection{The presentation \texorpdfstring{$\Pres$}{P} in full}\label{cert:presentation}
+
+The $26$ involutive generators, in their listed order, are $\iota,t,d,x,z,\sigma,g_1,\dots,g_{20}$. \Cref{cert:tab-gens} gives their
+defining words $\vartheta(g)$ in $p,\iota,t,d,x,z$; negative exponents are inverse letters, and $\iota,t,d,x,z$ are their own defining words.
+The non-involutive generator is $p$, and $w=g_{14}$.
+
+\begin{center}\small
+\begin{tabular}{@{}ll@{\qquad}ll@{}}
+\toprule
+$\sigma$ & $p\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1}$ & $g_{1}$ & $p\iota p^{-1}$ \\
+$g_{2}$ & $p^{2}\iota p^{-2}$ & $g_{3}$ & $p\iota p\iota p^{-1}\iota p^{-1}$ \\
+$g_{4}$ & $p^{2}\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1} p^{-1}$ & $g_{5}$ & $p\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1} p^{2}\iota p\iota p^{-2}\iota^{-1} p^{-1}\iota^{-1}$ \\
+$g_{6}$ & $p^{3}\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1} p^{-2}$ & $g_{7}$ & $ptp^{-1}$ \\
+$g_{8}$ & $pdp^{-1}$ & $g_{9}$ & $p\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1} pd\iota p\iota p^{-1}\iota^{-1} p^{-1}\iota^{-1}$ \\
+$g_{10}$ & $tptp^{-1}$ & $g_{11}$ & $p^{2}tp^{-2}$ \\
+$g_{12}$ & $xzx$ & $g_{13}$ & $zxz$ \\
+$g_{14}=w$ & $xzxz$ & $g_{15}$ & $xtx$ \\
+$g_{16}$ & $txt$ & $g_{17}$ & $xtxt$ \\
+$g_{18}$ & $tzt$ & $g_{19}$ & $ztz$ \\
+$g_{20}$ & $ztzt$ & & \\
+\bottomrule
+\end{tabular}
+\captionsetup{hypcap=false}%
+\captionof{table}{The defining words of the involutive generators of $\Pres$ other than $\iota,t,d,x,z$.}
+\label{cert:tab-gens}
+\end{center}
+
+\paragraph{$C_1$.} The ten relations $pbp^{-1}=c$ of type (E4) are, as pairs $(b,c)$: $(d,g_{8})$, $(g_{1},g_{2})$, $(g_{14},g_{14})$,
+$(g_{4},g_{6})$, $(g_{7},g_{11})$, $(\iota,g_{1})$, $(\sigma,g_{4})$, $(t,g_{7})$, $(x,x)$, $(z,z)$.
+
+\paragraph{Linear sets.} The eight linear sets are $\{\iota,\sigma,g_{3}\}$, $\{t,g_{7},g_{10}\}$, $\{t,g_{15},g_{17}\}$,
+$\{t,g_{19},g_{20}\}$, $\{x,g_{13},g_{14}\}$, $\{x,g_{16},g_{17}\}$, $\{z,g_{12},g_{14}\}$, $\{z,g_{18},g_{20}\}$; each product is taken in
+the order listed, which is the order of the generators.
+
+\paragraph{$C_0$.} The $76$ triples $(a,b,c)\in C_0$, meaning $aba=c$, are: the $25$ centrality triples $(g,w,w)$, $g\ne w$; the $32$
+triples used by the derivations, $(d,t,g_{10})$, $(g_{1},g_{2},g_{3})$, $(g_{1},g_{4},g_{4})$, $(g_{1},g_{7},g_{7})$, $(g_{1},g_{8},g_{8})$,
+$(g_{1},x,x)$, $(g_{1},z,z)$, $(g_{11},d,d)$, $(g_{12},g_{19},t)$, $(g_{4},g_{9},d)$, $(g_{4},\sigma,g_{5})$, $(g_{7},d,d)$,
+$(\iota,g_{4},g_{4})$, $(\iota,g_{7},g_{7})$, $(\iota,g_{8},g_{8})$, $(\sigma,g_{4},g_{5})$, $(\sigma,g_{6},g_{6})$, $(\sigma,g_{7},t)$,
+$(\sigma,g_{8},g_{9})$, $(t,g_{7},g_{7})$, $(t,x,g_{16})$, $(t,z,g_{18})$, $(x,d,d)$, $(x,g_{18},g_{18})$, $(x,\iota,\iota)$,
+$(x,t,g_{15})$, $(x,z,g_{12})$, $(z,d,d)$, $(z,g_{16},g_{16})$, $(z,\iota,\iota)$, $(z,t,g_{19})$, $(z,x,g_{13})$; and the $19$ commutations
+inside linear sets not already listed, $(g_{10},t,t)$, $(g_{12},z,z)$, $(g_{13},x,x)$, $(g_{15},g_{17},g_{17})$, $(g_{15},t,t)$,
+$(g_{16},g_{17},g_{17})$, $(g_{16},x,x)$, $(g_{17},t,t)$, $(g_{17},x,x)$, $(g_{18},g_{20},g_{20})$, $(g_{18},z,z)$,
+$(g_{19},g_{20},g_{20})$, $(g_{19},t,t)$, $(g_{20},t,t)$, $(g_{20},z,z)$, $(g_{3},\iota,\iota)$, $(g_{3},\sigma,\sigma)$,
+$(g_{7},g_{10},g_{10})$, $(\iota,\sigma,\sigma)$.
+
+\paragraph{The $29$ derivations.} \Cref{cert:tab-deriv} gives, for each target word, its resolved sequence of involutive generators and the
+moves that reduce it to the empty word: c cancels $aa$; $\kappa(a,b)$ replaces $aba$ by the generator $c$ with $(a,b,c)\in C_0$; m replaces
+two letters of a linear set by the third; $\lambda$ deletes the three letters of a linear set. The words of $\RP$ are written with the
+family letters of \cref{tab:RP} and the abbreviations of \cref{def:RP} ($s=[p,q]$, $B=psp^{-1}$, $t_m=p^{m-1}tp^{1-m}$, $J=xzxz$); a capital
+letter is the inverse of the lower-case one; and $q$ stands for $\iota p\iota$.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.31\textwidth}p{0.25\textwidth}p{0.38\textwidth}@{}}
+\toprule
+target & resolved sequence & moves \\
+\midrule
+$[p,\iota p\iota]\sigma^{-1}$ & $g_{1}\,g_{2}\,g_{1}\,\iota\,\sigma$ & $\kappa(g_{1},g_{2})$, $\lambda$ \\
+H: \texttt{s s} & $\sigma\,\sigma$ & c \\
+H: \texttt{s p s P s p s P s p s P} & $\sigma\,g_{4}\,\sigma\,g_{4}\,\sigma\,g_{4}$ & $\kappa(\sigma,g_{4})$, $\kappa(g_{4},\sigma)$, c \\
+\raggedright H: \texttt{s p p s P P s\textasciicircum{}-1 p p s\textasciicircum{}-1 P P} & $\sigma\,g_{6}\,\sigma\,g_{6}$ & $\kappa(\sigma,g_{6})$, c \\
+H: \texttt{p s P q s\textasciicircum{}-1 Q} & $g_{4}\,\iota\,g_{1}\,g_{4}\,g_{1}\,\iota$ & $\kappa(g_{1},g_{4})$, $\kappa(\iota,g_{4})$, c \\
+Q: \texttt{t t} & $t\,t$ & c \\
+S: \texttt{t s p T P s\textasciicircum{}-1} & $t\,\sigma\,g_{7}\,\sigma$ & $\kappa(\sigma,g_{7})$, c \\
+S: \texttt{t s q T Q s\textasciicircum{}-1} & $t\,\sigma\,\iota\,g_{1}\,g_{7}\,g_{1}\,\iota\,\sigma$ & $\kappa(g_{1},g_{7})$, $\kappa(\iota,g_{7})$, $\kappa(\sigma,g_{7})$, c \\
+S: \texttt{d B s p D P s\textasciicircum{}-1 B\textasciicircum{}-1} & $d\,g_{4}\,\sigma\,g_{8}\,\sigma\,g_{4}$ & $\kappa(\sigma,g_{8})$, $\kappa(g_{4},g_{9})$, c \\
+S: \texttt{d B s q D Q s\textasciicircum{}-1 B\textasciicircum{}-1} & $d\,g_{4}\,\sigma\,\iota\,g_{1}\,g_{8}\,g_{1}\,\iota\,\sigma\,g_{4}$ & $\kappa(g_{1},g_{8})$, $\kappa(\iota,g_{8})$, $\kappa(\sigma,g_{8})$, $\kappa(g_{4},g_{9})$, c \\
+C: \texttt{t1 t2 t1\textasciicircum{}-1 t2\textasciicircum{}-1} & $t\,g_{7}\,t\,g_{7}$ & $\kappa(t,g_{7})$, c \\
+A: \texttt{d t1 D t2\textasciicircum{}-1 t1\textasciicircum{}-1} & $d\,t\,d\,g_{7}\,t$ & $\kappa(d,t)$, $\lambda$ \\
+A: \texttt{d t2 D t2\textasciicircum{}-1} & $d\,g_{7}\,d\,g_{7}$ & $\kappa(g_{7},d)$, c \\
+A: \texttt{d t3 D t3\textasciicircum{}-1} & $d\,g_{11}\,d\,g_{11}$ & $\kappa(g_{11},d)$, c \\
+Z: \texttt{p x P X} & $x\,x$ & c \\
+Z: \texttt{p z P Z} & $z\,z$ & c \\
+Z: \texttt{q x Q X} & $\iota\,g_{1}\,x\,g_{1}\,\iota\,x$ & $\kappa(g_{1},x)$, $\kappa(x,\iota)$, c \\
+Z: \texttt{q z Q Z} & $\iota\,g_{1}\,z\,g_{1}\,\iota\,z$ & $\kappa(g_{1},z)$, $\kappa(z,\iota)$, c \\
+Z: \texttt{d x D X} & $d\,x\,d\,x$ & $\kappa(x,d)$, c \\
+Z: \texttt{d z D Z} & $d\,z\,d\,z$ & $\kappa(z,d)$, c \\
+L: \texttt{x x} & $x\,x$ & c \\
+L: \texttt{z z} & $z\,z$ & c \\
+L: \texttt{x z x z x z x z} & $x\,z\,x\,z\,x\,z\,x\,z$ & $\kappa(x,z)$, $\kappa(z,x)$, m, $\lambda$ \\
+P: \texttt{x t x T X t X T} & $x\,t\,x\,t\,x\,t\,x\,t$ & $\kappa(x,t)$, $\kappa(t,x)$, m, $\lambda$ \\
+P: \texttt{x t z T X t Z T} & $x\,t\,z\,t\,x\,t\,z\,t$ & $\kappa(t,z)$, $\kappa(x,g_{18})$, $\kappa(t,z)$, c \\
+P: \texttt{z t x T Z t X T} & $z\,t\,x\,t\,z\,t\,x\,t$ & $\kappa(t,x)$, $\kappa(z,g_{16})$, $\kappa(t,x)$, c \\
+P: \texttt{z t z T Z t Z T} & $z\,t\,z\,t\,z\,t\,z\,t$ & $\kappa(z,t)$, $\kappa(t,z)$, m, $\lambda$ \\
+K: \texttt{J t J\textasciicircum{}-1 T} & $x\,z\,x\,z\,t\,z\,x\,z\,x\,t$ & $\kappa(x,z)$, $\kappa(z,t)$, $\kappa(x,z)$, $\kappa(g_{12},g_{19})$, c \\
+$xzxz\,w^{-1}$ & $x\,z\,x\,z\,g_{14}$ & $\kappa(x,z)$, $\lambda$ \\
+\bottomrule
+\end{tabular}
+\captionsetup{hypcap=false}%
+\captionof{table}{The $29$ derivations of \cref{prop:presentation}(d), as recorded in \texttt{egamma0\_P.json}.}
+\label{cert:tab-deriv}
+\end{center}

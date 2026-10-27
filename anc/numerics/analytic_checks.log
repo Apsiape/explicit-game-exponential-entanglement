@@ -1,0 +1,28 @@
+Qubit count in a state (thm:count)
+  optimiser M=2, anc=1, start=0: S(rho)-bound=1.9200e-06, S(rho)=2.000
+  optimiser M=2, anc=1, start=1: S(rho)-bound=4.3481e-07, S(rho)=2.000
+  optimiser M=2, anc=1, start=0: S(rho)-bound=3.9302e-06, S(rho)=1.999
+  optimiser M=2, anc=1, start=1: S(rho)-bound=2.9249e-06, S(rho)=2.000
+  optimiser M=2, anc=1, start=0: S(rho)-bound=2.7766e-05, S(rho)=1.998
+  optimiser M=2, anc=1, start=1: S(rho)-bound=2.1929e-06, S(rho)=2.000
+  (i)  a_i^2 <= RHS                              instances=  1512  min slack=-1.869e-30  [OK]  worst at: M=2,anc=1,t=3.0,pure
+  (ii) b_i^2 <= RHS                              instances=  1512  min slack= 0.000e+00  [OK]  worst at: M=2,anc=1,t=0.0,flat
+  (iii) S(rho) >= sum of terms                   instances=   546  min slack= 0.000e+00  [OK]  worst at: M=2,anc=1,t=0.0,flat
+
+Rounding (lem:rounding)
+  ||(r(U)-U)xi|| <= ||(U^2-I)xi||                instances=  1000  min slack= 1.701e-03  [OK]  worst at: d=2,t=0.01,lowrank
+  ||[r(U),xi]|| <= ||[U,xi]||+2||(U^2-I)xi||     instances=  1000  min slack= 6.800e-03  [OK]  worst at: d=2,t=0.01,lowrank
+
+Sequential measurements and the return direction (lem:sequential, thm:return), magic square game
+  C_3 = 788.17 (paper: C_3 < 788.2)
+  largest loss/e^2 over instances with e>0: 0.435 (bound C_3 = 788.2) at optimiser seed=22, e=2.27e-01
+  loss(i,j) <= C_3 e^2 for every pair            instances=  5834  min slack=-1.042e-31  [OK]  worst at: anc=3,t=0.0,flat,pair=(0, 2)
+  lem:sequential(a): Pr[a_j != b_j] <= d_j^2/4   instances=   972  min slack=-5.551e-16  [OK]  worst at: anc=3,t=0.01,pure,j=0
+  negative control (exact operators, state not commuting with them): (S1),(S3) defects 0, (S2)-precision e=1.331, worst pair loss=0.443
+    The relations hold exactly, yet a pair is lost with constant probability: the state commutators of (S2)
+    cannot be dropped from the precision in thm:return.
+
+Profile of c in K in a state (thm:K-profile): d >= 1/(29 e)
+  29 e d - 1 >= 0                                instances=   538  min slack= 3.351e+01  [OK]  worst at: optimiser m=1,start=0, e=5.951e-01
+
+ALL CHECKS PASSED

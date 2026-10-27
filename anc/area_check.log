@@ -1,0 +1,141 @@
+PASS  S1 = {p}
+PASS  |S0| = 26 (26)
+PASS  |C0| = 76 distinct triples (76)
+PASS  |C1| = 10 (10)
+PASS  8 linear sets, each of 3 distinct elements
+PASS  defining words use only p,i,t,d,x,z (no q)
+PASS  base generator i defined as itself
+PASS  base generator t defined as itself
+PASS  base generator d defined as itself
+PASS  base generator x defined as itself
+PASS  base generator z defined as itself
+PASS  sigma = [p, i p i] = p i p i P I P I (freely)
+PASS  C0 triples lie in S0^3 (type E3)
+PASS  C1 pairs lie in S0^2 (type E4, y = p)
+PASS  linear sets lie in S0 (type E2)
+PASS  every pair inside a linear set is listed as a commutation triple (SV18 Sec. 6 format) []
+PASS  all 26 defining words are nontrivial involutions in G_P^+ []
+PASS  the 26 generators represent 26 distinct elements []
+PASS  all 76 C0 relations a b a = c hold []
+PASS  all 10 C1 relations p b p^-1 = c hold []
+PASS  all 8 linear relations hold, members commute []
+PASS  C1 is a partial function b -> c
+PASS  w = g14 maps to J = (xz)^2, the nontrivial central element
+PASS  J commutes with p, iota, t, d, x, z in G_P^+
+PASS  the 25 centrality triples (g, w, w) are in C0
+PASS  C1 contains p w p^-1 = w
+PASS  q = iota p iota in G_P^+ (Lemma 6.9 [lem:GPp])
+PASS  generators named in the text match their JSON words
+PASS  g3 = iota1 iota2 iota1
+PASS  g4 = p sigma p^-1, g6 = p^2 sigma p^-2
+PASS  s-lemma element: iota1 iota2 iota1 = sigma iota (eq. (19) [game:s-lemma])
+PASS  linear sets = {i1i2i1,i,sigma}, {t,t2,tt2}, {xzx,z,w}, {zxz,x,w}, {uvu,v,uvuv}, {vuv,u,uvuv} as in the text
+PASS  C1 = the ten triples of the text (p: i->i1->i2, s->psP->p2sP2, t->t2->t3, d->pdP, fixes x,z,w)
+PASS  R_P has 27 words
+PASS  relators_pauli.txt agrees with Table 2 [tab:RP] as transcribed from the PDF
+PASS  all 27 words of R_P are trivial in G_P
+INFO  longest freely reduced word of R_P: 22 letters (paper, Theorem 9.5 [thm:upper]: ell = 22)
+
+(R3) re-derivation with an exact cell count in F(S0 u S1)
+PASS  s-lemma  [p, i p i] sigma^-1: front end ['g1', 'g2', 'g1', 'i', 'sigma'] (cost 7), search cost 2, area <= 9
+PASS  H s s                            r-hat is trivial in G_P^+
+PASS  H s p s P s p s P s p s P        r-hat is trivial in G_P^+
+PASS  H s p p s P P s^-1 p p s^-1 P P  r-hat is trivial in G_P^+
+PASS  H p s P q s^-1 Q                 r-hat is trivial in G_P^+
+PASS  Q t t                            r-hat is trivial in G_P^+
+PASS  S t s p T P s^-1                 r-hat is trivial in G_P^+
+PASS  S t s q T Q s^-1                 r-hat is trivial in G_P^+
+PASS  S d B s p D P s^-1 B^-1          r-hat is trivial in G_P^+
+PASS  S d B s q D Q s^-1 B^-1          r-hat is trivial in G_P^+
+PASS  C t1 t2 t1^-1 t2^-1              r-hat is trivial in G_P^+
+PASS  A d t1 D t2^-1 t1^-1             r-hat is trivial in G_P^+
+PASS  A d t2 D t2^-1                   r-hat is trivial in G_P^+
+PASS  A d t3 D t3^-1                   r-hat is trivial in G_P^+
+PASS  Z p x P X                        r-hat is trivial in G_P^+
+PASS  Z p z P Z                        r-hat is trivial in G_P^+
+PASS  Z q x Q X                        r-hat is trivial in G_P^+
+PASS  Z q z Q Z                        r-hat is trivial in G_P^+
+PASS  Z d x D X                        r-hat is trivial in G_P^+
+PASS  Z d z D Z                        r-hat is trivial in G_P^+
+PASS  L x x                            r-hat is trivial in G_P^+
+PASS  L z z                            r-hat is trivial in G_P^+
+PASS  L x z x z x z x z                r-hat is trivial in G_P^+
+PASS  P x t x T X t X T                r-hat is trivial in G_P^+
+PASS  P x t z T X t Z T                r-hat is trivial in G_P^+
+PASS  P z t x T Z t X T                r-hat is trivial in G_P^+
+PASS  P z t z T Z t Z T                r-hat is trivial in G_P^+
+PASS  K J t J^-1 T                     r-hat is trivial in G_P^+
+      H      s s                              n_s=2  front   0  search   1  -> area <=   19 | authors: same seq True, replay True, exact cost 19, their bound 27
+PASS         authors' derivation of H s s replays under the exact cost model
+      H      s p s P s p s P s p s P          n_s=6  front   3  search   3  -> area <=   60 | authors: same seq True, replay True, exact cost 60, their bound 87
+PASS         authors' derivation of H s p s P s p s P s p s P replays under the exact cost model
+      H      s p p s P P s^-1 p p s^-1 P P    n_s=4  front   6  search   2  -> area <=   44 | authors: same seq True, replay True, exact cost 44, their bound 64
+PASS         authors' derivation of H s p p s P P s^-1 p p s^-1 P P replays under the exact cost model
+      H      p s P q s^-1 Q                   n_s=2  front   7  search   3  -> area <=   28 | authors: same seq True, replay True, exact cost 28, their bound 40
+PASS         authors' derivation of H p s P q s^-1 Q replays under the exact cost model
+      Q      t t                              n_s=0  front   0  search   1  -> area <=    1 | authors: same seq True, replay True, exact cost 1, their bound 1
+PASS         authors' derivation of Q t t replays under the exact cost model
+      S      t s p T P s^-1                   n_s=2  front   3  search   2  -> area <=   23 | authors: same seq True, replay True, exact cost 23, their bound 32
+PASS         authors' derivation of S t s p T P s^-1 replays under the exact cost model
+      S      t s q T Q s^-1                   n_s=2  front   7  search   4  -> area <=   29 | authors: same seq True, replay True, exact cost 29, their bound 40
+PASS         authors' derivation of S t s q T Q s^-1 replays under the exact cost model
+      S      d B s p D P s^-1 B^-1            n_s=4  front   6  search   3  -> area <=   45 | authors: same seq True, replay True, exact cost 45, their bound 64
+PASS         authors' derivation of S d B s p D P s^-1 B^-1 replays under the exact cost model
+      S      d B s q D Q s^-1 B^-1            n_s=4  front  10  search   5  -> area <=   51 | authors: same seq True, replay True, exact cost 51, their bound 72
+PASS         authors' derivation of S d B s q D Q s^-1 B^-1 replays under the exact cost model
+      C      t1 t2 t1^-1 t2^-1                n_s=0  front   4  search   2  -> area <=    6 | authors: same seq True, replay True, exact cost 6, their bound 8
+PASS         authors' derivation of C t1 t2 t1^-1 t2^-1 replays under the exact cost model
+      A      d t1 D t2^-1 t1^-1               n_s=0  front   4  search   4  -> area <=    8 | authors: same seq True, replay True, exact cost 8, their bound 7
+PASS         authors' derivation of A d t1 D t2^-1 t1^-1 replays under the exact cost model
+      A      d t2 D t2^-1                     n_s=0  front   4  search   2  -> area <=    6 | authors: same seq True, replay True, exact cost 6, their bound 8
+PASS         authors' derivation of A d t2 D t2^-1 replays under the exact cost model
+      A      d t3 D t3^-1                     n_s=0  front   6  search   2  -> area <=    8 | authors: same seq True, replay True, exact cost 8, their bound 12
+PASS         authors' derivation of A d t3 D t3^-1 replays under the exact cost model
+      Z      p x P X                          n_s=0  front   2  search   1  -> area <=    3 | authors: same seq True, replay True, exact cost 3, their bound 4
+PASS         authors' derivation of Z p x P X replays under the exact cost model
+      Z      p z P Z                          n_s=0  front   2  search   1  -> area <=    3 | authors: same seq True, replay True, exact cost 3, their bound 4
+PASS         authors' derivation of Z p z P Z replays under the exact cost model
+      Z      q x Q X                          n_s=0  front   6  search   3  -> area <=    9 | authors: same seq True, replay True, exact cost 9, their bound 12
+PASS         authors' derivation of Z q x Q X replays under the exact cost model
+      Z      q z Q Z                          n_s=0  front   6  search   3  -> area <=    9 | authors: same seq True, replay True, exact cost 9, their bound 12
+PASS         authors' derivation of Z q z Q Z replays under the exact cost model
+      Z      d x D X                          n_s=0  front   2  search   2  -> area <=    4 | authors: same seq True, replay True, exact cost 4, their bound 4
+PASS         authors' derivation of Z d x D X replays under the exact cost model
+      Z      d z D Z                          n_s=0  front   2  search   2  -> area <=    4 | authors: same seq True, replay True, exact cost 4, their bound 4
+PASS         authors' derivation of Z d z D Z replays under the exact cost model
+      L      x x                              n_s=0  front   0  search   1  -> area <=    1 | authors: same seq True, replay True, exact cost 1, their bound 1
+PASS         authors' derivation of L x x replays under the exact cost model
+      L      z z                              n_s=0  front   0  search   1  -> area <=    1 | authors: same seq True, replay True, exact cost 1, their bound 1
+PASS         authors' derivation of L z z replays under the exact cost model
+      L      x z x z x z x z                  n_s=0  front   0  search   4  -> area <=    4 | authors: same seq True, replay True, exact cost 6, their bound 4
+PASS         authors' derivation of L x z x z x z x z replays under the exact cost model
+      P      x t x T X t X T                  n_s=0  front   4  search   4  -> area <=    8 | authors: same seq True, replay True, exact cost 10, their bound 8
+PASS         authors' derivation of P x t x T X t X T replays under the exact cost model
+      P      x t z T X t Z T                  n_s=0  front   4  search   4  -> area <=    8 | authors: same seq True, replay True, exact cost 8, their bound 8
+PASS         authors' derivation of P x t z T X t Z T replays under the exact cost model
+      P      z t x T Z t X T                  n_s=0  front   4  search   4  -> area <=    8 | authors: same seq True, replay True, exact cost 8, their bound 8
+PASS         authors' derivation of P z t x T Z t X T replays under the exact cost model
+      P      z t z T Z t Z T                  n_s=0  front   4  search   4  -> area <=    8 | authors: same seq True, replay True, exact cost 10, their bound 8
+PASS         authors' derivation of P z t z T Z t Z T replays under the exact cost model
+      K      J t J^-1 T                       n_s=0  front   5  search   5  -> area <=   10 | authors: same seq True, replay True, exact cost 10, their bound 10
+PASS         authors' derivation of K J t J^-1 T replays under the exact cost model
+      Jlink  (xz)^2 w^-1                      n_s=0  front   1  search   2  -> area <=    3 | authors: same seq True, replay True, exact cost 5, their bound 3
+PASS         authors' derivation of Jlink (xz)^2 w^-1 replays under the exact cost model
+INFO  A_s (s-lemma area bound) = 9
+INFO  my A_* = 60 (attained by ('H', 's p s P s p s P s p s P')); paper takes A_* = 60; my total over the 29 words = 420
+PASS  A_* <= 60 holds with the exact cell count (my value 60)
+INFO  C0 triples used by the authors' derivations: 32; centrality: 25; linear-set commutations: 24 (of which 5 already among the previous two); union = 76
+PASS  C0 = (derivation triples) u (25 centrality) u (linear-set commutations); counts 32 + 25 + 19 = 76: 32 + 25 + 19
+INFO  my own derivations use 35 C0 triples, 3 of them among the 19 added commutation triples
+PASS  all 29 derivations exist without the 19 added commutation triples (max area 60)
+INFO  ell_E = max |theta(r)|, r in R: 46 letters before free reduction (E3), 44 after (E3) (paper: 44)
+PASS  ell_E = 44 as stated in Proposition 10.3(b) [prop:presentation]
+PASS  every theta(r), r in R, is trivial in G_P^+ (R2 input of Proposition 9.4 [prop:hash-models])
+
+Negative controls
+PASS  false C0 triple x t x = txt rejected by the model
+PASS  no derivation of the nontrivial word x z
+PASS  no derivation of the nontrivial word (xzx)(ztz)
+PASS  s-lemma underivable after deleting the C0 triple (g1, g2, g3)
+
+ALL CHECKS PASSED

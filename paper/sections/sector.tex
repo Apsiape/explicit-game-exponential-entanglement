@@ -1,0 +1,244 @@
+%======================================================================
+\section{Lamps force entropy: the sector theorem}\label{sec:sector}
+%======================================================================
+
+This section proves the lower bound of Theorem~B, and the group-theoretic half of the lower bound of Theorem~A. Its main result,
+\cref{thm:sector}, is stated for an arbitrary state: if an assignment of unitaries to $p,q,t,d,x,z$ satisfies the certificate $\RP$ to
+precision $e$ in a state $\rho$, nearly commutes with $\rho^{1/2}$, and keeps $J$ visibly away from $I$ in that state, then $\rho$ has
+entropy at least $e^{-2+o(1)}$. \Cref{sec:game} feeds into it the models that \cref{thm:transfer} extracts from strategies, so the
+theorem bounds the entanglement entropy of every near-optimal strategy. For the flat state it is the lower bound for the hyperlinear
+profile of $J$ (\cref{cor:hlp-lower}). Throughout, areas are taken with respect to $\RP$ (\cref{def:RP}), $J$ also denotes the word
+$xzxz$, and for $0<\eps<\frac12$ we put
+\begin{equation}\label{eq:sector-bfun}
+\bfun(\eps)=2^{-4(24+\log\log(1/\eps))^2}.
+\end{equation}
+Since $\log(1/\bfun(\eps))=O((\log\log(1/\eps))^2)$, we have $\bfun(\eps)=\eps^{o(1)}$ as $\eps\to0$, and $\bfun$ is increasing on
+$(0,\frac12)$.
+
+\paragraph{The picture.} On the first $N$ points of ray~$1$ there are $2^N$ configurations $u\subseteq\{1,\dots,N\}$, and the transporter
+$T_u$ of \cref{def:transporter} carries the Pauli pair $x,z$ at the configuration $0$ to the pair $T_uxT_u^{-1},T_uzT_u^{-1}$ at $u$. In
+$\GP$ these $2^N$ pairs satisfy the Pauli relations: pairs at different configurations commute, and each pair squares to the same central
+involution, $(T_uxT_u^{-1}\,T_uzT_u^{-1})^2=T_uJT_u^{-1}=J$. On the sector where $J$ acts as $-1$, an exact representation therefore
+carries $2^N$ anticommuting pairs, that is, $2^N$ qubits. In an approximate model the transported lamps become $2^N$ approximate Pauli
+pairs measured in the sector state, and \cref{cor:count} counts them: they still force about $2^N$ bits of entropy, as long as $2^N$ times
+the square of their errors stays below a constant. The errors are priced by the pair areas of \cref{thm:pair-area}. A commutator of two
+transported lamps has area at most $\Lambda_N$, and in a fixed state a filling of area $\Lambda$ costs its area times the length of its
+conjugators, which is again of order $\Lambda$ (\cref{lem:conjugator-length,lem:calculus}); so each error is of order
+$\Lambda_N^2e/\Delta$, where $\Delta$ measures how far $J$ is from $I$. The proof balances $2^N$ against $\Lambda_N^4$; with
+$\Lambda_N\le2^{(\log N+23)^2}$ the best $N$ has $2^N\approx\Delta^2e^{-2}\bfun(e)$.
+
+\begin{theorem}[The sector theorem]\label{thm:sector}
+Let $\phi:F(p,q,t,d,x,z)\to\U(D)$ be a homomorphism and $\rho$ a density matrix on $\C^D$, with $\xi=\rho^{1/2}$. Suppose that, for some
+$e>0$ and $0<\Delta\le2$,
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item $\hs{(\phi(r)-I)\xi}\le e$ for every $r\in\RP$;
+\item $\hs{[\phi(s),\xi]}\le e$ for every letter $s\in\{p,q,t,d,x,z\}$;
+\item $\hs{(\phi(J)-I)\xi}\ge\Delta$.
+\end{enumerate}
+If $e\le2^{-1071}\Delta$, then
+\[
+\log\rank\rho\ \ge\ c_1\,\Delta^2e^{-2}\,\bfun(e),\qquad c_1=\frac1{4.1\cdot10^7}.
+\]
+Moreover, let $J'=\mathrm r(\phi(J))$ be the rounding of \cref{lem:rounding}, $P_\pm=\frac12(I\pm J')$, $p_-=\Tr(P_-\rho)$, and let
+$\rho_-=P_-\rho P_-/p_-$ be the sector state of \cref{lem:sector-state}. Then $p_-\ge\Delta^2/16$, $\hs{[J',\xi]}\le6e$,
+$S(\rho_-)\ge c_1\Delta^2e^{-2}\bfun(e)$, and
+\[
+S(\rho)\ \ge\ \frac{c_1}{16}\,\Delta^4e^{-2}\,\bfun(e)-1 .
+\]
+\end{theorem}
+
+For the flat state $\rho=I/D$ the state commutators vanish, condition~(ii) holds trivially, and the theorem bounds $\log D$; this is
+\cref{cor:hlp-lower}. Nothing about the state is used beyond (i)--(iii), so the theorem applies to any state in which a model is
+accurate.
+
+The proof follows the picture. For a scale $N$ we round the transported lamps to involutions (Step~1), derive their pairwise relations
+from the pair areas and their relation to $J$ from \cref{lem:J-transport} (Step~2), pass to the sector state where the rounded $J$ is
+$-1$ (Step~3), and apply the count (Step~4); Step~5 chooses $N$. Every estimate is measured in the state, and conjugators are paid for
+through state commutators.
+
+\begin{proof}
+Fix $N\ge1$, to be chosen in Step~5, and put $n=\max(3,N)$, $M=2^N$, $l=21Nn\ge63$ and $\Lambda=\Lambda_N$. For $u\subseteq\{1,\dots,N\}$
+the transporter $T_u$ has $\lvert T_u\rvert\le l$ (\cref{thm:pair-area}). By \cref{rem:pair-growth}, $\Lambda\ge14000N^2n=\frac{2000N}3\,l$,
+so
+\begin{equation}\label{eq:sector-l}
+l\le\Lambda/666,\qquad l^2\le\Lambda^2/443556 .
+\end{equation}
+Every word of $\RP$ has length at most $30$ (in fact at most $22$, \cref{def:RP}), so \cref{lem:conjugator-length} applies with $K=30$.
+
+\emph{Step 1: rounding.} Let $A_u=\phi(T_uxT_u^{-1})$ and $B_u=\phi(T_uzT_u^{-1})$. These words have length at most $2l+1$, so their state
+commutators are at most $(2l+1)e$ by \cref{lem:calculus}(a). Since $A_u^2=\phi(T_u)\phi(x^2)\phi(T_u)^{-1}$ with $x^2\in\RP$ and
+$\hs{[\phi(T_u),\xi]}\le le$, \cref{lem:calculus}(c) gives $\hs{(A_u^2-I)\xi}\le e+2le\le(2l+1)e$, and likewise for $B_u$ with
+$z^2\in\RP$. Put
+\[
+X_u=\mathrm r(A_u),\qquad Z_u=\mathrm r(B_u),\qquad J'=\mathrm r(\phi(J)) .
+\]
+By \cref{lem:rounding}, $\hs{(X_u-A_u)\xi}\le(2l+1)e$ and $\hs{[X_u,\xi]}\le3(2l+1)e\le7le$, and the same holds for $Z_u$ and $B_u$. We
+write
+\[
+\gamma=7le,\qquad\text{so that}\qquad\hs{[X_u,\xi]},\ \hs{[Z_u,\xi]}\le\gamma,\qquad \gamma\ge441e .
+\]
+Since $\phi(J)^2=\phi((xz)^4)$ and $(xz)^4\in\RP$, we have $\hs{(\phi(J)^2-I)\xi}\le e$, so \cref{lem:rounding} gives
+$\hs{(J'-\phi(J))\xi}\le e$ and, as $J=xzxz$ has length $4$, $\hs{[J',\xi]}\le4e+2e=6e$.
+
+\emph{Step 2: relations.} \emph{Different sites.} Let $u\ne w$, $a,b\in\{x,z\}$, and $c=[T_uaT_u^{-1},T_wbT_w^{-1}]$. This word has length
+at most $4(2l+1)\le9l$ and area at most $\Lambda$ (\cref{thm:pair-area}). By \cref{lem:conjugator-length} it is freely a product of at most
+$\Lambda$ conjugates of words of $\RP^{\pm1}$ with conjugators of length at most $9l+30\Lambda$, so by \cref{lem:calculus}(d)
+\[
+\hs{(\phi(c)-I)\xi}\ \le\ \Lambda\bigl(1+2(9l+30\Lambda)\bigr)e=\Lambda(60\Lambda+18l+1)e\ \le\ 61\Lambda^2e,
+\]
+because $18l+1\le\Lambda$ by~\eqref{eq:sector-l}. Let $R^a_u$ be $X_u$ if $a=x$ and $Z_u$ if $a=z$. We replace the four factors of
+$\phi(c)=Y_1Y_2Y_1^{-1}Y_2^{-1}$, $Y_1=\phi(T_uaT_u^{-1})$, $Y_2=\phi(T_wbT_w^{-1})$, by the involutions $R^a_u,R^b_w,R^a_u,R^b_w$. Each
+factor moves by at most $3\gamma$ in the state-weighted norm: by at most $(2l+1)e\le\gamma$ for $Y_1,Y_2$, and for the inverted factors,
+writing $Y^{-1}-R=Y^{-1}(R-Y)R$, by at most $\hs{(R-Y)\xi}+2\hs{[R,\xi]}\le3\gamma$. The replacements have state commutators at most
+$\gamma$, so \cref{lem:calculus}(e) bounds the total cost by $4\cdot3\gamma+2(3+2+1)\gamma=24\gamma$. Since
+$[R^a_u,R^b_w]=(R^a_uR^b_wR^a_uR^b_w-I)R^b_wR^a_u$ and moving $R^b_wR^a_u$ to the right of $\xi$ costs at most $2\cdot2\gamma$,
+\begin{equation}\label{eq:sector-comm}
+\hs{[Z_u,Z_w]\xi},\ \ \hs{[X_u,Z_w]\xi}\ \le\ 61\Lambda^2e+28\gamma\qquad(u\ne w).
+\end{equation}
+
+\emph{One site.} Let $K_u=X_uZ_uX_uZ_u$. By \cref{lem:J-transport}, $A_uB_uA_uB_u=\phi(T_uJT_u^{-1})=\phi(j_u)\phi(J)$ with
+$j_u=T_uJT_u^{-1}J^{-1}$, a word of length at most $2l+8$ and area at most $4\lvert T_u\rvert\le4l$. By
+\cref{lem:conjugator-length,lem:calculus}(d),
+\[
+\hs{(\phi(j_u)-I)\xi}\le4l\bigl(1+2(2l+8+30\cdot4l)\bigr)e=4l(244l+17)e\le984\,l^2e .
+\]
+Replacing $X_u,Z_u$ by $A_u,B_u$ in $K_u$ costs at most $4(2l+1)e+2(3+2+1)(2l+1)e=16(2l+1)e\le34le$ by \cref{lem:calculus}(e), with the
+state commutators of $A_u,B_u$. Moving $\phi(J)$ to the right of $\xi$ costs at most $2\cdot4e$, and replacing $\phi(J)$ by $J'$ costs at
+most $e$. Hence, for every $u$,
+\[
+\hs{(K_u-J')\xi}\ \le\ 34le+984l^2e+8e+e\ \le\ \gamma_0:=1000\,l^2e .
+\]
+As $X_u$ and $Z_u$ are involutions, $X_uK_uX_u=Z_uK_uZ_u=K_u^*$, and $K_u^*-J'=K_u^*(J'-K_u)J'$, so
+$\hs{(K_u^*-J')\xi}\le\gamma_0+2\hs{[J',\xi]}\le\gamma_0+12e$. Writing $X_uJ'X_u-J'=X_u(J'-K_u)X_u+(K_u^*-J')$, we get
+$\hs{(X_uJ'X_u-J')\xi}\le(\gamma_0+2\gamma)+(\gamma_0+12e)$, and since $[X_u,J']=(X_uJ'X_u-J')X_u$, moving $X_u$ to the right of $\xi$ adds
+$2\gamma$. With the same argument for $Z_u$,
+\begin{equation}\label{eq:sector-J}
+\hs{[X_u,J']\xi},\ \ \hs{[Z_u,J']\xi}\ \le\ 2\gamma_0+4\gamma+12e .
+\end{equation}
+Finally $\{X_u,Z_u\}=(K_u+I)Z_uX_u$. Since $(J'+I)P_-=0$,
+\[
+\{X_u,Z_u\}P_-=(K_u-J')Z_uX_uP_-+(J'+I)[Z_uX_u,P_-] .
+\]
+Applied to $\xi$, the first term has norm at most $\gamma_0+2\cdot2\gamma+2\hs{[P_-,\xi]}\le\gamma_0+4\gamma+6e$, as
+$\hs{[P_-,\xi]}=\frac12\hs{[J',\xi]}\le3e$. The second has norm at most $2\hs{[Z_uX_u,P_-]\xi}=\hs{[Z_uX_u,J']\xi}$, and
+$[Z_uX_u,J']=Z_u[X_u,J']+[Z_u,J']X_u$ gives the bound $2(2\gamma_0+4\gamma+12e)+2\gamma$ by~\eqref{eq:sector-J}. As $30e\le\gamma$,
+\begin{equation}\label{eq:sector-anti}
+\hs{\{X_u,Z_u\}P_-\xi}\ \le\ 5\gamma_0+14\gamma+30e\ \le\ 5\gamma_0+15\gamma .
+\end{equation}
+
+\emph{Step 3: the sector.} We have $p_-=\Tr(P_-\rho)=\hs{P_-\xi}^2=\frac14\hs{(I-J')\xi}^2$, and
+$\hs{(I-J')\xi}\ge\hs{(I-\phi(J))\xi}-\hs{(\phi(J)-J')\xi}\ge\Delta-e\ge\Delta/2$, so $p_-\ge\Delta^2/16$. Let $\rho_-$ and
+$\xi_-=\rho_-^{1/2}$ be as in \cref{lem:sector-state}; by its part~(a), $\hs{P_+\xi P_-}\le\frac12\hs{[J',\xi]}\le3e$. We bound the five
+quantities that \cref{cor:count} needs, in the state $\rho_-$.
+\begin{itemize}[itemsep=1pt]
+\item For an operator $R$ with $\op R\le2$, \cref{lem:sector-state}(b) gives
+\[
+\hs{R\xi_-}\le(\hs{R\xi}+\op R\hs{[J',\xi]})/\sqrt{p_-}\le(\hs{R\xi}+12e)/\sqrt{p_-}.
+\]
+With~\eqref{eq:sector-comm}, $\hs{[Z_u,Z_w]\xi_-}$ and $\hs{[X_u,Z_w]\xi_-}$ are at most $(61\Lambda^2e+28\gamma+12e)/\sqrt{p_-}$.
+\item By the first bound of \cref{lem:sector-state}(b) and~\eqref{eq:sector-anti},
+\[
+\hs{\{X_u,Z_u\}\xi_-}\le\frac{\hs{\{X_u,Z_u\}P_-\xi}+2\hs{P_+\xi P_-}}{\sqrt{p_-}}\le\frac{5\gamma_0+15\gamma+6e}{\sqrt{p_-}}.
+\]
+\item By \cref{lem:sector-state}(c) for the unitaries $X_u$, $Z_u$, with~\eqref{eq:sector-J},
+\begin{align*}
+\hs{[X_u,\xi_-]}&\le\frac{\hs{[X_u,J']\xi}+3\hs{[X_u,\xi]}+\hs{[J',\xi]}}{\sqrt{p_-}}\\
+&\le\frac{(2\gamma_0+4\gamma+12e)+3\gamma+6e}{\sqrt{p_-}}=\frac{2\gamma_0+7\gamma+18e}{\sqrt{p_-}},
+\end{align*}
+and the same bound holds for $\hs{[Z_u,\xi_-]}$.
+\end{itemize}
+By~\eqref{eq:sector-l}, $\gamma=7le\le0.011\,\Lambda e$ and $\gamma_0=1000l^2e\le0.0023\,\Lambda^2e$, and $\Lambda\ge42000$. So
+$61\Lambda^2e+28\gamma+12e\le(61\Lambda^2+0.31\Lambda+12)e$, $5\gamma_0+15\gamma+6e\le(0.012\Lambda^2+0.17\Lambda+6)e$ and
+$2\gamma_0+7\gamma+18e\le(0.005\Lambda^2+0.08\Lambda+18)e$, and all five quantities are at most
+\[
+\eta:=\frac{63\Lambda^2e}{\sqrt{p_-}}\ \le\ \frac{252\Lambda^2e}{\Delta}.
+\]
+
+\emph{Step 4: counting.} Apply \cref{cor:count} on $\C^D$ to the state $\rho_-$ and the $M\ge2$ pairs of involutions $(X_u,Z_u)$,
+$u\subseteq\{1,\dots,N\}$, ordered in any way; all its hypotheses hold with the uniform bound $\eta$. If
+\begin{equation}\label{eq:sector-N}
+2^N\Lambda_N^4\ \le\ \frac{\Delta^2}{1.02\cdot10^7\,e^2},
+\end{equation}
+then $16M\eta^2\le16\cdot252^2\cdot2^N\Lambda^4e^2/\Delta^2\le16\cdot252^2/(1.02\cdot10^7)<0.0997<\frac1{10}$, so \cref{cor:count} gives
+$S(\rho_-)\ge\frac34M\ge2^{N-1}$. By \cref{lem:sector-entropy}, $\log\rank\rho\ge\log\rank\rho_-\ge S(\rho_-)$.
+
+\emph{Step 5: the choice of $N$.} By \cref{rem:pair-growth}, $\log\Lambda_N\le(\log N+23)^2$. Put
+\[
+Q=\log\frac{\Delta^2}{1.02\cdot10^7\,e^2},\qquad g(N)=N+4(\log N+23)^2 ,
+\]
+so that $g$ is increasing, $g(1)=2117$, and~\eqref{eq:sector-N} holds whenever $g(N)\le Q$. For $e\le2^{-1071}\Delta$ we have
+$Q\ge2142-\log(1.02\cdot10^7)>2118$, since $\log(1.02\cdot10^7)<23.3$, and $e\le\Delta/2$. Let $N$ be the largest integer with $g(N)\le Q$;
+then $N\ge1$. By maximality $g(N+1)>Q$, that is, $N>Q-1-4(\log(N+1)+23)^2$. Also $N+1<g(N)\le Q<2\log(1/e)$, because $\Delta\le2$ gives
+$Q\le2+2\log(1/e)-23$; so $\log(N+1)<1+\log\log(1/e)$. Therefore
+\[
+2^{N-1}\ >\ 2^{\,Q-2-4(\log(N+1)+23)^2}\ \ge\ \frac{\Delta^2}{4.08\cdot10^7\,e^2}\,2^{-4(24+\log\log(1/e))^2}\ \ge\ c_1\Delta^2e^{-2}\bfun(e),
+\]
+and with Step~4 this proves the bounds for $\log\rank\rho$ and $S(\rho_-)$. We showed $p_-\ge\Delta^2/16$ and $\hs{[J',\xi]}\le6e$ in Steps~3
+and~1. Finally, by \cref{lem:sector-entropy} and $h\le1$,
+\[
+S(\rho)\ \ge\ p_-\,S(\rho_-)-h\bigl(\min(\hs{[J',\xi]}^2/4,\tfrac12)\bigr)\ \ge\ \frac{\Delta^2}{16}\,S(\rho_-)-1. \qedhere
+\]
+\end{proof}
+
+\begin{remark}[Where the exponent $4$ comes from]\label{sector:rem-exponent}
+The pair area enters~\eqref{eq:sector-N} to the fourth power because it enters the errors squared: a filling of area $\Lambda$ is charged
+its area times the length of its conjugators, which is again of order $\Lambda$ (\cref{lem:conjugator-length}). This is why $\bfun$ has
+the factor $4$ in its exponent. In the flat state conjugation costs nothing, the words $c$ of Step~2 have defect at most $\Lambda e$
+(\cref{lem:defect}), and the same argument, with $\Lambda_N^2$ in place of $\Lambda_N^4$, gives the factor $2^{-2(24+\log\log(1/e))^2}$ for
+$\log D$ (with other constants). Both factors are $e^{o(1)}$, and we do not use the sharper flat one. The exponent $2$ of $\Delta/e$ is the
+same in both cases.
+\end{remark}
+
+\begin{remark}[Under the polynomial Dehn bound]\label{rem:sector-poly}
+Assume~\ref{H-poly}. Then the pair areas satisfy $\Lambda_N\le C'N^\kappa$ for all $N\ge1$, with $\kappa=6+\log107$ and an absolute
+constant $C'\ge1$ (\cref{rem:pair-growth}). In Step~5 choose instead $N$ maximal with $2^NC'^4N^{4\kappa}\le\Delta^2/(1.02\cdot10^7e^2)$;
+such $N\ge1$ exists when $e\le e_0\Delta$ with $e_0=1/(5000\,C'^2)$, and then~\eqref{eq:sector-N} holds. Maximality gives
+$2^{N-1}>\Delta^2/(4.08\cdot10^7C'^4e^2(N+1)^{4\kappa})$, and $N+1\le3\log(1/e)$ because $2^N<e^{-2}$. So, for $e\le e_0\Delta$,
+\[
+\log\rank\rho,\ S(\rho_-)\ \ge\ c\,\Delta^2e^{-2}(\log(1/e))^{-4\kappa},\qquad c=\frac1{4.08\cdot10^7\cdot81^{\kappa}C'^4},
+\]
+and the factor $\bfun(e)$ becomes a power of $\log(1/e)$, here and in everything deduced from \cref{thm:sector}.
+\end{remark}
+
+\subsection{The flat profile of \texorpdfstring{$J$}{J}}
+
+For the flat state, \cref{thm:sector} is a statement about $\eps$-representations. We record it for every finite set of relators that
+contains the certificate, and, with weaker constants, for every finite set of relators in which the certificate has bounded area. The
+latter covers finite presentations of $\GP$ and of $\GPp$ on any finite generating set and any word representing $J$ (\cref{rem:GP-fp}).
+
+\begin{corollary}[Lower bound for the profile of $J$]\label{cor:hlp-lower}
+\leavevmode
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item Let $R$ be a finite set of words in $p,q,t,d,x,z$ that represent $1$ in $\GP$, with $\RP\subseteq R$. For $0<\delta\le2$ and
+$0<\eps\le2^{-1071}\delta$,
+\[
+\log\hlp_R(J;\delta,\eps)\ \ge\ c_1\,\delta^2\eps^{-2}\,\bfun(\eps).
+\]
+\item Let $S$ be a finite alphabet, $R\subset F(S)$ finite and $w\in F(S)$. Suppose there are words $\hat s\in F(S)$ for
+$s\in\{p,q,t,d,x,z\}$ and an integer $k\ge1$ such that, for every $r\in\RP$, the word $\hat r$ obtained from $r$ by substituting $\hat s$
+for $s$ has area at most $k$ in $R$, and so has $w^{-1}(\hat x\hat z)^2$. Then for $0<\delta\le2$ and $0<\eps\le2^{-1072}\delta/k$,
+\[
+\log\hlp_R(w;\delta,\eps)\ \ge\ \frac{c_1}{4k^2}\,\delta^2\eps^{-2}\,\bfun(\eps).
+\]
+\end{enumerate}
+Under~\ref{H-poly} the factor $\bfun(\eps)$ improves to $(\log(1/\eps))^{-4\kappa}$, with other constants (\cref{rem:sector-poly}).
+\end{corollary}
+
+\begin{proof}
+For the flat state $\rho=I/D$ we have $\xi=D^{-1/2}I$, so $\hs{Y\xi}=\fn{Y}$ for every $Y$, every state commutator vanishes, and
+$\rank\rho=D$.
+
+(a) Let $\phi$ be an $\eps$-representation of $\langle p,q,t,d,x,z\mid R\rangle$ in $\U(D)$ with $\fn{\phi(J)-I}\ge\delta$. Conditions
+(i)--(iii) of \cref{thm:sector} hold for the flat state with $e=\eps$ and $\Delta=\delta$, so $\log D\ge c_1\delta^2\eps^{-2}\bfun(\eps)$.
+
+(b) Let $\phi$ be an $\eps$-representation of $\langle S\mid R\rangle$ in $\U(D)$ with $\fn{\phi(w)-I}\ge\delta$, and let $\phi'$ be the
+homomorphism on $F(p,q,t,d,x,z)$ with $\phi'(s)=\phi(\hat s)$. By \cref{lem:defect}, $\fn{\phi'(r)-I}=\fn{\phi(\hat r)-I}\le k\eps$ for
+$r\in\RP$, and $\fn{\phi'(J)-\phi(w)}=\fn{\phi(w^{-1}(\hat x\hat z)^2)-I}\le k\eps$, so $\fn{\phi'(J)-I}\ge\delta-k\eps\ge\delta/2$. Apply
+\cref{thm:sector} to $\phi'$ and the flat state with $e=k\eps$ and $\Delta=\delta/2$; its hypothesis $e\le2^{-1071}\Delta$ is our
+assumption on $\eps$. Since $\bfun$ is increasing and $k\eps\ge\eps$,
+$\log D\ge c_1(\delta/2)^2(k\eps)^{-2}\bfun(k\eps)\ge\frac{c_1}{4k^2}\delta^2\eps^{-2}\bfun(\eps)$.
+\end{proof}
+
+When $\langle S\mid R\rangle$ presents $\GP$ (or $\GPp$) and $w$ represents $J$, the hypothesis of~(b) holds for any words $\hat s$ that
+represent $p,q,t,d,x,z$, because the words $\hat r$ and $w^{-1}(\hat x\hat z)^2$ represent $1$ (\cref{lem:RP-valid}) and so have finite area; this is the
+argument of \cref{lem:change-presentation}. The matching upper bound, and the state-weighted version, are \cref{thm:profile}.

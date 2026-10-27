@@ -1,0 +1,55 @@
+% Figure 1: the three rays, a configuration, and a transporter (introduction).
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>=Stealth,baseline=(current bounding box.center),
+  pt/.style={circle,draw,fill=white,inner sep=0pt,minimum size=5pt},
+  on/.style={pt,fill=black},
+  lbl/.style={font=\footnotesize,inner sep=1pt}]
+\def\u{0.7}
+\foreach \i/\ang in {1/0,2/120,3/240}{
+  \draw[black!50] (0,0) -- (\ang:4.4*\u);
+  \node at (\ang:4.85*\u) {$\cdots$};
+  \foreach \j in {1,...,4}{\node[pt] (p\i\j) at (\ang:\j*\u) {};}
+}
+\node[lbl,anchor=west] at ($(120:4.8*\u)+(0.3,0)$) {ray $2$};
+\node[lbl,anchor=west] at ($(240:4.8*\u)+(0.3,0)$) {ray $3$};
+\node[lbl,anchor=north] at ($(0:4.8*\u)+(0.1,-0.2)$) {ray $1$};
+\foreach \j in {1,...,4}{\node[lbl,anchor=north] at ($(p1\j)+(0,-0.16)$) {$\j$};}
+\node[on] at (p11) {};
+\node[on] at (p13) {};
+\node[lbl,anchor=south] at ($(p12)+(0,0.3)$) {$u=e_1+e_3$};
+\end{tikzpicture}%
+\hspace{1.2cm}%
+\begin{tikzpicture}[x=0.85cm,y=0.85cm,font=\small,>=Stealth,baseline=(current bounding box.center),
+  lamp/.style={circle,draw,fill=white,inner sep=0pt,minimum size=7pt},
+  mv/.style={blue!50!black,very thick,->,shorten >=4pt,shorten <=4pt},
+  lbl/.style={font=\footnotesize,inner sep=1pt}]
+\coordinate (v0) at (0,0);
+\coordinate (v1) at (2.4,0);
+\coordinate (v2) at (0,2.4);
+\coordinate (v12) at (2.4,2.4);
+\coordinate (v3) at (1.3,1.1);
+\coordinate (v13) at (3.7,1.1);
+\coordinate (v23) at (1.3,3.5);
+\coordinate (v123) at (3.7,3.5);
+\draw[black!40] (v0) -- (v1) -- (v12) -- (v2) -- cycle;
+\draw[black!40] (v3) -- (v13) -- (v123) -- (v23) -- cycle;
+\draw[black!40] (v0) -- (v3) (v1) -- (v13) (v2) -- (v23) (v12) -- (v123);
+\draw[mv] (v0) -- (v3);
+\draw[mv] (v3) -- (v13);
+\node[lbl,blue!50!black,anchor=south east] at ($(v0)!0.5!(v3)+(-0.02,0.06)$) {$\tau_3$};
+\node[lbl,blue!50!black,anchor=south] at ($(v3)!0.3!(v13)+(0,0.08)$) {$\tau_1$};
+\foreach \v in {v0,v1,v2,v12,v3,v13,v23,v123}{\node[lamp] at (\v) {};}
+\node[lbl,anchor=north east] at ($(v0)+(-0.1,-0.1)$) {$0$: $x,z$};
+\node[lbl,anchor=north west] at ($(v13)+(0.1,-0.12)$) {$u$: $x_u,z_u$};
+\node[lbl,anchor=north] at ($(v1)+(0,-0.18)$) {$e_1$};
+\node[lbl,anchor=east] at ($(v2)+(-0.18,0)$) {$e_2$};
+\node[lbl,anchor=south east] at ($(v3)+(-0.1,0.08)$) {$e_3$};
+\end{tikzpicture}
+\caption{Left: the points of the three rays of Houghton's group and a configuration $u=e_1+e_3$, a finite set of points (filled). Right: the
+$2^3$ configurations supported on the points $1,2,3$ of ray~$1$, each carrying a Pauli pair (a circle), with $(x_vz_v)^2=J$ for all $v$. The
+transporter $T_u=\tau_1\tau_3$, a word in the generators, carries the configuration $0$ to $u$ (bold path), and conjugation by it carries the
+pair $x,z$ at $0$ to the pair $x_u=T_uxT_u^{-1}$, $z_u=T_uzT_u^{-1}$ at $u$. On $N$ points there are $2^N$ pairs, and on the sector where $J$
+acts as $-1$ each acts as a qubit.}
+\label{fig:lamps}
+\end{figure}

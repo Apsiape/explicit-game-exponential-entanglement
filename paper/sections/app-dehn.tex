@@ -1,0 +1,223 @@
+%======================================================================
+\section{A quasi-polynomial Dehn bound for Houghton's group}\label{app:dehn}
+%======================================================================
+\providecommand{\dehnA}{\mathsf A}
+\providecommand{\dehnB}{\mathsf B}
+\providecommand{\dehnE}{\mathsf E}
+\providecommand{\dehnU}{\mathsf U}
+
+This appendix proves the bound~\ref{H-exp}, $\dH(n)\le2^{(\log n+6)^2}$, on the Dehn function of the presentation $P_H$ of Houghton's
+group in~\eqref{eq:PH}, and with it that $P_H$ presents $H=H_3$. We work in Johnson's presentation $P_J$, which has the extra generator
+$\alpha=[p,q]$, and first check that its Dehn function bounds that of $P_H$ (\cref{dehn:PJ}). Every null word is then collected, at
+polynomial cost, into a word in the adjacent transpositions $\sigma_j$ of ray~$1$, which normal forms in a symmetric group reduce to the
+empty word (\cref{prop:collection}). The only expensive moves are commutations of far-apart transpositions $[\sigma_0,\sigma_m]$, $m\ge2$.
+Lee's recursion~\cite[Section~4.2]{Lee12} bounds their areas through areas at smaller distances and gives an exponential bound; splitting
+the distance in half gives $m^{(1+o(1))\log m}$ (\cref{prop:far-qp}). The recursion is that of~\cite[Section~3]{DM-H3} and the collection
+argument that of~\cite[Theorem~3.3]{DM-H3}; both are proved here in full. We use the notation of \cref{sec:group-houghton}.
+
+\subsection{Johnson's presentation}\label{dehn:sec-PJ}
+
+Words in the letters $p^{\pm1},q^{\pm1},\alpha^{\pm1}$ are evaluated in $H$ with $\alpha\mapsto s=[p,q]$, and such a word is \emph{null} if
+it represents $1$. Johnson's presentation~\cite{Joh99} (see~\cite[Theorem~2.8]{Lee12}), written in our generators, is
+\begin{multline}\label{dehn:PJ-eq}
+P_J=\bigl\langle p,q,\alpha\bigm|\ r_1=\alpha^2,\ r_2=(\alpha p\alpha p^{-1})^3,\ r_3=[\alpha,p^2\alpha p^{-2}],\\
+r_4=[p,q]\alpha^{-1},\ r_5=p\alpha p^{-1}q\alpha^{-1}q^{-1}\bigr\rangle .
+\end{multline}
+Its relators are null: $r_4$ by definition, and $r_1,r_2,r_3,r_5$ are the relators of $P_H$ with $\alpha$ in place of $s$, which hold in $H$
+(\cref{sec:group-houghton}). Let $\Area_J$ be the area with respect to $\{r_1,\dots,r_5\}$, and let $\delta_J(n)$ be the largest $\Area_J$ of a
+null word of length at most $n$; a priori it might be infinite. We do not assume that $P_J$ presents $H$.
+
+\begin{lemma}[From $P_J$ to $P_H$]\label{dehn:PJ}
+Every word $w$ in $p^{\pm1},q^{\pm1}$ that represents $1$ in $H$ satisfies $\Area_{P_H}(w)\le\Area_J(w)$. Hence $\dH(n)\le\delta_J(n)$ for every
+$n$.
+\end{lemma}
+
+\begin{proof}
+Let $\theta$ be the homomorphism from the free group on $p,q,\alpha$ to the free group on $p,q$ that fixes $p$ and $q$ and sends $\alpha$ to
+$s=[p,q]$. Relator by relator,
+\[
+\theta(r_1)=s^2,\quad\theta(r_2)=(sps\,p^{-1})^3,\quad\theta(r_3)=[s,p^2sp^{-2}],\quad\theta(r_5)=psp^{-1}qs^{-1}q^{-1}
+\]
+are the four relators of $P_H$, and $\theta(r_4)=[p,q][p,q]^{-1}$ is freely trivial. If $w=\prod_{i=1}^ku_ir_{c_i}^{\pm1}u_i^{-1}$ freely, then
+applying $\theta$, which fixes $w$, gives $w=\prod_{i=1}^k\theta(u_i)\theta(r_{c_i})^{\pm1}\theta(u_i)^{-1}$ freely; deleting the freely
+trivial factors with $c_i=4$ writes $w$ as a product of at most $k$ conjugates of relators of $P_H$ and their inverses. The second claim
+follows, because a word of length at most $n$ in $p^{\pm1},q^{\pm1}$ is also one in $p^{\pm1},q^{\pm1},\alpha^{\pm1}$.
+\end{proof}
+
+From now on areas are taken in $P_J$, $\Area=\Area_J$. Freely $[g,hk]=[g,h]\cdot h[g,k]h^{-1}$ and $[g^{-1},h]=g^{-1}[h,g]g$, and area is
+invariant under free conjugation and inversion; so the area of a commutator $[g,h_1\cdots h_m]$ is at most the sum of the areas of the
+$[g,h_l]$, and inverting $g$ or $h$ does not change the area of $[g,h]$.
+
+\subsection{Far commutators}\label{dehn:sec-far}
+
+For $j\in\Z$ and $k\ge0$ put
+\[
+\sigma_j=p^j\alpha p^{-j},\qquad \sigma'_j=q^j\alpha q^{-j},\qquad \eta=q^{-1}p,\qquad \eta_k=p^k\eta p^{-k}.
+\]
+For $j\ge0$ the words $\sigma_j$ and $\sigma'_j$ represent the transposition of $(1,j+1)$ and $(1,j+2)$, by \cref{group:gen}(a) and because
+$q$ acts on ray~$1$ as $p$ does. Since $p^{-k}$ maps $(1,1),(1,2)$ to $(2,k),(2,k-1)$ for $k\ge2$, the word $\sigma_{-k}$ represents the
+transposition of $(2,k-1)$ and $(2,k)$. The element $\eta$ fixes ray~$1$ pointwise, and $q$ fixes ray~$2$ pointwise. So the following words
+are null, and for $m\ge2$, $i,j\ge0$ and $k\ge2$ we put
+\[
+\dehnA(m)=\Area[\sigma_0,\sigma_m],\quad \dehnE(i)=\Area[\sigma_i,\eta],\quad \dehnU(j)=\Area(\sigma'_j\sigma_j^{-1}),\quad
+\dehnB(k)=\Area[\sigma_{-k},q],
+\]
+and $\dehnA^*(M)=\max_{2\le m\le M}\dehnA(m)$. Since $[\sigma_i,\sigma_j]=p^i[\sigma_0,\sigma_{j-i}]p^{-i}$ freely, $\dehnA^*(M)$ bounds the
+area of every $[\sigma_i^{\pm1},\sigma_j^{\pm1}]$ with $i,j\in\Z$ and $2\le\abs{i-j}\le M$.
+
+\paragraph{Cells.} The following moves cost one relator each, or four for the last.
+\begin{enumerate}[label=(c\arabic*),itemsep=1pt]
+\item\label{dehn:c-eta} $[\alpha,\eta]=q^{-1}r_5^{-1}q$ freely, so $\dehnE(0)\le1$.
+\item\label{dehn:c-r4} Replacing $pqp^{-1}$ by $\alpha q$, or $qpq^{-1}$ by $\alpha^{-1}p$: the words $pqp^{-1}(\alpha q)^{-1}=r_4$ and
+$qpq^{-1}(\alpha^{-1}p)^{-1}=qpq^{-1}p^{-1}\alpha$ are cyclic conjugates of $r_4^{\pm1}$.
+\item\label{dehn:c-r3} $[\sigma_i,\sigma_{i+2}]=p^ir_3p^{-i}$ freely, so $\dehnA(2)\le1$.
+\item\label{dehn:c-r1} Replacing $\sigma_j^{-1}$ by $\sigma_j$: $\sigma_j^{-1}\sigma_j^{-1}=p^jr_1^{-1}p^{-j}$.
+\item\label{dehn:c-braid} The braid word $\sigma_i\sigma_{i+1}\sigma_i\sigma_{i+1}^{-1}\sigma_i^{-1}\sigma_{i+1}^{-1}$ has area at most $4$:
+replacing its three inverted letters by~\ref{dehn:c-r1} leaves $(\sigma_i\sigma_{i+1})^3=p^ir_2p^{-i}$.
+\end{enumerate}
+
+\begin{lemma}[Lee's recursion]\label{lem:transfer-dehn}
+For $i\ge1$, $j\ge1$ and $k\ge2$:
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item $\dehnE(0)\le1$ and $\dehnE(i)\le2i+1+\sum_{m=2}^{i+1}\dehnA(m)$;
+\item $\dehnU(0)=0$ and $\dehnU(j)\le\sum_{l=0}^{j-1}\dehnE(l)$;
+\item $\dehnB(k)\le2k+5+\sum_{m=2}^{k-1}\dehnA(m)$;
+\item $\dehnA(k+j)\le\dehnA(k)+2j\,\dehnB(k)+2\,\dehnU(j)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The bound on $\dehnE(0)$ is~\ref{dehn:c-eta}. For $k\ge0$, the word $\eta_{k+1}\sigma_{k-1}\eta_k^{-1}$ is freely
+$p^k(pq^{-1}p^{-1}\alpha q)p^{-k}$, a conjugate of $r_4^{-1}$; so $\eta_k$ becomes $\eta_{k+1}\sigma_{k-1}$ at the cost of one cell, and
+$\eta=\eta_0$ becomes $\eta_iS$ with $S=\sigma_{i-2}\cdots\sigma_0\sigma_{-1}$ at the cost of $i$ cells. Doing this for $\eta$ and for
+$\eta^{-1}$ in $[\sigma_i,\eta]$ costs $2i$ cells. Then $[\sigma_i,\eta_iS]=[\sigma_i,\eta_i]\cdot\eta_i[\sigma_i,S]\eta_i^{-1}$ freely. The
+first factor is $p^i[\alpha,\eta]p^{-i}$, of area at most $1$. The second is a product of conjugates of the $[\sigma_i,\sigma_l]$,
+$l=i-2,\dots,-1$, whose distances $i-l$ run through $2,\dots,i+1$.
+
+(ii) $\sigma'_0=\sigma_0=\alpha$. Freely $\sigma'_{l+1}=q\sigma'_lq^{-1}$. In $\sigma'_{l+1}\sigma_{l+1}^{-1}$, replacing $\sigma'_l$ by $\sigma_l$
+costs $\dehnU(l)$ and leaves $q\sigma_lq^{-1}\sigma_{l+1}^{-1}$, which is freely $q[\sigma_l,\eta]q^{-1}$. So
+$\dehnU(l+1)\le\dehnU(l)+\dehnE(l)$.
+
+(iii) Freely $[\sigma_{-k},q]=p^{-k}[\alpha,p^kqp^{-k}]p^k$. By~\ref{dehn:c-r4}, $p^kqp^{-k}$ becomes $\sigma_{k-1}\cdots\sigma_1\sigma_0q$ at the
+cost of $k$ cells: if $p^{k-1}qp^{1-k}$ has become $\sigma_{k-2}\cdots\sigma_0q$, then $p^kqp^{-k}$ has become
+$\sigma_{k-1}\cdots\sigma_1\,pqp^{-1}$ freely, and one cell replaces $pqp^{-1}$ by $\sigma_0q$. This word occurs twice in the commutator,
+which costs $2k$ cells. Then $[\alpha,\sigma_{k-1}\cdots\sigma_2\cdot\sigma_1\sigma_0q]$ has area at most
+$\sum_{l=2}^{k-1}\dehnA(l)+\Area[\alpha,\sigma_1\sigma_0q]$. Finally, in $[\alpha,\sigma_1\sigma_0q]=\alpha\sigma_1\sigma_0\,q\alpha^{-1}q^{-1}\,\sigma_0^{-1}
+\sigma_1^{-1}$, replacing $q\alpha^{-1}q^{-1}=\sigma'^{\,-1}_1$ by $\sigma_1^{-1}$ costs $\dehnU(1)\le\dehnE(0)\le1$ by (ii), and leaves the braid
+word $\sigma_0\sigma_1\sigma_0\sigma_1^{-1}\sigma_0^{-1}\sigma_1^{-1}$, of area at most $4$ by~\ref{dehn:c-braid}. So
+$\Area[\alpha,\sigma_1\sigma_0q]\le5$.
+
+(iv) Conjugating by $p^{-k}$ turns $[\sigma_0,\sigma_{k+j}]$ into $[\sigma_{-k},\sigma_j]$. Replacing $\sigma_j^{\pm1}$ by $\sigma'^{\,\pm1}_j$ costs
+$2\dehnU(j)$ and gives $\sigma_{-k}\,q^j\alpha q^{-j}\,\sigma_{-k}^{-1}\,q^j\alpha^{-1}q^{-j}$. Moving $\sigma_{-k}$ to the right across $q^j$, and
+$\sigma_{-k}^{-1}$ to the left across $q^{-j}$, costs $2j\dehnB(k)$, since each move across one letter is a replacement whose cost is the area
+of a conjugate of $[\sigma_{-k},q]^{\pm1}$. What remains is $q^j[\sigma_{-k},\alpha]q^{-j}$, and $[\sigma_{-k},\alpha]=p^{-k}[\sigma_0,\sigma_k]p^k$
+freely.
+\end{proof}
+
+With $k=2$, part (iii) gives $\dehnB(2)\le9$, and part (iv) gives $\dehnA(m)\le2\dehnU(m-2)+18m-35$ for $m\ge3$. Iterating this, as
+in~\cite{Lee12}, bounds $\dehnA(m)$ only exponentially in $m$. Splitting the distance in half gives a quasi-polynomial bound.
+
+\begin{proposition}[Far commutators]\label{prop:far-qp}
+For $M\ge2$ and $\lambda=\lceil\log M\rceil$,
+\[
+\dehnA^*(M)\ \le\ 5\cdot3^{\lambda-1}2^{\lambda(\lambda-1)}-4\ \le\ 5\,(6M)^{\log M}.
+\]
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1: one halving.} Let $m\ge3$, and put $k=\lceil m/2\rceil\ge2$ and $j=\lfloor m/2\rfloor\ge1$, so that $j\le k<m$ and $k+j=m$. By
+\cref{lem:transfer-dehn}, $\dehnB(k)\le2k+5+(k-2)\dehnA^*(k)$, and $\dehnE(l)\le2l+1+l\,\dehnA^*(l+1)$ for $l\ge1$, so that
+\[
+\dehnU(j)\le1+\sum_{l=1}^{j-1}(2l+1)+\dehnA^*(k)\sum_{l=1}^{j-1}l= j^2+\tfrac12j(j-1)\,\dehnA^*(k).
+\]
+Part (iv) and $j\le k$ give
+\[
+\dehnA(m)\le\dehnA^*(k)\bigl(1+2j(k-2)+j(j-1)\bigr)+4jk+10j+2j^2\le(3k^2-5k+1)\dehnA^*(k)+6k^2+10k .
+\]
+
+\emph{Step 2: the recursion.} Put $G(M)=\dehnA^*(M)+4$. Since $k\ge2$,
+\[
+3k^2G(k)-(3k^2-5k+1)\dehnA^*(k)-6k^2-10k-4=(5k-1)\dehnA^*(k)+6k^2-10k-4\ge0,
+\]
+so $\dehnA(m)+4\le3k^2G(k)$ with $k=\lceil m/2\rceil$. The right side is nondecreasing in $m$, and $G(2)=\dehnA(2)+4\le5$
+by~\ref{dehn:c-r3}; hence $G(m)\le3\lceil m/2\rceil^2G(\lceil m/2\rceil)$ for every $m\ge3$.
+
+\emph{Step 3: iteration.} Let $m_0=M$ and $m_{l+1}=\lceil m_l/2\rceil$. Then $m_l\le2^{\lambda-l}$, so the first index $l_0$ with $m_{l_0}\le2$ is
+at most $\lambda-1$, and $m_{l_0}=2$. Applying Step~2 at $m_0,\dots,m_{l_0-1}$, with $m_l^2\le4^{\lambda-l}$, gives
+\[
+G(M)\le G(2)\prod_{l=1}^{l_0}3\cdot4^{\lambda-l}\le5\prod_{l=1}^{\lambda-1}3\cdot4^{\lambda-l}=5\cdot3^{\lambda-1}2^{\lambda(\lambda-1)} .
+\]
+The last bound of the proposition follows from $3^{\lambda-1}2^{\lambda(\lambda-1)}=(3\cdot2^\lambda)^{\lambda-1}$, $2^\lambda\le2M$ and
+$\lambda-1\le\log M$.
+\end{proof}
+
+\subsection{Collection}\label{dehn:sec-collection}
+
+\begin{proposition}[Collection]\label{prop:collection}
+For $n\ge1$, $\delta_J(n)\le400n^4\bigl(1+\dehnA^*(4n+2)\bigr)$.
+\end{proposition}
+
+\begin{proof}
+Fix $n$ and put $F=1+\dehnA^*(4n+2)$. By \cref{lem:transfer-dehn}(i),(ii), $\dehnE(l)\le2Fl+1$ and $\dehnU(l)\le Fl(l-1)+l\le Fl^2$ for
+$0\le l\le2n$. Let $w$ be a null word of length at most $n$, put $g_{m,l}=p^mq^l$ and $h=g_{n,n}$, and consider $hwh^{-1}$.
+
+\emph{Step 1: collecting onto ray~$1$.} While the letters of $w$ are read after $h$, the exponent sums $(m,l)$ of $p$ and $q$ stay in
+$[0,2n]^2$. We keep the prefix read so far in the form $v\,g_{m,l}$, with $v$ a word in the $\sigma_j^{\pm1}$, starting from the empty $v$
+and $g_{n,n}=h$, and use the rules
+\begin{align*}
+g_{m,l}\,p&=(\sigma_{m+l-1}^{-1}\cdots\sigma_m^{-1})\,g_{m+1,l}, & g_{m,l}\,p^{-1}&=(\sigma_{m-1}\cdots\sigma_{m+l-2})\,g_{m-1,l},\\
+g_{m,l}\,q^{\pm1}&=g_{m,l\pm1}, & g_{m,l}\,\alpha^{\pm1}&=\sigma_{m+l}^{\pm1}\,g_{m,l}.
+\end{align*}
+For the first, $q^lpq^{-l}=\sigma'^{\,-1}_{l-1}\cdots\sigma'^{\,-1}_0p$ by $l$ cells~\ref{dehn:c-r4} replacing $qpq^{-1}$ by $\alpha^{-1}p$;
+replacing each $\sigma'_i$ by $\sigma_i$ costs $\dehnU(i)$; and $p^m\sigma_ip^{-m}=\sigma_{m+i}$ freely. The second is the first at
+$(m-1,l)$, rearranged, and is used only with $m\ge1$. The third is free, and the fourth costs $\dehnU(l)$. So each rule costs at most
+$l+\sum_{i<l}\dehnU(i)\le2n+F\sum_{i<2n}i^2\le2n+\frac83Fn^3\le5Fn^3$. Since $w$ has exponent sums $0$ in $p$ and in $q$ (its image
+under~\eqref{eq:H-to-Z2} is trivial), the final form is $v\,h$, so $hwh^{-1}$ has become $v$ at a cost of at most $5Fn^4$. Each rule adds at
+most $2n$ letters, so $v$ has at most $2n^2$ letters $\sigma_j^{\pm1}$, all with $0\le j\le4n$. The rules hold in $H$, so $v$ represents $1$.
+
+\emph{Step 2: normal forms.} Replace each $\sigma_j^{-1}$ in $v$ by $\sigma_j$, one cell each by~\ref{dehn:c-r1}. Let $K=4n+1$. The word $v$
+now represents $1$ in the symmetric group of the points $(1,1),\dots,(1,K+1)$, in which $\sigma_0,\dots,\sigma_{K-1}$ are the adjacent
+transpositions. For $0\le k\le K$ let $c_k=\sigma_{K-1}\sigma_{K-2}\cdots\sigma_k$, with $c_K$ empty; it maps $(1,k+1)$ to $(1,K+1)$. So every
+permutation $\pi$ of these points is uniquely $u\,c_k$ with $u$ fixing $(1,K+1)$, namely with $(1,k+1)=\pi^{-1}(1,K+1)$; applying this to
+$u$ and so on gives a unique normal form, and the normal form of $1$ is the empty word. A generator $\sigma_i$ is inserted on the right of
+$u\,c_k$ by
+\[
+c_k\sigma_i=\sigma_ic_k\ \ (i\le k-2),\qquad c_k\sigma_{k-1}=c_{k-1},\qquad c_k\sigma_k=c_{k+1},\qquad c_k\sigma_i=\sigma_{i-1}c_k\ \ (i\ge k+1),
+\]
+and the new letter $\sigma_i$ or $\sigma_{i-1}$ on the left, whose index is at most $K-2$, is then inserted into $u$. The first rule moves
+$\sigma_i$ across $\sigma_k,\dots,\sigma_{K-1}$ by commutations of transpositions at distance at least $2$. The second concatenates, and the
+third cancels $\sigma_k\sigma_k$ by one cell~\ref{dehn:c-r1}. The last moves $\sigma_i$ left across $\sigma_k,\dots,\sigma_{i-2}$, applies one
+braid $\sigma_i\sigma_{i-1}\sigma_i=\sigma_{i-1}\sigma_i\sigma_{i-1}$, and moves $\sigma_{i-1}$ left across $\sigma_{i+1},\dots,\sigma_{K-1}$. A level
+costs at most $K+1$ moves and an insertion passes through at most $K$ levels, so a word of length $\ell$ reaches its normal form, here the
+empty word, in at most $\ell K(K+1)$ moves. A commutation costs at most $\dehnA^*(4n)\le F$, a braid at most $4$ by~\ref{dehn:c-braid}, and a
+cancellation $1$, so each move costs at most $4F$. Since $K(K+1)=(4n+1)(4n+2)\le30n^2$, this step costs at most
+$2n^2+2n^2\cdot30n^2\cdot4F\le242Fn^4$.
+
+In total $\Area(hwh^{-1})\le(5+242)Fn^4\le400Fn^4$, and area is invariant under conjugation by $h$.
+\end{proof}
+
+\begin{corollary}[The bound~\ref{H-exp}]\label{cor:dehn-qp}
+For $n\ge1$, $\dH(n)\le\delta_J(n)\le2^{(\log n+6)^2}$. In particular $P_J$ and $P_H$ are presentations of $H$.
+\end{corollary}
+
+\begin{proof}
+The first inequality is \cref{dehn:PJ}. By \cref{prop:collection,prop:far-qp} with $\lambda=\lceil\log(4n+2)\rceil\le\log n+3.59$ and
+$\ell=\log n\ge0$,
+\[
+\log\delta_J(n)\le\log2000+4\ell+(\lambda-1)\log3+\lambda(\lambda-1)\le\ell^2+11.8\ell+24.4\le(\ell+6)^2 .
+\]
+Here $\log2000<10.97$, $(\lambda-1)\log3\le1.585(\ell+2.59)\le1.585\ell+4.11$ and $\lambda(\lambda-1)\le(\ell+3.59)(\ell+2.59)\le\ell^2+6.18\ell+9.30$.
+So every null word in $p,q,\alpha$ is a product of conjugates of relators of $P_J$, and by \cref{dehn:PJ} every word in $p,q$ that represents
+$1$ in $H$ is a product of conjugates of relators of $P_H$. Since $p$ and $q$ generate $H$ (\cref{group:gen}(b)) and the relators hold in $H$,
+$P_J$ and $P_H$ present $H$.
+\end{proof}
+
+The proof does not use that $P_J$ presents $H$, so it reproves Johnson's theorem~\cite{Joh99}.
+
+\begin{remark}[Comparison with the polynomial bound]\label{dehn:rem-compare}
+The bound of \cref{prop:far-qp} is $M^{(1+o(1))\log M}$. A doubling endomorphism of $H_3$ gives $\dehnA^*(M)\le135M^{\log107}$
+\cite[Theorem~3.2]{DM-H3}, which with \cref{prop:collection} is the bound~\ref{H-poly}; it is not used in this paper. The two bounds are not
+comparable for all $M$, but the values of the recursion in the proof of \cref{prop:far-qp}, computed from \cref{lem:transfer-dehn} with
+equality and $\dehnA(2)=1$, lie below $135M^{\log107}$ for every $M\le750$; for instance they give $\dehnA(8)\le543$ and
+$\dehnA(28)\le536\,559$.
+\end{remark}

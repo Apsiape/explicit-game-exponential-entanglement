@@ -1,0 +1,33 @@
+# Certificate R_P for the Pauli-lamp group G_P (27 words).
+# Generators: p q t d x z ; inverse letters P Q T D X Z.
+# Abbreviations (expanded by the checker before evaluation, then freely reduced):
+#   s = [p,q] = p q P Q ; B = p s P ; t1 = t ; t2 = p t P ; t3 = p p t P P ; J = x z x z
+# Commutator convention [u,v] = u v u^-1 v^-1.
+# family | word (in abbreviations, space separated; '^-1' allowed on abbreviations)
+H | s s
+H | s p s P s p s P s p s P
+H | s p p s P P s^-1 p p s^-1 P P
+H | p s P q s^-1 Q
+Q | t t
+S | t s p T P s^-1
+S | t s q T Q s^-1
+S | d B s p D P s^-1 B^-1
+S | d B s q D Q s^-1 B^-1
+C | t1 t2 t1^-1 t2^-1
+A | d t1 D t2^-1 t1^-1
+A | d t2 D t2^-1
+A | d t3 D t3^-1
+Z | p x P X
+Z | p z P Z
+Z | q x Q X
+Z | q z Q Z
+Z | d x D X
+Z | d z D Z
+L | x x
+L | z z
+L | x z x z x z x z
+P | x t x T X t X T
+P | x t z T X t Z T
+P | z t x T Z t X T
+P | z t z T Z t Z T
+K | J t J^-1 T

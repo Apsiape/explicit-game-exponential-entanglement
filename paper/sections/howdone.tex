@@ -1,0 +1,67 @@
+%======================================================================
+\section*{How this work was done}\addcontentsline{toc}{section}{How this work was done}
+%======================================================================
+
+\paragraph{Roles.} This paper is the work of its two authors together with AI models from more than one developer. The authors set the
+direction: they chose the question, fixed the scope, decided which lines to pursue and which to drop, set the verification protocol, and
+take full responsibility for every claim. The models did most of the exploration, derivation, computation and drafting. For the group and the game
+they proposed constructions and proof strategies, wrote and checked proofs, and carried out the computations. They found the qubit count
+of \cref{sec:count}, the transfer and return arguments of \cref{sec:transfer}, the rate for CHSH$(n)$ and the Wasserstein-$1$ argument for
+the group $K$ of Slofstra and Vidick. They also wrote the verification programs, searched the literature, and drafted and edited the
+text.
+
+\paragraph{Sources.} The paper merges and supersedes two earlier unpublished drafts of ours. The first built the game and proved that every strategy
+needs local dimension $\exp(\eps^{-1/2+o(1)})$, and every strategy on a maximally entangled state $\exp(\eps^{-1+o(1)})$; the second
+developed the state-weighted method and closed that gap. This version proves every step from the definitions, apart from results of other
+authors that are cited with their numbers. In particular it reproves the facts about Houghton's group that it uses (\cref{app:dehn}), and
+it does not depend on our preprints~\cite{DM-lamps,DM-H3}, which appear only in remarks and credits. Material of the drafts that the main
+results do not need has been left out: the general question of when Slofstra's embedding transfers approximate representations, a
+comparison map between the solution groups of different games, the entropy needed by the Slofstra--Vidick game, and a discussion of the
+three-player game of Ji, Leung and Vidick.
+
+\paragraph{Verification.} The checks fall into three kinds.
+\begin{itemize}[itemsep=1pt]
+\item \emph{Machine checks of finite statements.} The programs described in \cref{app:cert} check the following:
+\begin{itemize}[itemsep=0pt]
+\item the presentation $\Pres$ and its model in $\GPp$;
+\item the $29$ derivations behind \cref{prop:presentation}(d), with the area bound $A_*=60$;
+\item the $27$ words of $\RP$;
+\item the linear system of the game;
+\item the area certificates behind $A_0=42$.
+\end{itemize}
+Each statement is checked by at least two programs that share no code, and every checking program runs negative
+controls; \cref{app:cert} says which program establishes what. Their recorded output is in \texttt{anc/}.
+\item \emph{Numerical attacks on the analytic statements.} A program in the ancillary files,
+\texttt{anc/numerics/analytic\_checks.py}, evaluates both sides of the qubit count (\cref{thm:count}), the rounding and sequential-measurement lemmas, the loss bound of the return theorem (\cref{thm:return}) on
+perturbed models of the magic square game, and the bound of \cref{thm:K-profile}, on random and optimized instances with flat, full-rank,
+low-rank and pure states, and runs a negative control showing that the state commutators of~\ref{prelim:S2} cannot be dropped from the return
+theorem. No inequality was violated. In the earlier drafts the triple construction for CHSH$(n)$ and the Wasserstein-$1$ contraction for
+$K$ were attacked in the same way. A further program, \texttt{anc/sv\_balanced\_lift.py}, builds the lift of \cref{lem:sv-lift} for small
+$m$, evaluates every relator, and confirms, as a negative control, that the literal lifts cannot be balanced.
+\item \emph{Reading in the earlier drafts.} The qubit count, the transfer theorem, the argument for CHSH$(n)$ and a first form of the
+argument for $K$ were proof-read by a model instance other than the one that derived them. They were then reviewed blind, refutation first,
+by a model of a different developer that had not seen our working files. That review found no counterexample to any principal statement
+and two repairable gaps, which are repaired here. The group-theoretic part was checked adversarially in the first draft.
+\item \emph{Reading of this version.} Two model instances that had not taken part in writing this version read it in full, refutation
+first: one read the analytic half and one the group-theoretic half. They re-derived the proofs, recomputed the constants, checked the cited
+results of other papers against their sources, and attacked the analytic lemmas numerically. They also rebuilt the presentation and the
+game independently of the shipped programs. They found no error in a main statement. They corrected the following slips, none of which
+affects the main results:
+\begin{itemize}[itemsep=0pt]
+\item an intermediate defect bound in the proof of \cref{lem:gadget};
+\item the range of $\eps$ in \cref{thm:sv-game} and in Theorem~E;
+\item a remark claiming a case of equality;
+\item the base of a logarithm in the introduction.
+\end{itemize}
+They also found that $17$ generators of an earlier version of $\Pres$ played no role. These have been removed, which shrinks the game from
+$2061$ to $1687$ equations.
+\item \emph{A blind audit.} A model of another developer, which had seen none of our working files, then audited this version refutation
+first. It re-derived the main arguments, including the return direction (\cref{thm:return}), which no model of another developer had read
+before; reran every program; and checked every reference against its primary source. It found no counterexample to a main statement. It
+found that the proof of the upper bound of~\cite[Thm.~1.1]{SV18}, which Theorem~F cites, uses a lift from~\cite[Prop.~4.8]{Slo19} that,
+for a group with two non-involutive generators such as $K$, does not leave the marked involution balanced as the last step of that proof
+needs, and \cref{lem:sv-lift} now supplies a balanced lift for the explicit models of $K$; that our
+account of the machine checks claimed more than the programs established, which led to the second cell-count verifier for $A_*=60$ and to
+the cap of $42$ factors in both verifiers of (C4); and several smaller points. All are corrected here.
+\end{itemize}
+A formalization in Lean is in progress and is not part of this version. The proofs are given in full, and the checks support them but do not replace them.

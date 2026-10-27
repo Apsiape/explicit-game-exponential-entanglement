@@ -1,0 +1,36 @@
+Part 1. The model of Example 11.11 [ex:K-model] on C^d, d = 2m, and the relators of K
+PASS  m = 1..8: x y x^-1 y^-2 has defect sqrt(2) sin(pi/(2m)), every other relator of K defect 0 (largest deviation 5.2e-16)
+
+Part 2. Negative control: the literal lifts of Slofstra's Proposition 4.8 for y and then x
+PASS  m = 1..8: the literal marker W = g(c) has the eigenvalue -1 with multiplicity d and +1 with 3d
+PASS  m = 1..8: tr W = 1/2, so W is not conjugate to -W
+PASS  m = 1..8: the literal lifts are approximate representations of the eliminated presentation (every relator defect at most e_m): the failure is only one of balance
+PASS  rank obstruction: min over the exchange of halves, the 24 block permutations and 100 random unitaries of ||T W T^* + W||_f^2 / 2 is 1.000000000 (>= 1)
+PASS  the bound ||T W T^* + W||_f^2 >= 2 is attained by a block permutation (gap 4.4e-16)
+PASS  with t the exchange of halves, the relator t c t u^-1 (u = J c) of the literal lift has defect sqrt(2) for every m, whatever the precision of the model
+
+Part 3. The balanced lift of Lemma 11.13 [lem:sv-lift]
+PASS  m = 1..8: tau is an involutive permutation with tau X tau = X^-1; f' = tau + tau and v' = tau X + tau X are involutions with f' v' = X + X
+PASS  Step 1 (y, doubled): f v = Y + Y^*, c -> (-I_d) + I_d, and every relator of the presentation reached has defect at most e_m (largest excess 5.0e-16)
+PASS  Step 2 (x, not doubled): every generator is an involution, and every relator of the all-involutive presentation reached has defect at most e_m (largest excess 5.0e-16)
+PASS  Step 3: t^2, u^2, J^2, [s, J], the row J c u, [c, u] and t c t u^-1 hold exactly (largest defect 2.2e-16)
+PASS  the marker is balanced: tr g(c) = 0 and t c t = -c exactly, for t the exchange of the two copies of C^d
+
+Part 4. Step 4: the solution group (Slofstra's Lemma 4.4 and Proposition 4.2) and the lift of his Remark 4.5
+PASS  m = 1..8: the lift of the solution group lives on C^(8d) = C^(16m), with J -> -I exactly
+PASS  m = 1..8: every relator of the solution group has defect at most 75 e_m (largest ratio defect/e_m = 0.7071)
+INFO  solution group as built here: 262 variables, 206 equations of at most 3 variables, 2373 relators checked (products in every order); Slofstra and Vidick leave the encoding of t c t = c J implicit, and the one used here is that of Step 2 of Lemma B.1 [lem:gadget]
+
+Part 5. Strategies (Theorem 5.4 [thm:return], flat state, s = 3)
+      m   local dim 16m   largest defect delta_m   m delta_m   loss bound C_3 delta_m^2
+      1              16             1.000000e+00    1.000000               7.881667e+02
+      2              32             7.071068e-01    1.414214               3.940834e+02
+      3              48             5.000000e-01    1.500000               1.970417e+02
+      4              64             3.826834e-01    1.530734               1.154243e+02
+      5              80             3.090170e-01    1.545085               7.526322e+01
+      6              96             2.588190e-01    1.552914               5.279716e+01
+      7             112             2.225209e-01    1.557647               3.902652e+01
+      8             128             1.950903e-01    1.560723               2.999781e+01
+PASS  m delta_m <= 75 pi / sqrt(2) for m = 1..8 (largest 1.5607), so the losing probability is O(1/m^2) at local dimension 16m: dimension O(eps^-1/2)
+
+ALL CHECKS PASSED

@@ -1,0 +1,306 @@
+%======================================================================
+\section{Calculus in a fixed state}\label{sec:state}
+%======================================================================
+
+Winning a game with probability $1-\eps$ controls the players' operators to precision about $\sqrt\eps$, but in the players' shared state,
+not in a normalized trace. This section develops the calculus in which such errors are measured and propagated without ever leaving the
+state.
+
+The picture is as follows. A shared pure state $\psi\in H_A\otimes H_B$ is a Hilbert--Schmidt operator in disguise: in a Schmidt basis it
+becomes $\xi=\rho_B^{1/2}$, Bob's operators act on it from the left and Alice's, transposed, from the right (\cref{lem:standard-form}). So
+$\norm{(I\otimes Y)\psi}=\hs{Y\xi}$, and every error of a strategy becomes a state-weighted norm carrying the factor $\xi$. A normalized
+trace ignores conjugation, $\fn{gUg^{-1}-I}=\fn{U-I}$, and this is why defects are bounded by areas (\cref{lem:defect}). A fixed state
+does not: conjugating by $g$ moves the state, and $\hs{(gUg^{-1}-I)\xi}$ may exceed $\hs{(U-I)\xi}$ by $2\hs{[g,\xi]}$. So every
+conjugator is charged through state commutators (\cref{lem:calculus}), and a word of area $k$ is charged its area times the length of
+its conjugators (\cref{lem:conjugator-length}). The charge is affordable because near-optimal play supplies the state commutators at the
+same precision $\sqrt\eps$ as the relations: an observable of Bob that agrees with an operator of Alice on $\psi$ nearly commutes with
+$\xi$ (\cref{lem:consistency}). No power of $\eps$ is lost at any step.
+
+The other tools are the rounding of unitaries to involutions and the rotation of the state by a unitary (\cref{state:rounding}); twirls,
+which act on Hilbert--Schmidt vectors and therefore remain orthogonal projections whatever the state (\cref{state:twirls}); the passage
+from a state to its restriction to the sector where a central involution acts as $-1$ (\cref{state:sector}); and three facts about
+relative entropy (\cref{state:entropy}). They are used in \cref{sec:count,sec:transfer,sec:sector,sec:rates}.
+
+Throughout, $\rho$ is a density matrix on $\C^d$ and $\xi=\rho^{1/2}$, unless the state comes from a strategy.
+
+\subsection{The standard form}
+
+\begin{lemma}[Standard form]\label{lem:standard-form}
+Let $\psi\in H_A\otimes H_B$ be a unit vector, $\rho=\rho_B$ Bob's reduced density matrix and $\xi=\rho^{1/2}$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For every operator $Y$ on $H_B$, $\norm{(I\otimes Y)\psi}=\hs{Y\xi}$.
+\item For every Hermitian operator $A$ on $H_A$ there is a Hermitian operator $\tilde A$ on $H_B$ with $\op{\tilde A}\le\op{A}$ such that,
+for every operator $Y$ on $H_B$,
+\[
+\hs{Y\xi-\xi\tilde A}\le\norm{(A\otimes I-I\otimes Y)\psi}.
+\]
+\end{enumerate}
+The same holds with the roles of the two factors exchanged.
+\end{lemma}
+
+\begin{proof}
+Let $\psi=\sum_{k=1}^r\sqrt{\lambda_k}\,e_k\otimes f_k$ be a Schmidt decomposition, so that $\xi=\sum_k\sqrt{\lambda_k}\,|f_k\rangle\langle f_k|$,
+and let $\Pi_A$ be the projection onto $\operatorname{span}\{e_k\}$. The linear map $\Theta$ from $\Pi_AH_A\otimes H_B$ to operators on $H_B$
+with $\Theta(e_k\otimes v)=|v\rangle\langle f_k|$ is an isometry for $\hs{\cdot}$, since
+$\norm{\sum_ke_k\otimes v_k}^2=\sum_k\norm{v_k}^2=\hs{\sum_k|v_k\rangle\langle f_k|}^2$. It satisfies $\Theta(\psi)=\xi$ and
+$\Theta((I\otimes Y)x)=Y\Theta(x)$, which gives (a).
+
+For (b) put $A_{lk}=\langle e_l,Ae_k\rangle$ and $\tilde A=\sum_{k,l}A_{lk}|f_k\rangle\langle f_l|$. Since $A$ is Hermitian, so is $\tilde A$;
+in the basis $(f_k)$ of its support, $\tilde A$ has the transposed matrix of the compression $\Pi_AA\Pi_A$, so $\op{\tilde A}\le\op{A}$.
+Now $(\Pi_AA\otimes I)\psi=\sum_{k,l}\sqrt{\lambda_k}A_{lk}\,e_l\otimes f_k$, which $\Theta$ maps to
+$\sum_{k,l}\sqrt{\lambda_k}A_{lk}|f_k\rangle\langle f_l|=\xi\tilde A$. The vector $((I-\Pi_A)A\otimes I)\psi$ lies in
+$(I-\Pi_A)H_A\otimes H_B$, which is orthogonal to $\Pi_AH_A\otimes H_B$, where both $(\Pi_AA\otimes I)\psi$ and $(I\otimes Y)\psi$ lie. Hence
+$\norm{(A\otimes I-I\otimes Y)\psi}\ge\norm{(\Pi_AA\otimes I-I\otimes Y)\psi}=\hs{\xi\tilde A-Y\xi}$. Exchanging the two tensor factors
+gives the last sentence.
+\end{proof}
+
+This is the standard form of the state. Slofstra and Vidick start their analysis of general strategies from it~\cite[proof of
+Proposition~5.4]{SV18}, and Marrakchi and de la Salle use it to round near-synchronous strategies~\cite{MdlS23}.
+
+\subsection{Consistency gives state commutation}
+
+If an observable of one player agrees with a Hermitian operator of the other on the shared state, the observable nearly commutes with the
+square root of the reduced state, with no loss in the exponent.
+
+\begin{lemma}[Consistency]\label{lem:consistency}
+Let $B$ be an involution and $T$ a Hermitian operator on $\C^d$, of any norm, with $\hs{B\xi-\xi T}\le\theta$. Then
+$\hs{[B,\xi]}\le\sqrt2\,\theta$.
+\end{lemma}
+
+\begin{proof}
+The form $\langle X,Y\rangle_\xi=\Tr(\xi X^*\xi Y)$ is the Hilbert--Schmidt inner product of $\xi^{1/2}X\xi^{1/2}$ and $\xi^{1/2}Y\xi^{1/2}$, so
+it is positive semidefinite and satisfies the Cauchy--Schwarz inequality. Put $x=\langle B,B\rangle_\xi=\Tr(\xi B\xi B)\ge0$ and
+$y=\hs{\xi T}$. Since $T$ is Hermitian, $\hs{T\xi}^2=\Tr(T^2\rho)=\hs{\xi T}^2$, and
+$\langle T,T\rangle_\xi=\langle T\xi,\xi T\rangle_{\mathrm{HS}}\le\hs{T\xi}\hs{\xi T}=y^2$. Expanding, with $\hs{B\xi}=1$,
+\[
+\theta^2\ \ge\ \hs{B\xi-\xi T}^2=1+y^2-2\operatorname{Re}\langle B,T\rangle_\xi\ \ge\ 1+y^2-2\sqrt x\,y\ \ge\ 1+y^2-(x+y^2)=1-x .
+\]
+Finally $\hs{[B,\xi]}^2=\hs{B\xi}^2+\hs{\xi B}^2-2\Tr(\xi B\xi B)=2-2x\le2\theta^2$.
+\end{proof}
+
+With \cref{lem:standard-form}(b): if $A$ is a Hermitian operator on Alice's side and $B$ an involution on Bob's with
+$\norm{(A\otimes I-I\otimes B)\psi}\le\theta$, then $\hs{[B,\xi]}\le\sqrt2\,\theta$ for $\xi=\rho_B^{1/2}$. This is the Cauchy--Schwarz
+argument of~\cite[proof of Proposition~5.4, (5.1)]{SV18}, with an explicit constant and a Hermitian partner of arbitrary norm; the second
+point matters in \cref{sec:rates}, where the partner has norm $\sqrt2$. The constant $\sqrt2$ is sharp: $\xi=|0\rangle\langle0|$,
+$B=\sigma_X$ and $T=0$ give $\theta=1$ and $\hs{[B,\xi]}=\sqrt2$.
+
+\subsection{Words in a fixed state}
+
+Let $\phi:F(S)\to\U(d)$ be a homomorphism, so that $\phi(w)$ depends only on the free reduction of a word $w$. Unlike the normalized
+trace, a fixed state does not ignore conjugation, so conjugators are charged through state commutators.
+
+\begin{lemma}[Calculus in a state]\label{lem:calculus}
+Suppose that $\hs{[\phi(s),\xi]}\le e_c$ for every $s\in S$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\hs{[\phi(u),\xi]}\le\abs{u}\,e_c$ for every word $u$.
+\item For unitaries $U_1,\dots,U_k$, $\hs{(U_1\cdots U_k-I)\xi}\le\sum_l\hs{(U_l-I)\xi}$.
+\item For unitaries $g,U$, $\hs{(gUg^*-I)\xi}\le\hs{(U-I)\xi}+2\hs{[g,\xi]}$.
+\item If $w$ is freely equal to $\prod_{l=1}^ku_lr_l^{\pm1}u_l^{-1}$ for words $u_l,r_l$ with $\hs{(\phi(r_l)-I)\xi}\le e$ for all $l$,
+then
+\[
+\hs{(\phi(w)-I)\xi}\le\sum_{l=1}^k\bigl(e+2\abs{u_l}\,e_c\bigr).
+\]
+\item For contractions $Y_1,\dots,Y_m$ and unitaries $Y'_1,\dots,Y'_m$,
+\[
+\hs{(Y_1\cdots Y_m-Y'_1\cdots Y'_m)\xi}\le\sum_{l=1}^m\Bigl(\hs{(Y_l-Y'_l)\xi}+2\sum_{l'>l}\hs{[Y'_{l'},\xi]}\Bigr).
+\]
+\end{enumerate}
+Parts (b), (c) and (e) do not use the hypothesis.
+\end{lemma}
+
+\begin{proof}
+(a) is the Leibniz rule, with $\hs{[\phi(s)^{-1},\xi]}=\hs{[\phi(s),\xi]}$. (b) Telescoping, $U_1\cdots U_k-I=\sum_lU_1\cdots U_{l-1}(U_l-I)$,
+and the unitary left factors do not change the norm. (c) $(gUg^*-I)\xi=g(U-I)\xi g^*+g(U-I)[g^*,\xi]$, $\op{U-I}\le2$ and
+$\hs{[g^*,\xi]}=\hs{[g,\xi]}$. (d) Since $\phi$ is a homomorphism of the free group, $\phi(w)=\prod_l\phi(u_l)\phi(r_l)^{\pm1}\phi(u_l)^{-1}$;
+apply (b), then (c) with $\hs{(\phi(r_l)^{-1}-I)\xi}=\hs{(\phi(r_l)-I)\xi}$, then (a). (e) Telescoping,
+\[
+Y_1\cdots Y_m-Y'_1\cdots Y'_m=\sum_lY_1\cdots Y_{l-1}(Y_l-Y'_l)R_l,\qquad R_l=Y'_{l+1}\cdots Y'_m\ \text{unitary}.
+\]
+Now $(Y_l-Y'_l)R_l\xi=(Y_l-Y'_l)\xi R_l+(Y_l-Y'_l)[R_l,\xi]$. The first term has norm $\hs{(Y_l-Y'_l)\xi}$, and the second at most
+$2\sum_{l'>l}\hs{[Y'_{l'},\xi]}$ by the Leibniz rule, since $\op{Y_l-Y'_l}\le2$. The left factors are contractions.
+\end{proof}
+
+Part~(d) needs short conjugators. For relations of bounded area the next lemma supplies them; it is the usual relation between area and
+conjugator length, read off a van Kampen diagram.
+
+\begin{lemma}[Conjugator lengths]\label{lem:conjugator-length}
+Let every word of a finite set $R$ have length at most $K$. If $w$ has area at most $k$ in $R$, then $w$ is freely equal to a product
+$\prod_{l=1}^{k'}u_lr_l^{\pm1}u_l^{-1}$ with $k'\le k$, $r_l\in R$ and $\abs{u_l}\le\abs{w}+kK$ for all $l$.
+\end{lemma}
+
+\begin{proof}
+Let $w_0$ be the free reduction of $w$. By van Kampen's lemma~\cite[Chapter~V, Theorem~1.1]{LS77} (see also~\cite[Section~4]{Bri02}),
+$w_0$ has a van Kampen diagram with at most $k$ faces: a finite, connected and simply connected planar $2$-complex whose edges are
+oriented and labelled by letters, whose boundary walk read from a base vertex is $w_0$, and whose faces are the bounded components of the
+complement of its $1$-skeleton, the boundary walk of each face reading a cyclic permutation of an element of $R^{\pm1}$. Such a diagram may
+be singular: it may contain edges and vertices not on any face. Van Kampen's lemma is stated in~\cite{LS77} for cyclically reduced
+relators. If the free reduction of $r\in R$ is $vr'v^{-1}$ with $r'$ cyclically reduced, we use $r'$ for the faces. A cyclic permutation of
+$r'^{\pm1}$ is then freely $\tau r^{\pm1}\tau^{-1}$ with $\abs{\tau}\le\abs{r'}-1+\abs{v}\le K-1$, which is all that the argument below uses. We show by induction on the number $f$ of faces that if a van Kampen
+diagram $D$ with $f$ faces has boundary word $u$, then $u$ is freely equal to a product of $f$ conjugates of elements of $R^{\pm1}$ with
+conjugators of length at most $\abs{u}+fK$. Applied to $w_0$, with $\abs{w_0}\le\abs{w}$, this gives the lemma.
+
+If $f=0$, $D$ is a finite tree, its boundary walk traverses each edge once in each direction, and $u$ is freely trivial. Let $f\ge1$.
+Choose a ray from an interior point of a face to infinity that avoids the vertices. Its last point in the closure of the union of the
+faces lies in the interior of an edge $e$ with a face $\Phi$ on one side and the unbounded region on the other. The boundary walk of $D$
+traverses $e$ exactly once, so $u=\alpha e\gamma$, where we write $e$ also for its label read in the direction of traversal. Read from
+the initial vertex of $e$, starting along $e$, the boundary of $\Phi$ reads $e\delta^{-1}$, a cyclic permutation of some $r^{\pm1}$ with
+$r\in R$; so $\abs{\delta}\le K-1$ and $e\delta^{-1}=\tau r^{\pm1}\tau^{-1}$ freely, with $\abs{\tau}\le K-1$. Removing the open face
+$\Phi$ and the open edge $e$ is an elementary collapse, so it leaves a van Kampen diagram $D'$ with $f-1$ faces, whose boundary word is
+$u'=\alpha\delta\gamma$, of length at most $\abs{u}+K-2$. Freely,
+\[
+u=\alpha e\gamma=(\alpha\tau)\,r^{\pm1}(\alpha\tau)^{-1}\cdot\alpha\delta\gamma ,
+\]
+and $\abs{\alpha\tau}\le\abs{u}-1+K-1\le\abs{u}+K$. By induction $u'$ is a product of $f-1$ conjugates with conjugators of length at most
+$\abs{u'}+(f-1)K\le\abs{u}+fK$.
+\end{proof}
+
+Together, \cref{lem:calculus}(d) and \cref{lem:conjugator-length} say that a word of area $k$ in relators of defect at most $e$ in the
+state, and of length $\ell$, has defect at most $k\bigl(e+2(\ell+kK)e_c\bigr)$: the area enters squared once state commutators are
+charged. As in the flat case, the state-weighted profiles therefore pass between finite presentations.
+
+\begin{lemma}[Change of presentation in a state]\label{state:change-presentation}
+In the setting of \cref{lem:change-presentation}, there is $C\ge1$, depending only on the two presentations and the words $\hat s'$, $w$,
+$w'$, such that for every model $(\phi,\rho)$ of $(\langle S\mid R\rangle,w)$ at precision $e$, the pair $(\phi\circ\vartheta,\rho)$ is a
+model of $(\langle S'\mid R'\rangle,w')$ at precision $Ce$, where $\vartheta(s')=\hat s'$. Hence $\hlps_{R'}(w';Ce)\le\hlps_R(w;e)$ and
+$\hS_{R'}(Ce)\le\hS_R(e)$. Without~\ref{prelim:S3}, the same holds for models of the presentations alone.
+\end{lemma}
+
+\begin{proof}
+Fix, once and for all, expressions of the words $\vartheta(r')$, $r'\in R'$, and $u=\vartheta(w')w^{-1}$, which represent $1$, as products
+of conjugates of elements of $R^{\pm1}$, up to free reduction. Let $k$ bound the numbers of factors and $L$ the lengths of the conjugators, and put
+$C=\max\bigl(\max_{s'}\abs{\hat s'},\,k(1+2L)+2\abs{w}+1\bigr)$. By \cref{lem:calculus}(a), $\hs{[\phi(\hat s'),\xi]}\le\abs{\hat s'}e$,
+which is~\ref{prelim:S2}. By \cref{lem:calculus}(d) with $e_c=e$, $\hs{(\phi(\vartheta(r'))-I)\xi}\le k(1+2L)e$, which
+is~\ref{prelim:S1}. For~\ref{prelim:S3} write $\phi(\vartheta(w'))+I=(\phi(u)-I)\phi(w)+(\phi(w)+I)$; since
+$\hs{(\phi(u)-I)\phi(w)\xi}\le\hs{(\phi(u)-I)\xi}+2\hs{[\phi(w),\xi]}\le k(1+2L)e+2\abs{w}e$, we get
+$\hs{(\phi(\vartheta(w'))+I)\xi}\le Ce$. The dimension and the state are unchanged.
+\end{proof}
+
+\subsection{Rounding and rotating}\label{state:rounding}
+
+\begin{lemma}[Rounding]\label{lem:rounding}
+For a unitary $U$ let $\mathrm r(U)$ be the involution obtained by replacing each eigenvalue $\lambda$ of $U$ by $1$ if
+$\operatorname{Re}\lambda\ge0$ and by $-1$ otherwise, keeping the eigenvectors. Then
+\[
+\hs{(\mathrm r(U)-U)\xi}\le\hs{(U^2-I)\xi}\qquad\text{and}\qquad\hs{[\mathrm r(U),\xi]}\le\hs{[U,\xi]}+2\hs{(U^2-I)\xi}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $\lambda=e^{i\vartheta}$ with $\abs{\vartheta}\le\pi/2$ we have $\abs{\cos(\vartheta/2)}\ge1/\sqrt2$, so
+$\abs{\lambda-1}=2\abs{\sin(\vartheta/2)}\le4\abs{\sin(\vartheta/2)\cos(\vartheta/2)}=\abs{\lambda^2-1}$; for $\operatorname{Re}\lambda<0$
+apply this to $-\lambda$. So $\abs{\mathrm r(\lambda)-\lambda}\le\abs{\lambda^2-1}$ on the unit circle, and $\mathrm r(U)-U=g(U)(U^2-I)$ for
+a function $g$ with $\abs g\le1$ on the spectrum of $U$ (put $g(\pm1)=0$). As $U$ is normal, $\op{g(U)}\le1$ and
+$\hs{(\mathrm r(U)-U)\xi}\le\hs{(U^2-I)\xi}$. Next $[\mathrm r(U),\xi]=[U,\xi]+g(U)(U^2-I)\xi-\xi g(U)(U^2-I)$, and, as functions of $U$
+commute, $\hs{\xi g(U)(U^2-I)}=\hs{g(U)^*(U^{*2}-I)\xi}\le\hs{(U^{*2}-I)\xi}=\hs{(U^2-I)\xi}$.
+\end{proof}
+
+For the flat state the first bound is the unitary case of~\cite[Lemma~2.8(c)]{SV18}, with the constant $2$ there improved to $1$.
+
+\begin{lemma}[Rotating the state]\label{lem:rotate}
+For a unitary $U$, $\tn{U^*\rho U-\rho}\le2\hs{[U,\xi]}$.
+\end{lemma}
+
+\begin{proof}
+For Hermitian $H,K$, $H^2-K^2=\frac12\bigl((H-K)(H+K)+(H+K)(H-K)\bigr)$, so $\tn{H^2-K^2}\le\hs{H-K}\hs{H+K}$ by H\"older. Take
+$H=U^*\xi U$ and $K=\xi$: then $H^2=U^*\rho U$, $\hs{H-K}=\hs{\xi U-U\xi}$ and $\hs{H+K}\le2$.
+\end{proof}
+
+\subsection{Hilbert--Schmidt twirls}\label{state:twirls}
+
+Twirling averages conjugates by a family of involutions. It is useful because each twirl is an orthogonal projection, and products of
+orthogonal projections are controlled by the following inequality. A related bound for sequential projective measurements is Gao's quantum
+union bound~\cite{Gao15}.
+
+\begin{lemma}[Projection products]\label{lem:projection-product}
+Let $P_1,\dots,P_k$ be orthogonal projections on a Hilbert space. Every vector $y$ satisfies
+\[
+\norm{y}^2-\operatorname{Re}\langle y,P_k\cdots P_1y\rangle\le2\sum_{l=1}^k\norm{(I-P_l)y}^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+Put $y_0=y$ and $y_l=P_ly_{l-1}$, and let $X$ be the left side. Since $y-y_k=\sum_l(I-P_l)y_{l-1}$ and $I-P_l$ is a self-adjoint idempotent,
+$X=\sum_l\operatorname{Re}\langle(I-P_l)y,(I-P_l)y_{l-1}\rangle$, and $\norm{(I-P_l)y_{l-1}}^2=\norm{y_{l-1}}^2-\norm{y_l}^2$. By
+Cauchy--Schwarz, $X\le\bigl(\sum_l\norm{(I-P_l)y}^2\bigr)^{1/2}\bigl(\norm y^2-\norm{y_k}^2\bigr)^{1/2}$, and
+$\norm y^2-\norm{y_k}^2=2X-\norm{y-y_k}^2\le2X$. If $X>0$, squaring gives the claim; otherwise there is nothing to prove.
+\end{proof}
+
+The inequality is~\cite[Lemma~4.1]{DM-H3}; we have included its short proof. For an involution $Z$ on $\C^d$, the map
+$\alpha_Z(v)=ZvZ$ on $M_d(\C)$ with the Hilbert--Schmidt inner product is unitary and equal to its inverse, hence self-adjoint. So
+\[
+\mathcal A^{\pm}_Z=\tfrac12(I\pm\alpha_Z)
+\]
+are orthogonal projections on $M_d(\C)$, whatever state is in use; the state enters only through the vectors that are twirled.
+
+\begin{lemma}[Two-sided twirls]\label{lem:twirl}
+Let $Z_1,\dots,Z_k$ be involutions on $\C^d$, $v\in M_d(\C)$, and fix signs $\sigma_j\in\{\pm1\}$. For $g\in\Z_2^k$ put
+$s(g)=\prod_j\sigma_j^{g_j}$ and $v_g=Z_k^{g_k}\cdots Z_1^{g_1}\,v\,Z_1^{g_1}\cdots Z_k^{g_k}$. Then, for uniformly random $g$,
+\[
+\E_g\hs{s(g)v_g-v}^2\ \le\sum_{j:\,\sigma_j=+1}\hs{[Z_j,v]}^2+\sum_{j:\,\sigma_j=-1}\hs{\{Z_j,v\}}^2 .
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\mathcal B_j=\mathcal A^{\sigma_j}_{Z_j}$. Averaging over $g_1$ first, then over $g_2$, and so on,
+$\E_g[s(g)v_g]=\mathcal B_k\cdots\mathcal B_1v$. Since $\hs{v_g}=\hs{v}$, the left side equals
+$2\hs{v}^2-2\operatorname{Re}\langle v,\mathcal B_k\cdots\mathcal B_1v\rangle$, which is at most $4\sum_j\hs{(I-\mathcal B_j)v}^2$ by
+\cref{lem:projection-product}. Finally $(I-\mathcal A^+_Z)v=\frac12(vZ-Zv)Z$ and $(I-\mathcal A^-_Z)v=\frac12(vZ+Zv)Z$, and right
+multiplication by $Z$ preserves $\hs{\cdot}$.
+\end{proof}
+
+For the flat state one may twirl the operators themselves. With a non-flat state, the map $T\mapsto\frac12(T+ZTZ)$ is not an orthogonal
+projection for the weighted inner product $\Tr(\rho S^*T)$; twirling the Hilbert--Schmidt vectors $v=Z_i\xi$, $X_i\xi$ and $\xi$, as in
+\cref{sec:count}, avoids this.
+
+\subsection{Changing the state to a sector}\label{state:sector}
+
+The counting arguments compress the state, not the operators, to the eigenspace where a central involution acts as $-1$.
+
+\begin{lemma}[Sector states]\label{lem:sector-state}
+Let $J'$ be an involution on $\C^d$, $P_\pm=\frac12(I\pm J')$, $p_-=\Tr(P_-\rho)>0$, $\rho_-=P_-\rho P_-/p_-$, $\xi_-=\rho_-^{1/2}$ and
+$\eta=P_-\xi P_-/\sqrt{p_-}$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\hs{\xi_--\eta}\le\hs{P_+\xi P_-}/\sqrt{p_-}$, and $\hs{P_+\xi P_-}\le\frac12\hs{[J',\xi]}$.
+\item For every operator $R$,
+\begin{gather*}
+\hs{R\xi_-}\le\bigl(\hs{RP_-\xi}+\op{R}\hs{P_+\xi P_-}\bigr)/\sqrt{p_-},\\
+\hs{R\xi_-}\le\bigl(\hs{R\xi}+\op{R}\hs{[J',\xi]}\bigr)/\sqrt{p_-}.
+\end{gather*}
+\item For every Hermitian contraction $Y$ and every unitary $Y'$,
+\begin{gather*}
+\hs{[Y,\xi_-]}\le\bigl(2\hs{[Y,P_-]\xi}+\hs{[Y,\xi]}+2\hs{P_+\xi P_-}\bigr)/\sqrt{p_-},\\
+\hs{[Y',\xi_-]}\le\bigl(\hs{[Y',J']\xi}+3\hs{[Y',\xi]}+\hs{[J',\xi]}\bigr)/\sqrt{p_-}.
+\end{gather*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Let $A=P_-\rho P_-$ and $B=(P_-\xi P_-)^2$. Since $\rho=\xi(P_++P_-)\xi$, $A-B=(P_+\xi P_-)^*(P_+\xi P_-)\ge0$, of trace
+$\hs{P_+\xi P_-}^2$. By the Powers--St{\o}rmer inequality $\hs{A^{1/2}-B^{1/2}}^2\le\tn{A-B}$~\cite[Lemma~4.1]{PS70}, and
+$A^{1/2}=\sqrt{p_-}\,\xi_-$, $B^{1/2}=P_-\xi P_-$, so $p_-\hs{\xi_--\eta}^2\le\hs{P_+\xi P_-}^2$. Also $P_+\xi P_-=P_+[\xi,P_-]$ and
+$[\xi,P_-]=-\frac12[\xi,J']$.
+
+(b) $\hs{R\eta}\le\hs{RP_-\xi}/\sqrt{p_-}$ and $\hs{R(\xi_--\eta)}\le\op{R}\hs{\xi_--\eta}$, which with (a) gives the first bound. For the
+second, $RP_-\xi=R\xi P_-+R[P_-,\xi]$ and $\hs{[P_-,\xi]}=\frac12\hs{[J',\xi]}$; with (a) again, $\hs{P_+\xi P_-}\le\frac12\hs{[J',\xi]}$.
+
+(c) Let $Y$ be a Hermitian contraction or a unitary. Expanding, $[Y,P_-\xi P_-]=[Y,P_-]\xi P_-+P_-[Y,\xi]P_-+P_-\xi[Y,P_-]$. The
+first two terms have norms at most $\hs{[Y,P_-]\xi}$ and $\hs{[Y,\xi]}$, and the third at most $\hs{\xi[Y,P_-]}=\hs{[Y,P_-]^*\xi}$. If $Y$
+is Hermitian, $[Y,P_-]^*=-[Y,P_-]$. If $Y$ is unitary, $[Y,P_-]^*=[P_-,Y^*]=Y^*[Y,P_-]Y^*$, and
+$\hs{[Y,P_-]Y^*\xi}\le\hs{[Y,P_-]\xi}+2\hs{[Y,\xi]}$. In both cases
+$\hs{[Y,\xi_--\eta]}\le2\op{Y}\hs{\xi_--\eta}$, and (a) applies; for unitary $Y$ we also use $2\hs{[Y,P_-]\xi}=\hs{[Y,J']\xi}$ and
+$2\hs{P_+\xi P_-}\le\hs{[J',\xi]}$.
+\end{proof}
+
+For a Hermitian $Y$ of arbitrary norm the proof of (c) gives the same bound with $2\op{Y}\hs{P_+\xi P_-}$ as its last term.
+
+\subsection{Entropy}\label{state:entropy}
+
+We use three standard facts. If $\mathcal P(\sigma)=\sum_kP_k\sigma P_k$ is the pinching by orthogonal projections $P_k$ with
+$\sum_kP_k=I$, then $\log\mathcal P(\sigma)$ is block diagonal, so $\Tr\sigma\log\mathcal P(\sigma)=\Tr\mathcal P(\sigma)\log\mathcal P(\sigma)$
+and
+\begin{equation}\label{eq:pinching}
+S(\mathcal P\sigma)-S(\sigma)=D(\sigma\,\|\,\mathcal P\sigma)\ \ge0 .
+\end{equation}
+(The support condition holds: if $\mathcal P(\sigma)v=0$, then $\sigma^{1/2}P_kv=0$ for every $k$, so $\sigma v=0$.) The relative entropy
+does not increase under quantum channels~\cite{Lin75,Uhl77}. And $D(A\|B)$ is jointly convex in pairs of positive
+operators~\cite{Lie73,Lin74}; since it is also positively homogeneous, $D(A_1+A_2\|B_1+B_2)\le D(A_1\|B_1)+D(A_2\|B_2)$.

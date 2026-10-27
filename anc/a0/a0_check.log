@@ -1,0 +1,132 @@
+$ python3 -I a0_check.py ..
+input  egamma0_P.json  sha256 ad0fd91d9378bc956a78e65c813b94fbb93a0e7090b3068b4d76ac6cbc1590f0
+input  game_Ab.json    sha256 c82d4cbbd72b0683ba2a7fceba8c92c346a4c3565e3785ddd2a56415f569c889
+
+templates, with their nominal cell counts (every equation in the order the template expects; role letters;
+X- is X^-1; each cell replaces P by Q, P Q^-1 a cyclic permutation of the relator
+or lemma named, or of its inverse; free reductions and cyclic permutations cost nothing)
+  N: word A C A- B-, 8 cells
+      A-             -> y6 A- y6-    by com A y6                1
+      B-             -> y3 B- y3-    by com B y3                1
+      A-             -> y5 y6        by eq A y5 y6              1
+      B-             -> y2 y3        by eq B y2 y3              1
+      y5 y3          -> y4-          by eq y3 y4 y5             1
+      y2 A           -> y1-          by eq A y1 y2              1
+      C y6           -> y7-          by eq C y6 y7              1
+      y1- y7- y4-    -> e            by eq y1 y4 y7             1
+  K3: word a b a- c-, 22 cells
+      a              -> ab- gs-      by eq a gs ab              1
+      a-             -> gs ab        by eq a gs ab              1
+      gs- b gs       -> b            by com b gs                1
+      b              -> b2- b1-      by eq b b1 b2              1
+      ab- b2-        -> c1- ab-      by N ab b2 c1              8
+      ab- b1- ab     -> c2-          by N ab b1 c2              8
+      c1- c2-        -> c2- c1-      by com c1 c2               1
+      c2- c1- c-     -> e            by eq c c1 c2              1
+  square: word g g, 1 cells
+      g g            -> e            by sq g                    1
+  linear: word v1 v2 v3, 1 cells
+      v1 v2 v3       -> e            by eq v1 v2 v3             1
+  C0-linear-commutation: word x y x y-, 2 cells
+      x              -> x-           by sq x                    1  (occurrence 2)
+      x y x- y-      -> e            by com x y                 1
+  C0-conjugacy: word a b a c-, 23 cells
+      a              -> a-           by sq a                    1  (occurrence 2)
+      a b a- c-      -> e            by K3 a b c               22
+  C1: word f v b v- f- c-, 42 cells
+      v              -> vb- gs-      by eq v gs vb              1
+      v-             -> gs vb        by eq v gs vb              1
+      gs- b gs       -> b            by com b gs                1
+      f              -> fb- gs-      by eq f gs fb              1
+      f-             -> gs fb        by eq f gs fb              1
+      gs- vb-        -> vb- gs-      by com vb gs               1
+      gs- b          -> b gs-        by com b gs                1
+      gs- vb gs      -> vb           by com vb gs               1
+      b              -> b2- b1-      by eq b b1 b2              1
+      vb- b2-        -> Z1- vb-      by N vb b2 Z1              8
+      vb- b1- vb     -> Z2-          by N vb b1 Z2              8
+      fb- Z1-        -> c2- fb-      by N fb Z1 c2              8
+      fb- Z2- fb     -> c1-          by N fb Z2 c1              8
+      c2- c1- c-     -> e            by eq c c1 c2              1
+  G2: word w ts w- ts- J, 24 cells
+      ts             -> tsb- gs-     by eq ts gs tsb            1
+      ts-            -> gs tsb       by eq ts gs tsb            1
+      gs- w- gs      -> w-           by com w gs                1
+      w-             -> w1 w2        by eq w w1 w2              1
+      tsb- w1        -> u2 tsb-      by N tsb w1 u2             8
+      tsb- w2 tsb    -> u1           by N tsb w2 u1             8
+      u2 u1          -> u1 u2        by com u1 u2               1
+      u1 u2          -> u-           by eq u u1 u2              1
+      u-             -> u            by sq u                    1
+      J w u          -> e            by eq w u                  1
+  letters: in N, A B C are the variables of a nice relation A B A = C and y1..y7 its gadget variables;
+  in K3, ab = bar(a), gs = g*, b1 = b', b2 = b'', c1 = c', c2 = c''; in C1, vb = bar(v), fb = bar(f),
+  Z = Z[b,c], Z1 = Z', Z2 = Z''; in G2, ts = t*, tsb = bar(t*), w1 = w', w2 = w'', u1 = u', u2 = u''.
+
+P: |S0| = 26, |C0| = 76, |C1| = 10, 8 linear sets; Gamma(A,b): n = 1993 variables, m = 1687 equations
+words certified: 120 relators of P (|S0| + |C0| + |C1| + |LIN| = 120) and the word of (G2)
+
+type                                words    min    max
+square g^2                             26      1      1
+linear relation                         8      1      1
+C0 commutation in a linear set         24      2      2
+C0 centrality (g,w,w)                  21     23     23
+C0 other commutation (x,y,y)           17     23     23
+C0 conjugacy (x,y,z), z != y           14     23     23
+C1 centrality (w,w)                     1     42     42
+C1 commutation (x,x)                    2     42     42
+C1 conjugacy (b,c), c != b              7     42     42
+(G2) [x_w, x_t*] J                      1     24     24
+
+one instance of each type: Psi(r), and the relators of Gamma(A,b) used, by kind and source
+  square g^2  i:  Psi(r) = i i
+      area <= 1:  square x1
+  linear relation  i sigma g3:  Psi(r) = i sigma g3
+      area <= 1:  equation (linear set of P) x1
+  C0 commutation in a linear set  (g10,t,t):  Psi(r) = g10 t g10 t^-1
+      area <= 2:  commutator x1, square x1
+  C0 centrality (g,w,w)  (d,g14,g14):  Psi(r) = d g14 d g14^-1
+      area <= 23:  commutator x6, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x2, equation (Step 4: gadget of bar(d) g14' bar(d) = g14'') x6, equation (Step 4: gadget of bar(d) g14'' bar(d) = g14') x6, square x1
+  C0 other commutation (x,y,y)  (g1,g4,g4):  Psi(r) = g1 g4 g1 g4^-1
+      area <= 23:  commutator x6, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x2, equation (Step 4: gadget of bar(g1) g4' bar(g1) = g4'') x6, equation (Step 4: gadget of bar(g1) g4'' bar(g1) = g4') x6, square x1
+  C0 conjugacy (x,y,z), z != y  (d,t,g10):  Psi(r) = d t d g10^-1
+      area <= 23:  commutator x6, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x2, equation (Step 4: gadget of bar(d) t' bar(d) = g10'') x6, equation (Step 4: gadget of bar(d) t'' bar(d) = g10') x6, square x1
+  C1 centrality (w,w)  (p,g14,g14):  Psi(r) = f v g14 v^-1 f^-1 g14^-1
+      area <= 42:  commutator x12, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x4, equation (Step 4: gadget of bar(f) Z[g14,g14]' bar(f) = g14'') x6, equation (Step 4: gadget of bar(f) Z[g14,g14]'' bar(f) = g14') x6, equation (Step 4: gadget of bar(v) g14' bar(v) = Z[g14,g14]'') x6, equation (Step 4: gadget of bar(v) g14'' bar(v) = Z[g14,g14]') x6
+  C1 commutation (x,x)  (p,x,x):  Psi(r) = f v x v^-1 f^-1 x^-1
+      area <= 42:  commutator x12, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x4, equation (Step 4: gadget of bar(f) Z[x,x]' bar(f) = x'') x6, equation (Step 4: gadget of bar(f) Z[x,x]'' bar(f) = x') x6, equation (Step 4: gadget of bar(v) x' bar(v) = Z[x,x]'') x6, equation (Step 4: gadget of bar(v) x'' bar(v) = Z[x,x]') x6
+  C1 conjugacy (b,c), c != b  (p,d,g8):  Psi(r) = f v d v^-1 f^-1 g8^-1
+      area <= 42:  commutator x12, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x4, equation (Step 4: gadget of bar(f) Z[d,g8]' bar(f) = g8'') x6, equation (Step 4: gadget of bar(f) Z[d,g8]'' bar(f) = g8') x6, equation (Step 4: gadget of bar(v) d' bar(v) = Z[d,g8]'') x6, equation (Step 4: gadget of bar(v) d'' bar(v) = Z[d,g8]') x6
+  (G2) [x_w, x_t*] J  [g14,t*]J:  Psi(r) = g14 t* g14^-1 t*^-1 J
+      area <= 24:  commutator x6, equation (Step 2: {w,u} with right-hand side 1) x1, equation (Step 3: {a,a',a''}) x2, equation (Step 3: {a,g,bar a}) x2, equation (Step 4: gadget of bar(t*) g14' bar(t*) = u'') x6, equation (Step 4: gadget of bar(t*) g14'' bar(t*) = u') x6, square x1
+
+longest conjugator in any certificate: 59 letters
+cells added to reorder equations whose product order differs from the templates: 0
+
+PASS  all 121 certificates verify: each factor is a conjugate of a relator of Gamma(A,b) and their product is freely equal to the word
+(G1): every Psi(r), r in R, has area at most 42;  (G2): area at most 24
+A_0 = 42
+PASS  cap: every certificate has at most 42 factors (largest 42)
+[exit status 0]
+
+$ python3 -I a0_check.py .. --negctl
+negative controls: each corruption must be rejected
+PASS  rejected: certificate of (p,d,g8) with factor 21 inverted
+PASS  rejected: certificate of (p,d,g8) with factor 3 dropped
+PASS  rejected: certificate of (d,t,g10) with a commutator of variables in no common equation  [[x_1, x_0] is not a relator: no common equation]
+PASS  rejected: game with one gadget equation used by (G2) corrupted (a wrong variable)  [no equation with variables ["y3[bar(t*),g14'',u']", "y4[bar(t*),g14'',u']", "y5[bar(t*),g14'',u']"]]
+PASS  rejected: game with the equation {w, w', w''} deleted  [no equation with variables ['g14', "g14'", "g14''"]]
+PASS  rejected: game with b = 0 in x_w + x_u = 1  [cell does not match the equation of ['g14', 'u']]
+PASS  rejected: presentation with a C0 triple (x,y,z) replaced by (x,z,y)  [no variable with role ('y', 1, 'bar(d)', "g10''", "t'")]
+PASS  rejected: the true certificate of (G2) checked against a game with y3 y4 y5 -> y3 y4 y6 in one of its gadgets
+PASS  rejected: certificate of (p,d,g8) padded to 44 factors by a factor and its inverse (replay alone accepts it: True)
+ALL NEGATIVE CONTROLS REJECTED
+[exit status 0]
+
+# file-level negative control: <tmp> holds egamma0_P.json and a copy of game_Ab.json in which the
+# right-hand side of x_w + x_u = 1 is set to 0; the check must fail
+$ python3 -I a0_check.py <tmp>
+input  egamma0_P.json  sha256 ad0fd91d9378bc956a78e65c813b94fbb93a0e7090b3068b4d76ac6cbc1590f0
+input  game_Ab.json    sha256 63af8169e846f4fb77544e0e3cb1185acb2c2a45d58cb7e5634e6927a90329a1
+FAIL  cell does not match the equation of ['g14', 'u']
+[exit status 1]

@@ -1,0 +1,209 @@
+%======================================================================
+\section{Preliminaries}\label{sec:prelim}
+%======================================================================
+
+All Hilbert spaces are finite-dimensional. This section fixes the norms in which errors are measured and recalls approximate
+representations and their hyperlinear profile, with the two facts that make profiles computable: the defect of a word is at most
+linear in its area, and a change of finite presentation changes all defects by bounded factors. It then introduces state-weighted
+models, the objects that near-optimal strategies actually produce, and the profiles they define. Finally it recalls linear system
+games and fixes the measures of entanglement.
+
+\subsection{Norms and conventions}
+
+Logarithms are to base $2$ unless written $\ln$; $h(x)=-x\log x-(1-x)\log(1-x)$ is the binary entropy, $S$ the von Neumann entropy in
+bits, and $D(A\|B)=\Tr A(\log A-\log B)$ the relative entropy of positive operators $A,B$ with $\supp A\subseteq\supp B$. Maps compose
+from right to left and groups act on the left. $F(S)$ is the free group on a set $S$, and $\abs{w}$ is the length of a word $w$. For
+words or group elements $[a,b]=aba^{-1}b^{-1}$; for operators $[S,T]=ST-TS$ and $\{S,T\}=ST+TS$. An \emph{involution} is a Hermitian
+unitary.
+
+For an operator $T$ between Hilbert spaces, $\hs{T}=(\Tr T^*T)^{1/2}$ is the unnormalized Hilbert--Schmidt norm, $\tn{T}$ the trace norm
+and $\op{T}$ the operator norm. We use $\hs{XTY}\le\op{X}\hs{T}\op{Y}$, the invariance of $\hs{\cdot}$ under multiplication by unitaries
+on either side, and H\"older's inequality $\tn{ST}\le\hs{S}\hs{T}$. On $\C^d$ we write $\tr=\frac1d\Tr$ and $\fn{T}=\hs{T}/\sqrt d$ for the
+normalized norm, so $\fn{I}=1$. For unitaries $U,W$ we have $\fn{U-W}=\fn{UW^*-I}$, $\fn{U^{-1}-I}=\fn{U-I}$, and
+\begin{equation}\label{eq:unitary-distance}
+\fn{U-I}^2=2-2\operatorname{Re}\tr U\le4,\qquad\text{with equality if and only if }U=-I ,
+\end{equation}
+since $\operatorname{Re}\tr U=-1$ forces every eigenvalue of $U$ to be $-1$. For unitaries $U,V$, $UV-VU=(UVU^{-1}V^{-1}-I)VU$, so
+$\fn{UVU^{-1}V^{-1}-I}=\fn{UV-VU}$: inside the normalized norm the group commutator and the operator commutator are interchangeable.
+In a fixed state they differ by state commutators (\cref{prelim:models}).
+
+\subsection{Approximate representations}
+
+An approximate representation assigns unitary matrices to the generators of a finite presentation so that every relator is mapped close
+to the identity. An element that is nontrivial in the group may still be forced close to the identity, and the hyperlinear profile
+measures how large the matrices must be before it can stay away.
+
+\begin{definition}[Approximate representations]\label{def:approx-rep}
+Let $S$ be finite, $R\subset F(S)$ finite and $\eps\ge0$. An \emph{$\eps$-representation} of $\langle S\mid R\rangle$ of dimension $d$ is a
+homomorphism $\phi:F(S)\to\U(d)$ with $\fn{\phi(r)-I}\le\eps$ for every $r\in R$. We call $\fn{\phi(w)-I}$ the \emph{defect} of $w$.
+\end{definition}
+
+\begin{definition}[Hyperlinear profile; {\cite[Definition~2.3]{SV18}}]\label{def:hlp}
+For $w\in F(S)$, $0<\delta\le2$ and $\eps>0$, the \emph{hyperlinear profile} $\hlp(w;\delta,\eps)$ is the least $d$ for which some
+$\eps$-representation of $\langle S\mid R\rangle$ of dimension $d$ has $\fn{\phi(w)-I}\ge\delta$, and $\infty$ if there is none. We write
+$\hlp_R$ when the presentation matters, and say that $w$ is \emph{nontrivial in approximate representations} if
+$\hlp(w;\delta,\eps)<\infty$ for some $\delta>0$ and all $\eps>0$.
+\end{definition}
+
+The profile is nonincreasing in $\eps$ and nondecreasing in $\delta$. By~\eqref{eq:unitary-distance}, $\delta=2$ asks for $\phi(w)=-I$
+exactly; this is the form used by Slofstra and Vidick. If a finitely presented group is hyperlinear, every element $g\ne1$ is nontrivial
+in approximate representations, for every finite presentation and every word representing $g$; amenable groups are sofic, hence
+hyperlinear~\cite{Gro99,Wei00,ES05,Pes08}.
+
+A word $w$ that represents $1$ in $G=\langle S\mid R\rangle$ is freely equal to a product of $k$ conjugates of elements of $R^{\pm1}$; the
+least such $k$ is its \emph{area} $\Area_R(w)$, and the \emph{Dehn function} of the presentation is
+$n\mapsto\max\{\Area_R(w):\abs{w}\le n,\ w=1\text{ in }G\}$. For a set of words $W$ we say that $w$ has \emph{area at most $k$ in $W$}
+if it is freely equal to a product of $k$ conjugates of elements of $W^{\pm1}$.
+
+\begin{lemma}[Defect is bounded by area]\label{lem:defect}
+If $\fn{\phi(r)-I}\le\eps$ for every $r\in W$ and $w$ has area at most $k$ in $W$, then $\fn{\phi(w)-I}\le k\eps$. In particular, in an
+$\eps$-representation, $\fn{\phi(w)-\phi(w')}\le\Area_R(w'^{-1}w)\,\eps$ whenever $w,w'$ represent the same element.
+\end{lemma}
+
+\begin{proof}
+For unitaries $U_1,\dots,U_k$ and $W'=U_2\cdots U_k$, unitary invariance gives $\fn{U_1W'-I}\le\fn{U_1W'-W'}+\fn{W'-I}=\fn{U_1-I}+\fn{W'-I}$,
+so $\fn{U_1\cdots U_k-I}\le\sum_i\fn{U_i-I}$ by induction. Write $w$, up to free reduction, as $\prod_{i=1}^ku_ir_i^{\pm1}u_i^{-1}$ with
+$r_i\in W$. Since $\phi$ is a homomorphism of the free group, each factor has
+$\fn{\phi(u_i)\phi(r_i)^{\pm1}\phi(u_i)^{-1}-I}=\fn{\phi(r_i)^{\pm1}-I}=\fn{\phi(r_i)-I}\le\eps$, and summing gives the first claim. For the
+second, $w'^{-1}w$ represents $1$ and $\fn{\phi(w)-\phi(w')}=\fn{\phi(w'^{-1}w)-I}$.
+\end{proof}
+
+The lemma is the only way in which approximate representations see the geometry of the group: a short filling forces a word to be nearly
+trivial. Its counterpart in a fixed state, where conjugators are no longer free, is \cref{lem:calculus}(d).
+
+\begin{lemma}[Change of presentation]\label{lem:change-presentation}
+Let $\langle S\mid R\rangle$ and $\langle S'\mid R'\rangle$ present the same group, fix words $\hat s'\in F(S)$ representing the generators
+$s'\in S'$, and let $w\in F(S)$, $w'\in F(S')$ represent the same element. There is $C\ge1$ with
+$\hlp_{R'}(w';\delta-C\eps,C\eps)\le\hlp_R(w;\delta,\eps)$ whenever $C\eps<\delta$; if $w'=s'$ is a letter and $\hat s'=w$, the loss in
+$\delta$ disappears.
+\end{lemma}
+
+\begin{proof}
+Let $\vartheta:F(S')\to F(S)$ be the homomorphism $s'\mapsto\hat s'$. The words $\vartheta(r')$, $r'\in R'$, and $\vartheta(w')^{-1}w$
+represent $1$; let $C\ge1$ bound their areas in $R$. If $\phi$ is an $\eps$-representation of $\langle S\mid R\rangle$ with
+$\fn{\phi(w)-I}\ge\delta$, then $\phi'=\phi\circ\vartheta$ is a $C\eps$-representation of $\langle S'\mid R'\rangle$ of the same dimension
+by \cref{lem:defect}, and $\fn{\phi'(w')-\phi(w)}\le C\eps$, so $\fn{\phi'(w')-I}\ge\delta-C\eps$. In the special case
+$\phi'(w')=\phi(\hat s')=\phi(w)$.
+\end{proof}
+
+So lower bounds of the form $\exp(c\,(\delta/\eps)^{\alpha})$, and finiteness of the profile, pass between finite presentations, with new
+constants. The same holds for the state-weighted profiles below (\cref{state:change-presentation}).
+
+\subsection{State-weighted models}\label{prelim:models}
+
+Let $\rho$ be a density matrix on $\C^d$ and $\xi=\rho^{1/2}$, so that $\hs{\xi}=1$. For an operator $Y$ on $\C^d$ we call
+\[
+\hs{Y\xi}=\Tr(Y^*Y\rho)^{1/2}\qquad\text{and}\qquad\hs{[Y,\xi]}
+\]
+the \emph{state-weighted norm} of $Y$ and the \emph{state commutator} of $Y$. For the \emph{flat state} $\rho=I/d$ the first is $\fn{Y}$
+and the second vanishes. We use without comment that $\hs{XY\xi}\le\op{X}\hs{Y\xi}$, that $\hs{Y\xi U}=\hs{Y\xi}$ for unitary $U$, that
+$\hs{\xi Y}=\hs{Y^*\xi}$, that $\hs{(U^*-I)\xi}=\hs{(U-I)\xi}$ for unitary $U$, and that $[U^*,\xi]=-U^*[U,\xi]U^*$, so
+$\hs{[U^*,\xi]}=\hs{[U,\xi]}$. For contractions $S,T$ the Leibniz rule $[ST,\xi]=S[T,\xi]+[S,\xi]T$ gives
+$\hs{[ST,\xi]}\le\hs{[S,\xi]}+\hs{[T,\xi]}$. For unitaries $U,V$ the identities $[U,V]=(UVU^{-1}V^{-1}-I)VU$ and
+$UVU^{-1}V^{-1}-I=[U,V]U^{-1}V^{-1}$ show that $\hs{[U,V]\xi}$ and $\hs{(UVU^{-1}V^{-1}-I)\xi}$ differ by at most
+$2\hs{[U,\xi]}+2\hs{[V,\xi]}$.
+
+\begin{definition}[State-weighted models]\label{def:model}
+Let $\langle S\mid R\rangle$ be a finite presentation, $w\in F(S)$ and $e\ge0$. A \emph{state-weighted model} of $\langle S\mid R\rangle$
+at precision $e$ on $\C^d$ is a pair $(\phi,\rho)$ of a homomorphism $\phi:F(S)\to\U(d)$ and a density matrix $\rho$ on $\C^d$ such that,
+with $\xi=\rho^{1/2}$,
+\begin{enumerate}[label=(S\arabic*),leftmargin=3.2em]
+\item\label{prelim:S1} $\hs{(\phi(r)-I)\xi}\le e$ for every $r\in R$;
+\item\label{prelim:S2} $\hs{[\phi(s),\xi]}\le e$ for every $s\in S$.
+\end{enumerate}
+It is a model of the pair $(\langle S\mid R\rangle,w)$ if moreover
+\begin{enumerate}[label=(S\arabic*),leftmargin=3.2em,resume]
+\item\label{prelim:S3} $\hs{(\phi(w)+I)\xi}\le e$.
+\end{enumerate}
+We call $\hs{(\phi(u)-I)\xi}$ the \emph{defect of $u$ in the state}.
+\end{definition}
+
+Condition~\ref{prelim:S2} has no flat analogue: a trace ignores conjugation, a state does not, and~\ref{prelim:S2} is what pays for conjugators
+(\cref{lem:calculus}). Condition~\ref{prelim:S3} is the state-weighted form of $\phi(w)=-I$.
+
+\begin{definition}[State-weighted profiles]\label{def:state-profile}
+Let $\langle S\mid R\rangle$ be a finite presentation, $w\in F(S)$ and $e>0$. The \emph{state-weighted profile} $\hlps(w;e)$ is the least $d$
+for which a model of $(\langle S\mid R\rangle,w)$ at precision $e$ on $\C^d$ exists, that is, a pair $(\phi,\rho)$
+satisfying~\ref{prelim:S1}--\ref{prelim:S3}; it is $\infty$ if there is none. The \emph{entropy profile} $\hS(e)$ is the infimum of $S(\rho)$ over all such
+models, in any dimension. We write $\hlps_R$ and $\hS_R$ when the presentation matters.
+\end{definition}
+
+Both profiles are nonincreasing in $e$, and $\hS(e)\le\log\hlps(w;e)$ since $S(\rho)\le\log d$. If $\phi$ is an $e$-representation with
+$\fn{\phi(w)-I}\ge2$, that is with $\phi(w)=-I$, then $(\phi,I/d)$ satisfies~\ref{prelim:S1}--\ref{prelim:S3} at precision $e$. Hence
+\[
+\hlps(w;e)\le\hlp(w;2,e),
+\]
+and a lower bound on $\hlps$ is a stronger statement than the same lower bound on $\hlp(\,\cdot\,;2,\cdot)$.
+
+\subsection{Linear system games}
+
+Let $A\in\F_2^{m\times n}$ and $b\in\F_2^m$, and let $V_i=\{j:A_{ij}=1\}$ be the set of variables of the $i$-th equation, assumed nonempty;
+put $s=\max_i\abs{V_i}$. We write answers as signs, the bit $0$ as $+1$ and the bit $1$ as $-1$.
+
+\begin{definition}[Linear system games; \cite{CM14,CLS17,SV18}]\label{def:lcs}
+\leavevmode
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item The \emph{solution group} $\Gamma=\Gamma(A,b)$ is generated by $x_1,\dots,x_n,J$ with the relators
+\begin{gather*}
+x_j^2,\quad J^2,\quad [x_j,J]\ \ (1\le j\le n),\qquad [x_j,x_k]\ \ (j,k\in V_i\text{ for some }i),\\
+J^{b_i}x_{j_1}x_{j_2}\cdots x_{j_r}\ \ (1\le i\le m,\ V_i=\{j_1<\dots<j_r\}).
+\end{gather*}
+The element $J$ is a central involution. Approximate representations and models of $\Gamma$ are taken with respect to this presentation,
+and with $w=J$; we write $\hlp_\Gamma$, $\hlps_\Gamma$ and $\hS_\Gamma$.
+\item In the game $G=G(A,b)$ with \emph{question distribution} $\pi$ on $\{1,\dots,m\}\times\{1,\dots,n\}$, a referee draws $(i,j)$ from
+$\pi$. Alice receives $i$ and answers $a\in\{\pm1\}^{V_i}$ with $\prod_{j\in V_i}a_j=(-1)^{b_i}$; Bob receives $j$ and answers
+$c\in\{\pm1\}$. They win if $j\notin V_i$ or $a_j=c$. We put $\pi_{\min}=\min\{\pi(i,j):j\in V_i\}$ and assume $\pi_{\min}>0$. The
+\emph{default distribution} draws $i$ uniformly and then $j\in V_i$ uniformly, so $\pi_{\min}\ge1/(ms)$; Slofstra and Vidick draw $i$
+and $j$ independently and uniformly~\cite{SV18}, so $\pi_{\min}=1/(mn)$.
+\item A \emph{strategy} consists of a unit vector $\psi\in H_A\otimes H_B$, a POVM $\{P^i_a\}_a$ on $H_A$ for each $i$, indexed by the
+answers to $i$, and a POVM $\{Q^j_c\}_{c=\pm1}$ on $H_B$ for each $j$. Its \emph{observables} are the Hermitian contractions
+$A_{ij}=\sum_aa_jP^i_a$ ($j\in V_i$) and $B_j=Q^j_{+1}-Q^j_{-1}$, and the pair $(i,j)$ with $j\in V_i$ is won with probability
+\[
+\sum_a\bigl\langle\psi,(P^i_a\otimes Q^j_{a_j})\psi\bigr\rangle=\tfrac12\bigl(1+\langle\psi,(A_{ij}\otimes B_j)\psi\rangle\bigr).
+\]
+The winning probability $\omega(G;\mathcal S)$ of a strategy $\mathcal S$ is the $\pi$-average of these probabilities, a pair with
+$j\notin V_i$ counting as won. The \emph{quantum value} $\omq(G)$ is the supremum of $\omega(G;\mathcal S)$ over all strategies, and
+$\omqc(G)$ the supremum over commuting-operator strategies, in which $\psi$ lies in one Hilbert space and Alice's operators commute with
+Bob's.
+\end{enumerate}
+\end{definition}
+
+The following facts are standard. A perfect commuting-operator strategy exists if and only if $J\ne1$ in $\Gamma$~\cite[Theorem~4]{CLS17}.
+A perfect strategy on a tensor product of Hilbert spaces, of finite or infinite dimension, exists if and only if some finite-dimensional
+representation of $\Gamma$ sends $J$ to $-I$~\cite[Theorem~1]{CM14}, \cite[Theorem~5]{CLS17}, \cite[Theorem~3.2]{Slo19}; a
+finite-dimensional representation in which $J\ne1$ restricts to the $(-1)$-eigenspace of the image of $J$, where $J$ acts as $-I$. Finally, $\omq(G)=1$ if
+and only if $J$ is nontrivial in approximate representations of $\Gamma$: the ``if'' direction is~\cite[Proposition~3.4]{Slo19}
+(restated as~\cite[Proposition~4.3]{SV18}), and the ``only if'' direction follows from the lower bound
+$\hlp_\Gamma(J;2,C\eps^{1/4})\le\Ent(G,\eps)$ of~\cite[Corollary~5.2]{SV18}, and~\cite[Corollary~5.3]{SV18} states the equivalence. Whether $\omq(G)=1$ does not depend on $\pi$, because a
+strategy that wins with probability $1-\eps$ loses each pair $(i,j)$ with $j\in V_i$ with probability at most $\eps/\pi_{\min}$.
+\Cref{sec:transfer} proves quantitative and state-weighted forms of these correspondences.
+
+\subsection{Entanglement}
+
+A unit vector $\psi\in H_A\otimes H_B$ has a Schmidt decomposition $\psi=\sum_{k=1}^r\sqrt{\lambda_k}\,e_k\otimes f_k$ with $\lambda_k>0$
+and orthonormal families $(e_k)$, $(f_k)$. Its reduced density matrices $\rho_A$ and $\rho_B$ have the same nonzero eigenvalues
+$\lambda_k$. We keep apart the \emph{Schmidt rank} $r=\rank\rho_B$, which is at most both local dimensions, and the \emph{entanglement
+entropy} $S(\rho_A)=S(\rho_B)\le\log r$, the number of ebits of $\psi$. For a mixed state $\sigma$ on $H_A\otimes H_B$ the
+\emph{entanglement of formation} is~\cite{BDSW96}
+\[
+E_F(\sigma)=\inf\Bigl\{\sum_jp_j\,S\bigl(\Tr_B|\psi_j\rangle\langle\psi_j|\bigr):\ \sigma=\sum_jp_j|\psi_j\rangle\langle\psi_j|\Bigr\}.
+\]
+The distillable entanglement is at most $E_F$, so lower bounds on $E_F$ say nothing about it.
+
+\begin{definition}[Dimension needed to play; \cite{SV18}]\label{def:entanglement}
+For a nonlocal game $G$ and $\eps>0$, $\Ent(G,\eps)$ is the least $d$ such that some strategy with $H_A=H_B=\C^d$ wins with probability at
+least $\omq(G)-\eps$, and $\Entme(G,\eps)$ is the least $d$ for which such a strategy exists with the maximally entangled state
+$\Phi_d=d^{-1/2}\sum_ke_k\otimes e_k$ of $\C^d\otimes\C^d$. So $\Ent\le\Entme$, and when $\omq(G)=1$ both count strategies that win with
+probability at least $1-\eps$.
+\end{definition}
+
+\begin{remark}[Local dimension, Schmidt rank and projective measurements]\label{rem:local-dimension}
+Two normalizations are free. \emph{Schmidt-rank compression:} if $\psi=\sum_{k\le r}\sqrt{\lambda_k}e_k\otimes f_k$ and $\Pi_A,\Pi_B$
+project onto the spans of the $e_k$ and of the $f_k$, then compressing every $P^i_a$ by $\Pi_A$ and every $Q^j_c$ by $\Pi_B$ gives POVMs
+on two spaces of dimension $r$ with the same probabilities, since $\psi=(\Pi_A\otimes\Pi_B)\psi$. Hence $\Ent(G,\eps)$ is also the least
+Schmidt rank, and the least $\min(\dim H_A,\dim H_B)$, of a strategy that wins with probability at least $\omq(G)-\eps$; a lower bound on
+the Schmidt rank of every such strategy is a lower bound on $\Ent(G,\eps)$, and a lower bound on its entanglement entropy is a lower bound
+on $\log\Ent(G,\eps)$. \emph{Naimark dilation:} if $K$ is the largest number of answers to a question, dilating each of Alice's POVMs to a
+projective measurement on $H_A\otimes\C^K$, with the state $\psi\otimes|0\rangle$, changes neither Bob's reduced density matrix nor any
+probability, and multiplies Alice's local dimension by at most $K$.
+\end{remark}

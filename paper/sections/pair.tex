@@ -1,0 +1,386 @@
+%======================================================================
+\section{Pair areas}\label{sec:pair}
+%======================================================================
+
+The generators $x$ and $z$ of $\GP$ act on the Pauli pair at the site $0$ only. To reach the pair at a site $u$ we conjugate by a word
+$T_u$ that carries $0$ to $u$, a \emph{transporter} (\cref{fig:lamps}). Pairs at different sites commute in $\GP$, but an approximate
+representation sees a relation only through a finite certificate: by \cref{lem:defect}, a word of area $k$ with respect to words of
+defect at most $\eps$ has defect at most $k\eps$. \Cref{sec:sector} needs the $2^N$ pairs at the configurations of the first $N$ points of
+ray~$1$ to commute up to small errors, so it needs their commutators to have small area with respect to one fixed finite set of words
+$\RP$. This section proves that they have area at most $\Lambda_N\le2^{(\log N+23)^2}$ (\cref{thm:pair-area}), quasi-polynomial in $N$,
+the logarithm of the number $2^N$ of pairs, and that the transported pairs square to the transported $J$ at linear cost (\cref{lem:J-transport}).
+
+The proof is a computation with words in which every step involves at most three points of ray~$1$. Two lamps are first brought to
+one translation word; the configuration that separates them is then cleared down to a single point by at most $N$ transvections, with the
+translation word renormalized after each; what is left is the commutation of the lamps at two neighbouring sites, a word of $\RP$. Each
+step is a \emph{local filling} (\cref{lem:local-filling}), whose cost is governed by the Dehn function $\dH$ of $H_3$ at scale $O(N)$: two
+short words in $p,q$ that agree on the one or two points that matter differ by an element of a point stabilizer, which commutes with the
+transported generator. This adapts~\cite[Theorem~5.1]{DM-lamps}, where the lamps are copies of $S_3$, to Pauli lamps.
+
+\subsection{The certificate}\label{sec:pair-cert}
+
+We use the notation of \cref{sec:group}. On the first ray we write $i$ for the point $(1,i)$, $e_i$ for $e_{(1,i)}$, $\tau_i$ for the
+translation $\tau_{e_i}$, and $(i\ j)$ for the transposition of the points $i$ and $j$; thus $t=\tau_1$, $d=E_{2\leftarrow1}$ and
+$s=[p,q]=(1\ 2)$ (\cref{group:gen}). By~\eqref{eq:affine-id} and \cref{def:GP}, a linear map fixes the site $0$ and so commutes with $x=x_0$
+and $z=z_0$, an element $h\in A$ conjugates the pair at $v$ to the pair at $h(v)$, and $J$ is central (\cref{prop:J-central}). We write $J$
+also for the word $xzxz$.
+
+\begin{definition}[The certificate $\RP$]\label{def:RP}
+Put
+\[
+s=[p,q],\qquad B=psp^{-1},\qquad t_m=p^{m-1}\,t\,p^{1-m}\quad(m=1,2,3).
+\]
+The \emph{certificate} $\RP$ consists of the $27$ words of \cref{tab:RP} in the letters $p,q,t,d,x,z$: thirteen \emph{host words} in
+$p,q,t,d$ (families \textsf{H}, \textsf{Q}, \textsf{S}, \textsf{C}, \textsf{A}) and fourteen \emph{lamp words} (families \textsf{Z},
+\textsf{L}, \textsf{P}, \textsf{K}). Expanded literally, the words have length at most $30$; we take each to be its free reduction, which
+has length at most $22$. In particular $\RP$ contains $x^2$, $z^2$ and $(xz)^4$. In this section areas are taken with respect to $\RP$, and
+we write $\Area=\Area_{\RP}$.
+\end{definition}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{@{}l p{0.38\textwidth} p{0.31\textwidth} r r@{}}
+\toprule
+ & words & meaning & number & longest\tabularnewline
+\midrule
+\textsf{H} & \raggedright $s^2$,\ $(sps\,p^{-1})^3$,\ $[s,p^2sp^{-2}]$,\ $psp^{-1}qs^{-1}q^{-1}$ & \raggedright the presentation $P_H$ of $H_3$ & 4 & 22\tabularnewline
+\textsf{Q} & \raggedright $t^2$ & \raggedright translations are involutions & 1 & 2\tabularnewline
+\textsf{S} & \raggedright $[t,sp]$, $[t,sq]$, $[d,Bsp]$, $[d,Bsq]$ & \raggedright stabilizers of prototypes commute with them & 4 & 16\tabularnewline
+\textsf{C} & \raggedright $[t_1,t_2]$ & \raggedright translations commute & 1 & 8\tabularnewline
+\textsf{A} & \raggedright $d\,t_1d^{-1}(t_1t_2)^{-1}$,\ $[d,t_2]$,\ $[d,t_3]$ & \raggedright how $d$ moves the translations at $1,2,3$ & 3 & 12\tabularnewline
+\midrule
+\textsf{Z} & \raggedright $[\ell,a]$ for $\ell\in\{p,q,d\}$, $a\in\{x,z\}$ & \raggedright linear maps fix the lamp at $0$ & 6 & 4\tabularnewline
+\textsf{L} & \raggedright $x^2$,\ $z^2$,\ $(xz)^4$ & \raggedright the lamp at $0$ is $D_4$ & 3 & 8\tabularnewline
+\textsf{P} & \raggedright $[a,tbt^{-1}]$ for $a,b\in\{x,z\}$ & \raggedright the lamps at $0$ and $e_1$ commute & 4 & 8\tabularnewline
+\textsf{K} & \raggedright $[J,t]$, with $J=xzxz$ & \raggedright $J$ commutes with $t$ & 1 & 10\tabularnewline
+\midrule
+ & total & & 27 & \tabularnewline
+\bottomrule
+\end{tabular}
+\caption{The certificate $\RP$: thirteen host words in $p,q,t,d$ and fourteen lamp words, written with the abbreviations of
+\cref{def:RP}. The last column is the largest length of a word of the family after free reduction.}
+\label{tab:RP}
+\end{table}
+
+\begin{lemma}\label{lem:RP-valid}
+Every word of $\RP$ represents $1$ in $\GP$.
+\end{lemma}
+
+\begin{proof}
+By \cref{group:gen}(a), $s=(1\ 2)$ and $B=(2\ 3)$. We check the families in turn.
+\begin{itemize}[itemsep=0pt,leftmargin=2em]
+\item[\textsf{H}] These are the relators of $P_H$, which hold in $H$ (\cref{sec:group-houghton}).
+\item[\textsf{Q}] $t$ is a translation of the $\F_2$-space $V$, so $t^2=1$.
+\item[\textsf{S}] $sp$ and $sq$ fix the point $1$, and $Bsp$ and $Bsq$ fix the points $1$ and $2$; by~\eqref{eq:affine-id} they commute
+with $t=\tau_1$, respectively with $d=E_{2\leftarrow1}$.
+\item[\textsf{C}] Translations commute.
+\item[\textsf{A}] $t_m=\tau_m$ because $p^{m-1}$ maps the point $1$ to $m$, and $dt_md^{-1}=\tau_{d(e_m)}$ by~\eqref{eq:affine-id}, with
+$d(e_1)=e_1+e_2$, $d(e_2)=e_2$ and $d(e_3)=e_3$.
+\item[\textsf{Z}] $p$, $q$ and $d$ are linear, so they fix the site $0$ and commute with $x$ and $z$.
+\item[\textsf{L}] $x$ and $z$ are involutions, and $(xz)^4=J^2=1$.
+\item[\textsf{P}] $tbt^{-1}$ lies in the pair at the site $t(0)=e_1\ne0$, and pairs at distinct sites commute in $\EV$.
+\item[\textsf{K}] $J$ is central.\qedhere
+\end{itemize}
+\end{proof}
+
+The $27$ words are listed in the ancillary file \texttt{relators\_pauli.txt}, and a script checks them independently in a faithful model
+of $\GP$ (\cref{app:cert}).
+
+\paragraph{Areas.} Area is invariant under free equality, inversion and conjugation, and subadditive under products. If $\mu U\nu$ and
+$\mu U'\nu$ are words, then $\mu U\nu=(\mu UU'^{-1}\mu^{-1})\,\mu U'\nu$ freely, so replacing a subword $U$ by $U'$ changes the area by at
+most $\Area(UU'^{-1})$; we call this a \emph{replacement of cost $\Area(UU'^{-1})$}. Finally, $[w,v_1v_2]=[w,v_1]\cdot v_1[w,v_2]v_1^{-1}$
+and $[w,v^{-1}]=v^{-1}[w,v]^{-1}v$ freely, so for all words $w,v$ and every factorization $v=v_1^{\pm1}\cdots v_m^{\pm1}$ into words $v_l$
+\begin{equation}\label{eq:pair-comm}
+\Area([w,v])=\Area([v,w])\le\sum_{l=1}^m\Area([w,v_l]).
+\end{equation}
+The family \textsf{H} is the presentation $P_H$ of~\eqref{eq:PH}, so a word $w$ in $p,q$ that represents $1$ in $H$ has
+$\Area(w)\le\dH(|w|)$. The function $\dH$ is finite and nondecreasing (\cref{cor:dehn-qp}), and it is the only input about $H$ beyond
+explicit computations with permutations.
+
+\subsection{Short words in Houghton's group}\label{sec:pair-houghton}
+
+All transport takes place among the first $n$ points of ray~$1$. For $n\ge1$ let $\Sigma_n\le H$ be the group of permutations supported
+in $\{1,\dots,n\}$, identified with $\Sym(n)$. Recall that $\sigma_k=p^ksp^{-k}$ is the transposition $(k{+}1\ \,k{+}2)$
+(\cref{group:gen}). Lengths of words in $p,q$ are counted with $s$ written out as $pqp^{-1}q^{-1}$.
+
+\begin{lemma}[Finite permutations]\label{lem:pair-transp}
+\leavevmode
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item For $1\le i<j$ the word $\omega_{i,j}=p^{i-1}(sp)^{j-i-1}(sp^{-1})^{j-i-1}s\,p^{1-i}$ represents $(i\ j)$ and has length
+$10j-8i-8<10j$.
+\item Every element of $\Sigma_n$ that moves $m\ge2$ points is represented by a word in $p,q$ of length less than $10(m-1)n$.
+\item Let $y_1,\dots,y_l\in\{1,\dots,n\}$ be distinct. Put $\pi_0=1$ and, for $m=1,\dots,l$, $w_m=\pi_{m-1}^{-1}(y_m)$ and
+$\pi_m=\pi_{m-1}(m\ w_m)$, where $(m\ m)=1$. Then $\pi[y_1,\dots,y_l]:=\pi_l$ maps $m$ to $y_m$ for $m\le l$, and it is a product of at
+most $l$ transpositions of points of $\{1,\dots,n\}$. The product of the corresponding words $\omega_{m,w_m}$, also written
+$\pi[y_1,\dots,y_l]$, has length less than $10ln$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Conjugating $(i{+}1\ \,j)$ by $\sigma_{i-1}=(i\ \,i{+}1)$ gives $(i\ j)$ for $j>i+1$, so by induction on $j-i$
+\[
+(i\ j)=\sigma_{i-1}\sigma_i\cdots\sigma_{j-3}\;\sigma_{j-2}\;\sigma_{j-3}\cdots\sigma_i\sigma_{i-1}.
+\]
+In this product the powers of $p$ telescope: $\sigma_k\sigma_{k+1}=p^ksps\,p^{-k-1}$ and $\sigma_{k+1}\sigma_k=p^{k+1}sp^{-1}s\,p^{-k}$, and
+multiplying out gives $\omega_{i,j}$. Its length is $2(i-1)+5(j-i-1)+5(j-i-1)+4=10j-8i-8$.
+
+(b) A permutation that moves $m$ points is a product of at most $m-1$ transpositions of those points, each represented by (a) by a word
+of length less than $10n$.
+
+(c) By induction $\pi_{m-1}(k)=y_k$ for $k<m$. Since $y_m\ne y_k$ for $k<m$, the point $w_m=\pi_{m-1}^{-1}(y_m)$ is not among $1,\dots,m-1$,
+so $w_m\ge m$ and $(m\ w_m)$ fixes $1,\dots,m-1$. Hence $\pi_m(k)=y_k$ for $k<m$, and $\pi_m(m)=\pi_{m-1}(w_m)=y_m$. Each $w_m$ lies in
+$\{1,\dots,n\}$, because $\pi_{m-1}\in\Sigma_n$. There are at most $l$ nontrivial factors, each a word of length less than $10n$ by (a).
+\end{proof}
+
+That a point stabilizer of $H$ is isomorphic to $H$ is known~\cite[Example~3.6]{Cor06}. The next lemma gives such isomorphisms explicitly
+on generators, with short words.
+
+\begin{lemma}[Point stabilizers]\label{lem:pair-stab}
+For $k\ge1$ let $H^{(k)}$ be the pointwise stabilizer in $H$ of the points $1,\dots,k$, put $\zeta_k=\sigma_{k-1}\cdots\sigma_1\sigma_0$ and
+$K_k=(\zeta_kp,\ \zeta_kq)$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item There is an isomorphism $H\to H^{(k)}$ that sends $p,q$ to $\zeta_kp,\zeta_kq$ and the transposition $(i\ j)$ to
+$(i{+}k\ \ j{+}k)$. In particular $K_k$ generates $H^{(k)}$.
+\item Every element of $\Sigma_n\cap H^{(k)}$ that moves $m\ge2$ points is represented by a word with fewer than $10(m-1)n$ letters from
+$K_k^{\pm1}$.
+\end{enumerate}
+Here $\zeta_1=s$ and $\zeta_2=Bs$, so $K_1=(sp,sq)$ and $K_2=(Bsp,Bsq)$ are the pairs of the family \textsf{S}; their letters have length
+at most $5$ and $11$ in $p,q$.
+\end{lemma}
+
+\begin{proof}
+(a) Let $\theta_k:Y\to Y\setminus\{1,\dots,k\}$ map $(1,j)$ to $(1,j+k)$ and fix rays $2$ and $3$. For $g\in H$ let $g^{[k]}$ act as
+$\theta_kg\theta_k^{-1}$ on the image of $\theta_k$ and fix the points $1,\dots,k$. Then $g^{[k]}$ is eventually a translation on each ray,
+and $g\mapsto g^{[k]}$ is an injective homomorphism $H\to H^{(k)}$. It is onto, because an element $h\in H^{(k)}$ restricts to a
+permutation of the image of $\theta_k$, and $\theta_k^{-1}h\theta_k$ lies in $H$. Since $\theta_k$ maps the point $i$ to $i+k$, $(i\ j)^{[k]}=(i{+}k\ \ j{+}k)$. The element
+$\zeta_k$ is the cycle $1\mapsto k{+}1\mapsto k\mapsto\dots\mapsto2\mapsto1$ of points of ray~$1$. Hence $\zeta_kp$ fixes the points
+$1,\dots,k$, maps $(1,j)$ to $(1,j+1)$ for $j>k$, maps $(2,1)$ to $(1,k+1)$, and agrees with $p$ on the other points; that is,
+$\zeta_kp=p^{[k]}$. Likewise $\zeta_kq=q^{[k]}$.
+
+(b) An element $g\in\Sigma_n\cap H^{(k)}$ that moves $m$ points is $g'^{[k]}$ for some $g'\in\Sigma_{n-k}$ that moves $m$ points. Write $g'$
+as a word in $p,q$ of length less than $10(m-1)(n-k)$ by \cref{lem:pair-transp}(b), and substitute $\zeta_kp,\zeta_kq$ for $p,q$.
+
+Finally $\zeta_1=\sigma_0=s$ and $\zeta_2=\sigma_1\sigma_0=Bs$. With $s=pqp^{-1}q^{-1}$ and $B=psp^{-1}$, the words $sp$, $sq$ have length
+$5$, and $Bsp$, $Bsq$ have length $11$.
+\end{proof}
+
+\subsection{Transporters and local fillings}\label{sec:pair-local}
+
+\begin{definition}[Transporters]\label{def:transporter}
+Let $n\ge3$. For distinct points $i,j\in\{1,\dots,n\}$ put
+\[
+U_i=\pi[i],\qquad \tau_i=U_i\,t\,U_i^{-1},\qquad U_{ij}=\pi[j,i],\qquad X_{ij}=U_{ij}\,d\,U_{ij}^{-1},
+\]
+words in $p,q,t,d$ built from the words of \cref{lem:pair-transp}(c). For $u\subseteq\{1,\dots,n\}$ with elements $i_1<\dots<i_m$ put
+$T_u=\tau_{i_1}\cdots\tau_{i_m}$, with $T_\emptyset$ the empty word. We identify $u$ with the configuration $\sum_{i\in u}e_i\in V$.
+\end{definition}
+
+Since $U_i$ maps the point $1$ to $i$, the word $\tau_i$ represents the translation $\tau_i=\tau_{e_i}$ by~\eqref{eq:affine-id}, and we use
+the same symbol for both. Since $U_{ij}$ maps $1$ to $j$ and $2$ to $i$, the word $X_{ij}$ represents the transvection $E_{i\leftarrow j}$.
+Translations commute, so $T_u$ represents $\tau_u$, and $T_uxT_u^{-1}$ and $T_uzT_u^{-1}$ represent the Pauli pair $x_u,z_u$ at the site
+$u$. By \cref{lem:pair-transp}, $|U_i|<10n$ and $|U_{ij}|<20n$, and $U_i$ is a product of at most one transposition and $U_{ij}$ of at most
+two.
+
+The elements $t$ and $d$ have \emph{prototypes} $P_t=\{1\}$ and $P_d=\{1,2\}$: by~\eqref{eq:affine-id}, an element of $H$ that fixes $P_f$
+pointwise commutes with $f$. So two transporting words that agree on the prototype give the same conjugate. The next lemma prices this,
+and the lemma after it lists the four local identities used in the proof of \cref{thm:pair-area}. They are the Pauli versions
+of~\cite[Lemmas~4.1 and~4.2]{DM-lamps}. The transporting word may end with a power of $p$, because the words of the family \textsf{A}
+use $t_2$ and $t_3$.
+
+\begin{lemma}[Change of transporter]\label{lem:exchange}
+Let $n\ge3$ and $f\in\{t,d\}$. Let $U$ and $W_0$ be words in $p^{\pm1},q^{\pm1}$ of length less than $30n$ that represent elements of
+$\Sigma_n$, such that $W_0^{-1}U$ moves at most $10$ points. Let $W=W_0p^j$, where $j=0$ if $f=d$ and $j\in\{0,1,2\}$ if $f=t$. If the
+permutations represented by $W$ and $U$ agree on $P_f$, then
+\[
+\Area\bigl(WfW^{-1}\cdot Uf^{-1}U^{-1}\bigr)\ \le\ \mathcal C(n):=2\,\dH(1500n)+130n .
+\]
+\end{lemma}
+
+\begin{proof}
+\emph{Step 1: a word for the stabilizer element.} Let $k=|P_f|$ and let $g$ be the element represented by $W^{-1}U$. It fixes $P_f$
+pointwise, so $g\in H^{(k)}$. If $j=0$, then $g\in\Sigma_n$ moves at most $10$ points, and by \cref{lem:pair-stab}(b) it is represented by a
+word $Z$ with fewer than $90n$ letters from $K_k^{\pm1}$. If $j\ge1$, then $f=t$, $k=1$, and $g=(sp)^{-j}g'$ with
+$g'=(sp)^jp^{-j}\cdot W_0^{-1}U$. Here $(sp)p^{-1}=s$ and $(sp)^2p^{-2}=sB$ lie in $\Sigma_3$, so $g'\in\Sigma_n$ moves at most $13$ points,
+and $g'$ fixes the point $1$ because $g$ and $sp$ do. By \cref{lem:pair-stab}(b), $g'$ is represented by a word $Z'$ with fewer than $120n$
+letters from $K_1^{\pm1}$, and we put $Z=(sp)^{-j}Z'$. In both cases $Z$ has fewer than $122n$ letters from $K_k^{\pm1}$, each of length at
+most $11$ in $p,q$.
+
+\emph{Step 2: the filling.} The word $\Omega=W^{-1}UZ^{-1}$ in $p,q$ represents $1$ in $H$ and has length less than
+$(30n+2)+30n+11\cdot122n\le1500n$, so $\Area(\Omega)\le\dH(1500n)$ by the family \textsf{H}. For each letter $\ell$ of $K_k$ the word
+$[f,\ell]$ is in the family \textsf{S}, so $\Area([f,Z])<122n$ by~\eqref{eq:pair-comm}. Since $U=W\Omega Z$ freely,
+\[
+WfW^{-1}\cdot Uf^{-1}U^{-1}=W\,(f\Omega f^{-1})\,[f,Z]\,\Omega^{-1}\,W^{-1}
+\]
+freely, and its area is at most $2\dH(1500n)+122n\le\mathcal C(n)$.
+\end{proof}
+
+\begin{lemma}[Local fillings]\label{lem:local-filling}
+Let $n\ge3$ and
+\[
+L(n)=10\,\dH(1500n)+700\,n .
+\]
+Let $i,j,k\in\{1,\dots,n\}$ with $i\ne j$, and $a,b\in\{x,z\}$. Each of the following words represents $1$ in $\GP$ and has area at most
+$L(n)$.
+\begin{enumerate}[label=(\alph*),itemsep=1pt]
+\item $\tau_i^2$, of area at most $1$, and $[\tau_i,\tau_j]$, of area at most $4\mathcal C(n)+1$.
+\item $X_{ij}\tau_kX_{ij}^{-1}\tau_k^{-1}$ if $k\ne j$, and $X_{ij}\tau_jX_{ij}^{-1}\tau_i^{-1}\tau_j^{-1}$; of area at most
+$5\mathcal C(n)+1$.
+\item $[X_{ij},a]$, of area at most $2|U_{ij}|+1<40n+1$.
+\item $[a,\tau_ib\tau_i^{-1}]$, of area at most $4|U_i|+1<40n+1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The words represent $1$: in (a) and (b) because translations are commuting involutions and $E_{i\leftarrow j}\tau_kE_{i\leftarrow
+j}^{-1}=\tau_{E_{i\leftarrow j}(e_k)}$, with $E_{i\leftarrow j}(e_k)=e_k$ for $k\ne j$ and $E_{i\leftarrow j}(e_j)=e_i+e_j$; in (c) because
+$E_{i\leftarrow j}$ is linear; in (d) because $\tau_ib\tau_i^{-1}$ lies in the pair at the site $e_i\ne0$. Since $5\mathcal C(n)+1\le L(n)$
+and $40n+1\le L(n)$, it remains to prove the stated area bounds.
+
+\emph{Changes of transporter.} In (a) and (b) we replace a subword $Uf^{\pm1}U^{-1}$ by $Wf^{\pm1}W^{-1}$ as in \cref{lem:exchange}; this
+is a replacement of cost at most $\mathcal C(n)$, since the two words compared are conjugate to the word of the lemma or to its inverse.
+Below, $W_0$ is a product of at most three transpositions, of length less than $30n$ (\cref{lem:pair-transp}(c)), and
+$U\in\{U_i,U_j,U_k,U_{ij}\}$ is a product of at most two, so $W_0^{-1}U$ moves at most $10$ points.
+
+(a) The word $\tau_i^2$ is freely $U_it^2U_i^{-1}$, a conjugate of the word $t^2$. For $[\tau_i,\tau_j]$ let $W_0=\pi[i,j]$, which maps $1$ to
+$i$ and $2$ to $j$. Replace both occurrences of $\tau_i^{\pm1}$ by $(W_0tW_0^{-1})^{\pm1}$, and both of $\tau_j^{\pm1}$ by
+$(W_0t_2W_0^{-1})^{\pm1}=(W_0p\,t\,p^{-1}W_0^{-1})^{\pm1}$: these are four changes of transporter, since $W_0$ and $U_i$ map $1$ to $i$, and
+$W_0p$ and $U_j$ map $1$ to $j$. What is left is $W_0[t_1,t_2]W_0^{-1}$, a conjugate of the word of the family \textsf{C}. So the area is at
+most $4\mathcal C(n)+1$.
+
+(b) Let $W_0=\pi[j,i,k]$, or $W_0=\pi[j,i]$ if $k\in\{i,j\}$, so that $W_0$ maps $1$ to $j$ and $2$ to $i$, and let $m\in\{1,2,3\}$ be the
+point with $W_0(m)=k$; thus $m=1$ exactly when $k=j$, and $m=2$ exactly when $k=i$. Replace $X_{ij}^{\pm1}$ by $(W_0dW_0^{-1})^{\pm1}$, a
+change of transporter because $W_0$ and $U_{ij}$ agree on $P_d=\{1,2\}$; replace $\tau_k^{\pm1}$ by $(W_0t_mW_0^{-1})^{\pm1}$, where
+$t_m=p^{m-1}tp^{1-m}$ and $W_0p^{m-1}$ maps $1$ to $k$; and, when $k=j$, replace $\tau_i^{\pm1}$ by $(W_0t_2W_0^{-1})^{\pm1}$. If $k\ne j$,
+four changes turn the word into $W_0(dt_md^{-1}t_m^{-1})W_0^{-1}$ with $m\in\{2,3\}$, a conjugate of a word of the family \textsf{A}. If
+$k=j$, five turn it into $W_0(dt_1d^{-1}t_2^{-1}t_1^{-1})W_0^{-1}$, again a conjugate of one. So the area is at most $5\mathcal C(n)+1$.
+
+(c) The word $X_{ij}=U_{ij}dU_{ij}^{-1}$ has $2|U_{ij}|+1$ letters, each in $\{p,q,d\}^{\pm1}$, and $[\ell,a]$ is a word of the family
+\textsf{Z} for $\ell\in\{p,q,d\}$. By~\eqref{eq:pair-comm}, $\Area([X_{ij},a])\le2|U_{ij}|+1<40n+1$.
+
+(d) Freely the word is $U_i\,[U_i^{-1}aU_i,\ t(U_i^{-1}bU_i)t^{-1}]\,U_i^{-1}$. By~\eqref{eq:pair-comm} and the family \textsf{Z}, replacing
+$U_i^{-1}a^{\pm1}U_i$ by $a^{\pm1}$ costs at most $\Area([U_i^{-1},a])\le|U_i|$, and likewise for $b$. Four such replacements leave
+$U_i[a,tbt^{-1}]U_i^{-1}$, a conjugate of a word of the family \textsf{P}. So the area is at most $4|U_i|+1<40n+1$.
+\end{proof}
+
+\subsection{The pair-area theorem}\label{sec:pair-thm}
+
+\begin{theorem}[Pair areas]\label{thm:pair-area}
+Let $N\ge1$ and $n=\max(3,N)$. For every $u\subseteq\{1,\dots,N\}$ the transporter $T_u$ is a word in $p,q,t$ of length $|T_u|\le21Nn$ that
+represents the translation $\tau_u$, so that $T_uxT_u^{-1}$ and $T_uzT_u^{-1}$ represent the Pauli pair at the site $u$. For distinct
+$u,w\subseteq\{1,\dots,N\}$ and $a,b\in\{x,z\}$,
+\[
+\Area\bigl([T_uaT_u^{-1},\,T_wbT_w^{-1}]\bigr)\ \le\ \Lambda_N:=20N^2L(n),
+\]
+with $L(n)=10\dH(1500n)+700n$ as in \cref{lem:local-filling}. Moreover, with $C_0=4.5\cdot10^4$,
+\[
+14000N^2n\ \le\ \Lambda_N\ \le\ C_0N^2\bigl(\dH(C_0N)+N\bigr)\ \le\ 2^{(\log N+23)^2}.
+\]
+\end{theorem}
+
+\paragraph{Overview of the proof.} In $\GP$ the statement is a short computation. Conjugation by $\tau_u$ turns the commutator of the
+lamps at $u$ and $w$ into that of the lamps at $0$ and $u_0=u+w\ne0$. Fix a point $j$ of $u_0$. The transvection $E_{i\leftarrow j}$
+toggles the point $i$ in every configuration that contains $j$, so the product $G$ of the at most $N-1$ transvections $E_{i\leftarrow j}$ over
+the other points $i$ of $u_0$ is a linear map that carries $u_0$ to $e_j$ and fixes $0$. So the commutator is conjugate to that of the lamps
+at $0$ and $e_j$, and these commute by the family \textsf{P}. The proof follows this computation word by word, and pays for each identity
+it uses with a local filling (\cref{lem:local-filling}). \emph{Step~1} merges $T_u^{-1}T_w$ into the single translation word $T_{u_0}$ by
+$O(N^2)$ swaps. \emph{Step~2} applies the transvections one at a time, and after each one renormalizes the translation word, so that it
+never has more than $N+1$ factors; this costs $O(N)$ local fillings per transvection. \emph{Step~3} moves the lamp letters across $G$,
+which is linear, and ends with one word of the family \textsf{P}. Each local filling costs at most $L(n)$, so the total is $O(N^2L(n))$.
+
+\begin{example}\label{pair:ex}
+Let $N=3$, $u=\{1,3\}$ and $w=\{2\}$, so that $T_u=\tau_1\tau_3$ (as in \cref{fig:lamps}) and $T_w=\tau_2$. Up to conjugation by $T_u$, the
+commutator is $[a,ZbZ^{-1}]$ with $Z=T_u^{-1}T_w=\tau_3^{-1}\tau_1^{-1}\tau_2$. In Step~1, two words $\tau_i^2$ turn $Z$ into $\tau_3\tau_1\tau_2$,
+and two swaps sort it into $T_{u_0}=\tau_1\tau_2\tau_3$, where $u_0=\{1,2,3\}$. In Step~2 we take the pivot $j=3$. Conjugation by $X_{13}$,
+which represents $E_{1\leftarrow3}$, fixes $\tau_1$ and $\tau_2$ and turns $\tau_3$ into $\tau_3\tau_1$, up to local fillings:
+\[
+X_{13}\,\tau_1\tau_2\tau_3\,X_{13}^{-1}\ \leadsto\ \tau_1\tau_2\tau_3\tau_1\ \leadsto\ \tau_1\tau_1\tau_2\tau_3\ \leadsto\ \tau_2\tau_3=T_{\{2,3\}},
+\]
+by two swaps and one word $\tau_1^2$. Conjugation by $X_{23}$ turns $\tau_2\tau_3$ into $\tau_2\tau_3\tau_2$, then $\tau_2\tau_2\tau_3$, then
+$\tau_3$. So $G=X_{23}X_{13}$ carries the site $u_0$ to $e_3$; indeed $E_{2\leftarrow3}E_{1\leftarrow3}(e_1+e_2+e_3)=e_3$. In Step~3 the
+letters $a^{\pm1},b^{\pm1}$ are moved across $G$, which represents a linear map, and what is left is $[a,\tau_3b\tau_3^{-1}]$, a local filling
+of type (d). Every identity used involves at most three points.
+\end{example}
+
+\begin{proof}[Proof of \cref{thm:pair-area}]
+\emph{Step 0: the transporters.} Translations commute, so $T_u$ represents $\tau_u$. Each $\tau_i$ is a word in $p,q,t$ of length
+$2|U_i|+1<20n+1$, so $|T_u|\le20Nn\le21Nn$. Write $L=L(n)$; by \cref{lem:local-filling} each of its words has area at most $L$, and
+$L\ge700n$.
+
+\emph{Step 1: one translation word.} Freely $[T_uaT_u^{-1},T_wbT_w^{-1}]=T_u[a,ZbZ^{-1}]T_u^{-1}$ with $Z=T_u^{-1}T_w$. Replace each of the
+at most $N$ factors $\tau_i^{-1}$ of $T_u^{-1}$ by $\tau_i$, at cost $\Area(\tau_i^{-2})\le1$ each. Sort the resulting product of at most $2N$
+factors $\tau_i$ into increasing order of $i$ by at most $\binom{2N}2$ swaps of adjacent distinct factors, each of cost at most $L$
+(\cref{lem:local-filling}(a)), and cancel the at most $N$ adjacent equal pairs, at cost $1$ each. The result is $T_{u_0}$ with
+$u_0=u+w\ne0$, so $\Area(ZT_{u_0}^{-1})\le2N+N(2N-1)L\le2N^2L$. Since $Z^{\pm1}$ occurs four times in $[a,ZbZ^{-1}]$,
+\[
+\Area\bigl([T_uaT_u^{-1},T_wbT_w^{-1}]\bigr)\le8N^2L+\Area\bigl([a,T_{u_0}bT_{u_0}^{-1}]\bigr).
+\]
+
+\emph{Step 2: normalized clearing.} Let $r\le N$ be the number of points of $u_0$, choose one of them, $j$, as the \emph{pivot}, and list the
+others as $i_1,\dots,i_{r-1}$. Put $G_l=X_{i_lj}\cdots X_{i_1j}$ and $u_l=u_0+e_{i_1}+\dots+e_{i_l}$, which is $u_0$ with $i_1,\dots,i_l$
+removed; so $u_{r-1}=\{j\}$. We claim
+\[
+\Area\bigl(G_lT_{u_0}G_l^{-1}\,T_{u_l}^{-1}\bigr)\le2lrL\qquad(0\le l\le r-1).
+\]
+For $l=0$ the word is freely trivial. Given the claim for $l$, put $i=i_{l+1}$ and $X=X_{ij}$. Freely
+$G_{l+1}T_{u_0}G_{l+1}^{-1}=X(G_lT_{u_0}G_l^{-1})X^{-1}$, which becomes $XT_{u_l}X^{-1}$ at cost at most $2lrL$. Freely $XT_{u_l}X^{-1}$ is
+the product, in order, of the words $X\tau_{i'}X^{-1}$ over the points $i'$ of $u_l$. By \cref{lem:local-filling}(b), at a total cost of at
+most $rL$, each of them becomes $\tau_{i'}$, except that $X\tau_jX^{-1}$ becomes $\tau_j\tau_i$. The new factor $\tau_i$ has a partner
+$\tau_i$ in $T_{u_l}$, since $i$ is a point of $u_l$; at most $r-1$ swaps make the two adjacent, and $\tau_i^2$ cancels them at cost $1$.
+What remains is $T_{u_{l+1}}$, and this step costs at most $rL+(r-1)L+1\le2rL$, which proves the claim. The translation word is back in
+normal form after every transvection and never has more than $r+1$ factors.
+
+\emph{Step 3: a single point.} Let $G=G_{r-1}$ and $\Theta=GT_{u_0}G^{-1}\tau_j^{-1}$, of area at most $2r(r-1)L\le2N^2L$ by Step~2. Freely
+$T_{u_0}=G^{-1}\Theta\tau_jG$. Substituting this into the four occurrences of $T_{u_0}^{\pm1}$ in $[a,T_{u_0}bT_{u_0}^{-1}]$ and deleting the
+four occurrences of $\Theta^{\pm1}$ costs at most $8N^2L$, and leaves
+\[
+a\,G^{-1}\tau_jG\,b\,G^{-1}\tau_j^{-1}G\,a^{-1}\,G^{-1}\tau_jG\,b^{-1}\,G^{-1}\tau_j^{-1}G .
+\]
+The word $G$ is a product of $r-1$ words $X_{ij}$, so $\Area([G,c])\le(r-1)(40n+1)$ for $c\in\{x,z\}$ by~\eqref{eq:pair-comm} and
+\cref{lem:local-filling}(c), and likewise for $[G,c^{-1}]=c^{-1}[G,c]^{-1}c$. Replacing $Gb^{\pm1}G^{-1}$ by $b^{\pm1}$, and then, after
+conjugating by $G$, $Ga^{\pm1}G^{-1}$ by $a^{\pm1}$, costs at most $4(r-1)(40n+1)$ and leaves a conjugate of $[a,\tau_jb\tau_j^{-1}]$, of
+area at most $40n+1$ by \cref{lem:local-filling}(d). Altogether, since $4N(40n+1)+40n+1\le205Nn\le N^2L$,
+\[
+\Area\bigl([a,T_{u_0}bT_{u_0}^{-1}]\bigr)\le8N^2L+4N(40n+1)+40n+1\le9N^2L,
+\]
+and with Step~1 the area of the commutator is at most $17N^2L\le\Lambda_N$.
+
+\emph{Step 4: the size of $\Lambda_N$.} Since $L(n)\ge700n$, $\Lambda_N\ge14000N^2n$. Since $n\le3N$ and $\dH$ is nondecreasing,
+$L(n)\le10\dH(4500N)+2100N$, so $\Lambda_N\le200N^2\dH(4500N)+42000N^3\le C_0N^2(\dH(C_0N)+N)$. By~\ref{H-exp},
+$\dH(C_0N)\le2^{(\log(C_0N)+6)^2}$, and also $N\le2^{(\log(C_0N)+6)^2}$; so with $\ell=\log N\ge0$ and $\log C_0<15.46$,
+\[
+\log\Lambda_N\le\log(2C_0)+2\ell+(\ell+\log C_0+6)^2\le16.46+2\ell+(\ell+21.46)^2\le\ell^2+45\ell+477\le(\ell+23)^2 .
+\qedhere
+\]
+\end{proof}
+
+\begin{remark}[Growth of $\Lambda_N$]\label{rem:pair-growth}
+By \cref{thm:pair-area}, $14000N^2n\le\Lambda_N\le2^{(\log N+23)^2}$ for all $N\ge1$. The factor $N^2$ counts local moves: at most $N$
+transvections, each followed by at most $N$ swaps. The Dehn function of $H_3$ enters only through $L(n)$, at the scale $n=\max(3,N)$ of the
+transport. So all $\binom{2^N}2$ pairs of lamps on $N$ points commute at area $O(N^2\dH(C_0N))$, which is $2^{O(\log^2N)}$ by~\ref{H-exp}.
+Under~\ref{H-poly}, $\dH(m)\le C_Hm^{p_H}$ with $p_H\ge1$, and then
+\[
+\Lambda_N\le C_0N^2\bigl(C_H(C_0N)^{p_H}+N\bigr)\le C'N^{2+p_H}=C'N^{\kappa}\qquad(N\ge1),\qquad C'=C_0\bigl(C_HC_0^{p_H}+1\bigr),
+\]
+polynomial in $N$.
+\end{remark}
+
+\subsection{Transporting the central involution}\label{sec:pair-J}
+
+The lower bounds compare the image of $J$ with the products $x_uz_ux_uz_u$ at the various sites. Transporting $J$ is cheap, and the
+transported Pauli pair squares to the transported $J$ with no relation at all.
+
+\begin{lemma}[Transporting $J$]\label{lem:J-transport}
+Let $N\ge1$, $n=\max(3,N)$ and $u\subseteq\{1,\dots,N\}$. Then
+\[
+\Area\bigl(T_uJT_u^{-1}J^{-1}\bigr)\le4|T_u|\le84Nn,
+\]
+and $(T_uxT_u^{-1}\,T_uzT_u^{-1})^2=T_uJT_u^{-1}$ freely.
+\end{lemma}
+
+\begin{proof}
+The word $T_uJT_u^{-1}J^{-1}$ is $[T_u,J]$, and the letters of $T_u$ are $p^{\pm1}$, $q^{\pm1}$ and $t^{\pm1}$. For $g\in\{p,q\}$,
+\eqref{eq:pair-comm} applied to the four letters of $J=xzxz$ and the family \textsf{Z} give $\Area([g,J])\le4$. For the letter $t$,
+$[t,J]=[J,t]^{-1}$ is the inverse of the word of the family \textsf{K}. By~\eqref{eq:pair-comm} applied to the letters of $T_u$,
+$\Area([T_u,J])\le4|T_u|$, and $|T_u|\le21Nn$ by \cref{thm:pair-area}. The second claim holds because $T_u^{-1}T_u$ cancels freely, so the
+word is freely $T_u(xz)^2T_u^{-1}=T_uJT_u^{-1}$.
+\end{proof}

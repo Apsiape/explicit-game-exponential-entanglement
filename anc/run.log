@@ -1,0 +1,54 @@
+Part 1: exact evaluation of the certificate in the faithful model of G_P
+  certificate relators_pauli.txt: 27 words, total length 227, max length 22
+  ok    H  s s                                      (len 8)
+  ok    H  s p s P s p s P s p s P                  (len 22)
+  ok    H  s p p s P P s^-1 p p s^-1 P P            (len 22)
+  ok    H  p s P q s^-1 Q                           (len 12)
+  ok    Q  t t                                      (len 2)
+  ok    S  t s p T P s^-1                           (len 12)
+  ok    S  t s q T Q s^-1                           (len 8)
+  ok    S  d B s p D P s^-1 B^-1                    (len 16)
+  ok    S  d B s q D Q s^-1 B^-1                    (len 12)
+  ok    C  t1 t2 t1^-1 t2^-1                        (len 8)
+  ok    A  d t1 D t2^-1 t1^-1                       (len 7)
+  ok    A  d t2 D t2^-1                             (len 8)
+  ok    A  d t3 D t3^-1                             (len 12)
+  ok    Z  p x P X                                  (len 4)
+  ok    Z  p z P Z                                  (len 4)
+  ok    Z  q x Q X                                  (len 4)
+  ok    Z  q z Q Z                                  (len 4)
+  ok    Z  d x D X                                  (len 4)
+  ok    Z  d z D Z                                  (len 4)
+  ok    L  x x                                      (len 2)
+  ok    L  z z                                      (len 2)
+  ok    L  x z x z x z x z                          (len 8)
+  ok    P  x t x T X t X T                          (len 8)
+  ok    P  x t z T X t Z T                          (len 8)
+  ok    P  z t x T Z t X T                          (len 8)
+  ok    P  z t z T Z t Z T                          (len 8)
+  ok    K  J t J^-1 T                               (len 10)
+  ok    family counts H4 Q1 S4 C1 A3 Z6 L3 P4 K1 (27 words)
+  ok    J = (xz)^2 is the nontrivial central element J^1 of E_V
+  ok    [J,p] = 1 in G_P
+  ok    [J,q] = 1 in G_P
+  ok    [J,t] = 1 in G_P
+  ok    [J,d] = 1 in G_P
+  ok    [J,x] = 1 in G_P
+  ok    [J,z] = 1 in G_P
+  ok    same-site: (X_u Z_u)^2 = J for all 8 sites u of the N=3 ladder
+  ok    distinct sites commute: all 8*7*4 commutators trivial
+  ok    p = iota_12 o rho_12 (both involutions) on heights < 60 (all points behave uniformly beyond height 2)
+Negative controls (must be rejected):
+  ok    corrupted L word "x z x z" rejected
+  ok    corrupted P word "x z X Z" rejected
+  ok    corrupted A word "d t1 D t1^-1" rejected
+  ok    corrupted K-missing-t word "J x J^-1 Z" rejected
+Part 2: numerical sanity of the Pauli sector bound (not a proof)
+  ok    scalar inequality 1-h2(x) <= (1-2sqrt(x(1-x)))/ln2 on a grid (min slack 0.00e+00)
+  ok    bracket at M*sigma^2*eps^2 = 1/10 is 0.6415 >= 1/2
+  ok    exact 3-qubit Pauli instance: log D = 3.000 = bound 3.000 (tight)
+  ok    Pauli sector bound log D >= sum[...] held in 60/60 random instances
+  ok    projection-product estimates a^2 <= sum alpha^2, b^2 <= gamma^2 + sum beta^2 held in all instances
+
+ALL CHECKS PASSED
+exit 0

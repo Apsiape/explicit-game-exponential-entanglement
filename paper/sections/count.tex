@@ -1,0 +1,265 @@
+%======================================================================
+\section{Counting qubits in a state}\label{sec:count}
+%======================================================================
+
+Let $X_1,\dots,X_M,Z_1,\dots,Z_M$ be involutions. If the $Z_i$ commute, and $X_i$ anticommutes with $Z_i$ and commutes with $Z_j$ for
+$j\ne i$, then the joint eigenspaces of the $Z_i$ carry labels $z\in\{\pm1\}^M$, and $X_i$ maps the eigenspace with label $z$ onto the one
+with label $z^{(i)}$, the label with its $i$-th sign flipped. All $2^M$ eigenspaces then have the same dimension, so the dimension of
+the space is a multiple of $2^M$. This section proves a robust form of this count in an arbitrary state $\rho$, with every error measured in that state
+(\cref{thm:count}), and its two special cases: uniformly small errors (\cref{cor:count}) and the flat state (\cref{cor:count-flat}). The
+errors of the pairs enter only through sums of squares, so $M$ pairs tolerate errors of order $M^{-1/2}$ each; this $\ell^2$ tolerance is
+what gives the exponent $2$ of $1/e$ in the sector theorem (\cref{thm:sector}). The price of a non-flat state is the state commutators
+$\hs{[Z_i,\xi]}$ and $\hs{[X_i,\xi]}$, which cannot be dropped (\cref{ex:commutators-needed}); in games they are supplied by consistency
+(\cref{lem:consistency}). The section ends with the entropy of a sector state (\cref{lem:sector-entropy}), which carries the count back
+from the sector where a central involution is $-1$ to the original state.
+
+\subsection{The count}
+
+\begin{theorem}[Qubit count in a state]\label{thm:count}
+Let $X_1,\dots,X_M,Z_1,\dots,Z_M$ be involutions on $\C^d$, $\rho$ a density matrix on $\C^d$ and $\xi=\rho^{1/2}$. Put
+$c^Z_i=\hs{[Z_i,\xi]}$ and $c^X_i=\hs{[X_i,\xi]}$, let $f(g)=Z_1^{g_1}Z_2^{g_2}\cdots Z_M^{g_M}$ for $g\in\Z_2^M$, let $e_i\in\Z_2^M$ be the
+$i$-th unit vector, and, for uniformly random $g$,
+\[
+a_i^2=\E_g\hs{\bigl(f(g+e_i)-f(g)Z_i\bigr)\xi}^2,\qquad b_i^2=\E_g\hs{\bigl((-1)^{g_i}X_if(g)-f(g)X_i\bigr)\xi}^2 .
+\]
+Then
+\begin{enumerate}[label=(\roman*),itemsep=2pt]
+\item $\displaystyle a_i^2\le2\sum_{j>i}\bigl(\hs{[Z_i,Z_j]\xi}+c^Z_j\bigr)^2+2\sum_{j>i}(c^Z_j)^2$;
+\item $\displaystyle b_i^2\le2\bigl(\hs{\{X_i,Z_i\}\xi}+c^Z_i\bigr)^2+2\sum_{j\ne i}\bigl(\hs{[X_i,Z_j]\xi}+c^Z_j\bigr)^2+2\sum_{j=1}^M(c^Z_j)^2$;
+\item $\displaystyle S(\rho)\ \ge\ \sum_{i=1}^M\Bigl[1-\frac{(b_i+c^X_i)^2}{2\ln2}-h\Bigl(\min\Bigl(\frac{(a_i+c^Z_i)^2}4,\frac12\Bigr)\Bigr)\Bigr]$.
+\end{enumerate}
+\end{theorem}
+
+For exact Pauli operators on $(\C^2)^{\otimes M}$ and $\rho=I/2^M$ every error vanishes, and (iii) is the equality $S(\rho)=M$. Since
+$S(\rho)\le\log\rank\rho\le\log d$, the theorem also bounds the rank and the dimension. When all errors are uniformly small it takes the
+following form.
+
+\begin{corollary}[Uniform errors]\label{cor:count}
+In the setting of \cref{thm:count}, let $M\ge2$ and suppose that, for all $i\ne j$,
+\[
+\hs{[Z_i,Z_j]\xi},\ \ \hs{[X_i,Z_j]\xi},\ \ \hs{\{X_i,Z_i\}\xi},\ \ c^X_i,\ \ c^Z_i\ \le\ \kappa .
+\]
+If $16M\kappa^2\le\frac1{10}$, then $S(\rho)\ge\frac34M$; in particular $\rank\rho\ge2^{3M/4}$.
+\end{corollary}
+
+For the flat state $\rho=I/d$ all state commutators vanish, $\hs{Y\xi}=\fn{Y}$ and $S(\rho)=\log d$. The theorem then says that $M$
+approximate Pauli pairs whose errors are small in $\ell^2$ need about $M$ qubits.
+
+\begin{corollary}[Flat count]\label{cor:count-flat}
+Let $X_1,\dots,X_M,Z_1,\dots,Z_M$ be involutions on $\C^D$, let $0\le\eta\le1$, and suppose that for every $i$
+\[
+\sum_{j>i}\fn{Z_iZ_j-Z_jZ_i}^2\ \le\ \eta\qquad\text{and}\qquad\fn{X_iZ_i+Z_iX_i}^2+\sum_{j\ne i}\fn{X_iZ_j-Z_jX_i}^2\ \le\ \eta .
+\]
+Then $\log D\ge M\bigl(1-\eta/\ln2-h(\eta/2)\bigr)$. In particular $D\ge2^{M/2}$ when $\eta\le\frac1{10}$.
+\end{corollary}
+
+\begin{remark}[Comparison and credits]\label{count:credits}
+The stability theorem of Gowers and Hatami~\cite{GH17} needs a small defect for an approximate homomorphism of the whole finite group that
+the pairs generate, and the many-qubit tests of Natarajan and Vidick~\cite{NV17} certify $n$ EPR pairs from a test that samples the whole
+Pauli group, through a state-dependent form of that theorem. \Cref{thm:count} uses only the pairwise relations of $2M$ involutions,
+measured in an arbitrary state, and the twirl of \cref{lem:twirl} manufactures the group average from them. Pauli stability for
+synchronous strategies with a trace is due to de la Salle~\cite{dlS22}, and state-dependent anticommutators appear in the entropic uncertainty relations of Kaniewski, Tomamichel and
+Wehner~\cite{KTW14}. For lamps that are copies of $S_3$, the role of $X_i$ is played by an involution that inverts an element of order $3$;
+it exchanges the eigenvalues $\omega,\omega^2$ but fixes the eigenvalue $1$. The analogue of the flat count for such lamps
+is~\cite[Theorem~B.3]{DM-lamps}.
+\end{remark}
+
+\begin{example}[The state commutators are needed]\label{ex:commutators-needed}
+Exact Pauli operators $X_i,Z_i$ on $(\C^2)^{\otimes M}$ with the pure state $\rho=\xi=|0\cdots0\rangle\langle0\cdots0|$ satisfy the
+Pauli relations exactly, so $a_i=b_i=0$ and $c^Z_i=0$, but $S(\rho)=0$: the bound (iii) survives only because $c^X_i=\sqrt2$. The
+commutators are needed already in (i). On $\C^4$ with basis $e_1,\dots,e_4$ let $\rho=\xi=|e_1\rangle\langle e_1|$,
+$Z_1=\operatorname{diag}(1,-1,1,-1)$, $Z_2=\operatorname{diag}(1,-1)\oplus\sigma_X$, and let $Z_3$ exchange $e_1\leftrightarrow e_3$ and
+$e_2\leftrightarrow e_4$. These are involutions with $[Z_1,Z_3]=0$ and $[Z_1,Z_2]\xi=0$, so every state-weighted relation in (i) for $i=1$
+vanishes. In the proof below $R=Z_2^{g_2}Z_3^{g_3}$; for $g_2=g_3=1$, $R^*Z_1R-Z_1=Z_3Z_2Z_1Z_2Z_3-Z_1=\operatorname{diag}(-2,2,0,0)$,
+which maps $e_1$ to $-2e_1$, and for the other values of $(g_2,g_3)$, $(R^*Z_1R-Z_1)\xi=0$. So $a_1^2=1$, consistent with (i) only because
+$c^Z_3=\hs{[Z_3,\xi]}=\sqrt2$.
+\end{example}
+
+\subsection{Three entropy lemmas}
+
+\begin{lemma}[Zero-diagonal basis]\label{lem:zero-diagonal}
+A traceless Hermitian operator $H$ on $\C^d$ has an orthonormal basis $e_1,\dots,e_d$ with $\langle e_k,He_k\rangle=0$ for all $k$.
+\end{lemma}
+
+\begin{proof}
+If $H=0$ any basis works. Otherwise $H$ has unit eigenvectors $u_\pm$ with eigenvalues $l_+>0>l_-$, and the unit vector
+$v=(\sqrt{-l_-}\,u_++\sqrt{l_+}\,u_-)/\sqrt{l_+-l_-}$ has $\langle v,Hv\rangle=(-l_-l_++l_+l_-)/(l_+-l_-)=0$. The compression of $H$ to
+$v^\perp$ is traceless; induct on $d$.
+\end{proof}
+
+The next inequality says that a two-point distribution whose masses are nearly equal in the Hellinger sense carries nearly one bit.
+
+\begin{lemma}[Binary Hellinger bound]\label{lem:hellinger}
+For $0\le x\le1$, $\ 1-h(x)\le\bigl(1-2\sqrt{x(1-x)}\bigr)/\ln2$.
+\end{lemma}
+
+\begin{proof}
+Write $x=(1+y)/2$ with $\abs y\le1$. Then $\ln2\,(1-h(x))=\frac12\bigl[(1+y)\ln(1+y)+(1-y)\ln(1-y)\bigr]$; the derivative of the bracket is
+$\ln(1+y)-\ln(1-y)=2\sum_{m\ge0}y^{2m+1}/(2m+1)$, and integrating from $0$ gives $\ln2\,(1-h(x))=\sum_{k\ge1}y^{2k}/(2k(2k-1))$. The
+binomial series gives $1-2\sqrt{x(1-x)}=1-\sqrt{1-y^2}=\sum_{k\ge1}\binom{2k}k\,y^{2k}/((2k-1)4^k)$. Both series have non-negative terms and
+converge for $\abs y\le1$, so it suffices to show $4^k\le2k\binom{2k}k$. This is an equality for $k=1$, and from $k$ to $k+1$ the left side
+grows by the factor $4$ and the right side by $\frac{k+1}k\cdot\frac{(2k+2)(2k+1)}{(k+1)^2}=\frac{2(2k+1)}k\ge4$.
+\end{proof}
+
+The third lemma bounds the entropy gained by pinching a state by one involution. It is a Jensen--Shannon bound in terms of a
+Hilbert--Schmidt distance between square-root factors.
+
+\begin{lemma}[Jensen--Shannon bound]\label{lem:jensen-shannon}
+Let $L,L':\C^d\to\mathcal K$ be operators with $\hs{L}=\hs{L'}=1$, and put $\rho=LL^*$ and $\sigma=L'L'^*$. Then
+\[
+D\bigl(\rho\,\big\|\,\tfrac12(\rho+\sigma)\bigr)\ \le\ h\bigl(\min(\hs{L-L'}^2/4,\,1/2)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+The operator $L^*L-L'^*L'$ is Hermitian and traceless, so by \cref{lem:zero-diagonal} there is an orthonormal basis $(e_k)$ of $\C^d$ with
+$\norm{Le_k}=\norm{L'e_k}=:\sqrt{w_k}$; then $\sum_kw_k=\hs{L}^2=1$. Put $a_k=Le_k$ and $b_k=L'e_k$, so that $\rho=\sum_ka_ka_k^*$ and
+$\frac12(\rho+\sigma)=\sum_k\frac12(a_ka_k^*+b_kb_k^*)$. By joint convexity and homogeneity (\cref{state:entropy}),
+\[
+D\bigl(\rho\,\big\|\,\tfrac12(\rho+\sigma)\bigr)\le\sum_kD\bigl(a_ka_k^*\,\big\|\,\tfrac12(a_ka_k^*+b_kb_k^*)\bigr).
+\]
+Terms with $w_k=0$ vanish. If $w_k>0$, write $a_k=\sqrt{w_k}\,u$ and $b_k=\sqrt{w_k}\,u'$ with unit vectors $u,u'$, and $r_k=\abs{\langle
+u,u'\rangle}$. The operator $\frac12(uu^*+u'u'^*)$ has eigenvalues $\frac12(1\pm r_k)$, and $u$ has weights $\frac12(1\pm r_k)$ on the
+corresponding eigenvectors (compare $\langle u,\frac12(uu^*+u'u'^*)u\rangle=\frac12(1+r_k^2)$), so the $k$-th term equals
+$w_k\,h(\frac12(1-r_k))$. Since $\norm{a_k-b_k}^2=w_k(2-2\operatorname{Re}\langle u,u'\rangle)\ge2w_k(1-r_k)$, we get
+$\frac12(1-r_k)\le\min(\norm{a_k-b_k}^2/(4w_k),1/2)$, and $h$ increases on $[0,\frac12]$. The function $y\mapsto h(\min(y/4,1/2))$ is
+concave and nondecreasing on $[0,\infty)$, so by Jensen's inequality with the weights $w_k$,
+\[
+\sum_kw_k\,h\Bigl(\min\Bigl(\frac{\norm{a_k-b_k}^2}{4w_k},\frac12\Bigr)\Bigr)\le h\Bigl(\min\Bigl(\sum_k\frac{\norm{a_k-b_k}^2}4,\frac12\Bigr)\Bigr)
+=h\bigl(\min(\hs{L-L'}^2/4,1/2)\bigr).\qedhere
+\]
+\end{proof}
+
+Equality holds when $L=|x\rangle\langle y|$ and $L'=|x'\rangle\langle y|$ with $\langle x,x'\rangle\ge0$. The equal-norm basis is essential: in a basis where $\norm{Le_k}\ne\norm{L'e_k}$ the
+termwise bound fails. For a single column with $b=(1-\sqrt x)\,a$ and $\norm a=1$, the term is
+$\log\bigl(2/(1+(1-\sqrt x)^2)\bigr)=\sqrt x/\ln2+O(x)$, while $h(\norm{a-b}^2/4)=h(x/4)=O(x\log(1/x))$.
+
+\subsection{Proof of the count}
+
+The idea is to replace the $Z_i$, which commute only approximately, by exactly commuting involutions $C_i$ on a larger space, and the
+$X_i$ by exact twists $\hat X_i$ that anticommute with $C_i$ and commute with $C_j$ for $j\ne i$. The isometry
+$W=2^{-M/2}\sum_gf(g)\otimes|g\rangle$ intertwines $Z_i$ with $C_i$ and $X_i$ with $\hat X_i$ up to the averaged errors $a_i$ and $b_i$,
+and the twirls of \cref{lem:twirl} bound these averages by the pairwise relations. In the embedded state, pinching by the joint
+eigenspaces of the $C_i$ gives a distribution on $\{\pm1\}^M$ in which $\hat X_i$ nearly exchanges the two values of $z_i$, so each
+coordinate carries nearly a full bit; and each pinching raises the entropy only a little, because $C_i$ nearly commutes with the state.
+
+\begin{proof}[Proof of \cref{thm:count}]
+\emph{Step 1: twirling the $Z$'s, (i).} Fix $g$ and write $f(g)=LZ_i^{g_i}R$ with $R=Z_{i+1}^{g_{i+1}}\cdots Z_M^{g_M}$. Since $Z_i^2=I$,
+$f(g+e_i)-f(g)Z_i=LZ_i^{g_i}(Z_iR-RZ_i)$, so $\hs{(f(g+e_i)-f(g)Z_i)\xi}=\hs{(R^*Z_iR-Z_i)\xi}$. Put $v=Z_i\xi$. Then
+$R^*Z_iR\xi=R^*vR+R^*Z_iR(\xi-R^*\xi R)$, hence
+\[
+\hs{(R^*Z_iR-Z_i)\xi}\le\hs{R^*vR-v}+\hs{R^*\xi R-\xi}.
+\]
+Square, use $(x+y)^2\le2x^2+2y^2$, average over $g$, and apply \cref{lem:twirl} twice, with all signs $+1$ and the involutions
+$Z_{i+1},\dots,Z_M$ (the vector $R^*vR$ is $v_g$ of that lemma, with $Z_{i+1}$ innermost):
+\[
+a_i^2\le2\sum_{j>i}\hs{[Z_j,Z_i\xi]}^2+2\sum_{j>i}\hs{[Z_j,\xi]}^2 .
+\]
+Finally $[Z_j,Z_i\xi]=[Z_j,Z_i]\xi+Z_i[Z_j,\xi]$.
+
+\emph{Step 2: twirling around $X_i$, (ii).} Multiplying on the left by the unitary $f(g)^*$,
+$\hs{((-1)^{g_i}X_if(g)-f(g)X_i)\xi}=\hs{((-1)^{g_i}f(g)^*X_if(g)-X_i)\xi}$. With $v=X_i\xi$ and $f=f(g)$,
+$(-1)^{g_i}f^*X_if\xi=(-1)^{g_i}f^*vf+(-1)^{g_i}f^*X_if(\xi-f^*\xi f)$, so the left side is at most
+$\hs{(-1)^{g_i}f^*vf-v}+\hs{f^*\xi f-\xi}$. By \cref{lem:twirl} with the sign $-1$ at $i$ and $+1$ elsewhere,
+$\E_g\hs{(-1)^{g_i}f^*vf-v}^2\le\hs{\{Z_i,v\}}^2+\sum_{j\ne i}\hs{[Z_j,v]}^2$, where $\{Z_i,X_i\xi\}=\{X_i,Z_i\}\xi-X_i[Z_i,\xi]$ and
+$[Z_j,X_i\xi]=[Z_j,X_i]\xi+X_i[Z_j,\xi]$. By \cref{lem:twirl} with all signs $+1$, $\E_g\hs{f^*\xi f-\xi}^2\le\sum_j(c^Z_j)^2$. Squaring
+as in Step~1 gives (ii).
+
+\emph{Step 3: the embedding.} Let $\mathcal H=\C^d\otimes\ell^2(\Z_2^M)$ and define $W:\C^d\to\mathcal H$ by
+$Wy=2^{-M/2}\sum_gf(g)y\otimes|g\rangle$; then $W^*W=2^{-M}\sum_gf(g)^*f(g)=I$. Let $S_i|g\rangle=|g+e_i\rangle$ and
+$F_i|g\rangle=(-1)^{g_i}|g\rangle$, and put $C_i=I\otimes S_i$ and $\hat X_i=X_i\otimes F_i$. These are involutions, the $C_i$ commute, and
+$F_iS_iF_i=-S_i$, $F_iS_jF_i=S_j$ for $j\ne i$, so
+\[
+\hat X_iC_i\hat X_i=-C_i,\qquad\hat X_iC_j\hat X_i=C_j\quad(j\ne i).
+\]
+Reindexing the sum, $(C_iW-WZ_i)\xi=2^{-M/2}\sum_g(f(g+e_i)-f(g)Z_i)\xi\otimes|g\rangle$ and
+$(\hat X_iW-WX_i)\xi=2^{-M/2}\sum_g((-1)^{g_i}X_if(g)-f(g)X_i)\xi\otimes|g\rangle$, so
+\[
+\hs{(C_iW-WZ_i)\xi}=a_i,\qquad\hs{(\hat X_iW-WX_i)\xi}=b_i ,
+\]
+the Hilbert--Schmidt norm of an operator $\C^d\to\mathcal H$ summing over the $2^M$ blocks. Put $K=W\xi$, an operator $\C^d\to\mathcal H$
+with $\hs{K}=1$, and $\tilde\rho=KK^*=W\rho W^*$. Since $K^*K=\rho$, $S(\tilde\rho)=S(\rho)$.
+
+\emph{Step 4: each coordinate carries nearly a bit.} For $z\in\{\pm1\}^M$ let $P_z=\prod_i\frac12(I+z_iC_i)$ be the joint eigenprojections of
+the $C_i$, $\bar\rho=\sum_zP_z\tilde\rho P_z$ and $p(z)=\Tr(P_z\tilde\rho)=\hs{P_zK}^2$. Since $\bar\rho$ is block diagonal with blocks of
+weights $p(z)$, the chain rule, and the fact that conditioning does not increase entropy, give
+\[
+S(\bar\rho)\ \ge\ H(p)=\sum_iH(z_i\mid z_1,\dots,z_{i-1})\ \ge\ \sum_iH(z_i\mid z_{-i}),
+\]
+where $z_{-i}$ is $z$ without its $i$-th coordinate and $z$ has law $p$. Fix $i$ and consider the unit vectors $u=K$ and
+$v=\hat X_iKX_i$ in the Hilbert--Schmidt space of operators $\C^d\to\mathcal H$. Since $\hat X_iP_z\hat X_i=P_{z^{(i)}}$,
+$\hs{P_zv}^2=\hs{P_z\hat X_iK}^2=p(z^{(i)})$; and, multiplying by $X_i$ on the right,
+\[
+\hs{u-v}=\hs{KX_i-\hat X_iK}\le\hs{W(\xi X_i-X_i\xi)}+\hs{(WX_i-\hat X_iW)\xi}=c^X_i+b_i .
+\]
+By the reverse triangle inequality and the orthogonality of the $P_z$,
+$\sum_z\bigl(\sqrt{p(z)}-\sqrt{p(z^{(i)})}\bigr)^2\le\sum_z\hs{P_z(u-v)}^2=\hs{u-v}^2$. For a value $y$ of $z_{-i}$ let $m_y$ and $m'_y$ be
+the masses of $z_i=+1$ and $z_i=-1$, and $s_y=m_y+m'_y$. Then
+$1-\sum_y2\sqrt{m_ym'_y}=\frac12\sum_z\bigl(\sqrt{p(z)}-\sqrt{p(z^{(i)})}\bigr)^2$, and \cref{lem:hellinger} with $x=m_y/s_y$, multiplied
+by $s_y$ and summed over $y$ (terms with $s_y=0$ vanish), gives
+\[
+H(z_i\mid z_{-i})=\sum_ys_y\,h(m_y/s_y)\ \ge\ 1-\frac{1-\sum_y2\sqrt{m_ym'_y}}{\ln2}\ \ge\ 1-\frac{(b_i+c^X_i)^2}{2\ln2}.
+\]
+
+\emph{Step 5: pinching costs little entropy.} Let $\mathcal T_i(\sigma)=\frac12(\sigma+C_i\sigma C_i)$, the pinching by the
+eigenprojections of $C_i$. The $\mathcal T_i$ commute, and $\bar\rho=\mathcal T_M\cdots\mathcal T_1\tilde\rho$. Put
+$\sigma_i=\mathcal T_i\cdots\mathcal T_1\tilde\rho$. By~\eqref{eq:pinching}, commutation, and monotonicity of $D$ under the channel
+$\mathcal T_{i-1}\cdots\mathcal T_1$,
+\[
+S(\sigma_i)-S(\sigma_{i-1})=D\bigl(\mathcal T_{i-1}\cdots\mathcal T_1\tilde\rho\,\big\|\,\mathcal T_{i-1}\cdots\mathcal T_1\mathcal T_i\tilde\rho\bigr)
+\le D(\tilde\rho\,\|\,\mathcal T_i\tilde\rho),
+\]
+so $S(\bar\rho)\le S(\tilde\rho)+\sum_iD(\tilde\rho\|\mathcal T_i\tilde\rho)$. Now $\tilde\rho=(KZ_i)(KZ_i)^*$ and
+$C_i\tilde\rho C_i=(C_iK)(C_iK)^*$, both factors of unit Hilbert--Schmidt norm, and
+\[
+\hs{KZ_i-C_iK}\le\hs{W(\xi Z_i-Z_i\xi)}+\hs{(WZ_i-C_iW)\xi}=c^Z_i+a_i .
+\]
+\Cref{lem:jensen-shannon} gives $D(\tilde\rho\|\mathcal T_i\tilde\rho)\le h\bigl(\min((a_i+c^Z_i)^2/4,1/2)\bigr)$.
+
+\emph{Conclusion.} Combining the bounds of Steps~4 and~5 on $S(\bar\rho)$ with $S(\tilde\rho)=S(\rho)$ proves (iii).
+\end{proof}
+
+\begin{proof}[Proof of \cref{cor:count}]
+By \cref{thm:count}(i) and (ii), $a_i^2\le2(M-1)(2\kappa)^2+2(M-1)\kappa^2\le10M\kappa^2$ and
+$b_i^2\le2(2\kappa)^2+2(M-1)(2\kappa)^2+2M\kappa^2=10M\kappa^2$. For $M\ge2$, $(\sqrt{10M}+1)^2=10M+2\sqrt{10M}+1\le16M$, so
+$(a_i+c^Z_i)^2$ and $(b_i+c^X_i)^2$ are at most $16M\kappa^2\le\frac1{10}$. Since $h$ increases on $[0,\frac12]$, each bracket in
+\cref{thm:count}(iii) is at least $1-\frac{0.1}{2\ln2}-h(0.025)$. Here $\frac{0.1}{2\ln2}<0.0722$, and
+$h(0.025)=0.025\log40+0.975\log\frac{40}{39}<0.1334+0.0361=0.1695$, using $\log40<\frac{16}3$ (from $5^3<2^7$) and
+$0.975\ln\frac{40}{39}\le\frac{0.975}{39}=0.025$. So each bracket exceeds $1-0.0722-0.1695>\frac34$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{cor:count-flat}]
+Apply \cref{thm:count} with $\rho=I/D$. All state commutators vanish and $\hs{Y\xi}=\fn{Y}$, so (i) and (ii) give $a_i^2\le2\eta$ and
+$b_i^2\le2\eta$, and (iii) gives
+\[
+\log D=S(I/D)\ \ge\ \sum_{i=1}^M\Bigl[1-\frac{2\eta}{2\ln2}-h\bigl(\min(\eta/2,1/2)\bigr)\Bigr]=M\bigl(1-\eta/\ln2-h(\eta/2)\bigr),
+\]
+since $h$ increases on $[0,\frac12]$ and $\eta\le1$. The bracket decreases in $\eta$. For $\eta=\frac1{10}$, $0.1/\ln2<0.1443$, and
+$h(0.05)=0.05\log20+0.95\log\frac{20}{19}<0.2167+0.0722=0.2889$, using $\log20<\frac{13}3$ (from $5^3<2^7$) and
+$\log\frac{20}{19}\le\frac1{19\ln2}$. So the bracket exceeds $1-0.1443-0.2889>\frac12$, and $D\ge2^{M/2}$.
+\end{proof}
+
+For the flat state, $\xi$ commutes with every operator, so the second terms in Steps~1 and~2 vanish and (i), (ii) hold without the
+factor $2$; the bracket in \cref{cor:count-flat} then improves to $1-\eta/(2\ln2)-h(\eta/4)$. We do not need the improvement.
+
+\subsection{Entropy of a sector}
+
+The count is applied on the sector where a central involution acts as $-1$, to the sector state of \cref{lem:sector-state}. The entropy of
+the sector state controls the entropy of the original state.
+
+\begin{lemma}[Entropy of a sector]\label{lem:sector-entropy}
+In the setting of \cref{lem:sector-state},
+\[
+S(\rho)\ \ge\ p_-\,S(\rho_-)-h\bigl(\min(\hs{[J',\xi]}^2/4,\,1/2)\bigr)\qquad\text{and}\qquad\rank\rho\ge\rank\rho_- .
+\]
+\end{lemma}
+
+\begin{proof}
+The pinching $\rho^\natural=P_+\rho P_++P_-\rho P_-=\frac12(\rho+J'\rho J')$ is the direct sum of $(1-p_-)\rho_+$ and $p_-\rho_-$, where
+$\rho_+=P_+\rho P_+/(1-p_-)$ if $p_-<1$, so $S(\rho^\natural)\ge p_-\,S(\rho_-)$. By~\eqref{eq:pinching} and \cref{lem:jensen-shannon} with
+$L=\xi J'$ and $L'=J'\xi$, for which $LL^*=\rho$ and $L'L'^*=J'\rho J'$,
+\[
+S(\rho^\natural)-S(\rho)=D(\rho\,\|\,\rho^\natural)\le h\bigl(\min(\hs{\xi J'-J'\xi}^2/4,1/2)\bigr).
+\]
+Finally $\rank(P_-\rho P_-)\le\rank\rho$.
+\end{proof}

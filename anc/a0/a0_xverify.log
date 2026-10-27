@@ -1,0 +1,23 @@
+$ python3 -I a0_xverify.py .. a0_certificates.json
+independent re-verification: 121 certificates OK, max area 42
+PASS  replay: every factor is a conjugate of a relator of Gamma(A,b) with sign +1 or -1, and each product reduces freely to its word
+PASS  cap: every certificate has at most 42 factors (largest 42)
+[exit status 0]
+
+$ python3 -I a0_xverify.py .. a0_certificates.json --negctl
+negative controls: each corrupted dump must be rejected
+PASS  rejected: a certificate of 42 factors padded to 44 by a factor and its inverse  [replay accepts it; cap: 44 factors]
+PASS  rejected: a factor with sign 2  [sign 2 is not +1 or -1]
+PASS  rejected: a factor with sign 0  [sign 0 is not +1 or -1]
+PASS  rejected: a certificate with one factor dropped  [certificate of C1 conjugacy (b,c), c != b (p,d,g8) does not reduce to its word]
+PASS  rejected: a certificate of 1 factor with a factor and its inverse appended that name the square of the variable index 2010, beyond the last index 1992  [invalid relator key ['sq', 2010]: variable index not an integer in 0..1992]
+PASS  rejected: a certificate of 1 factor with a factor and its inverse appended that name [x_j, J] for the variable index 1993, one past the last  [invalid relator key ['Jc', 1993]: variable index not an integer in 0..1992]
+PASS  rejected: a certificate of 1 factor with a factor and its inverse appended that name the equation of index -1  [invalid relator key ['eq', -1]: equation index not an integer in 0..1686]
+PASS  rejected: a certificate of 1 factor with a factor and its inverse appended that are conjugated by the letter 1995, outside the letters 1..1994 of Gamma(A,b) and their inverses  [invalid conjugator [1995]: not a list of integers x with 1 <= |x| <= 1994]
+ALL NEGATIVE CONTROLS REJECTED
+[exit status 0]
+
+# negative control: one factor of one certificate inverted; the check must fail
+$ python3 -I a0_xverify.py .. <corrupted copy of a0_certificates.json>
+FAIL  replay: certificate of C0 other commutation (x,y,y) (g1,g4,g4) does not reduce to its word
+[exit status 1]

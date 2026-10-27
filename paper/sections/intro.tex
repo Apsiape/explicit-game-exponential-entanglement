@@ -1,0 +1,282 @@
+%======================================================================
+\section{Introduction}\label{sec:intro}
+%======================================================================
+
+In a two-player nonlocal game a referee sends a question to each of two players, who cannot communicate, and they win if their answers
+satisfy a fixed predicate. Players who share an entangled state can sometimes win with a probability that no classical strategy reaches,
+and for some games the best winning probability, the \emph{quantum value} $\omq(G)$, is approached only by strategies of ever larger
+dimension. For such a game the basic quantitative question is how much entanglement near-optimal play needs. Lower bounds on it are
+dimension witnesses: from the winning statistics alone, they certify that the players share a large entangled state. Write $\Ent(G,\eps)$
+for the least local dimension of a strategy that wins with probability at least $\omq(G)-\eps$. How fast does $\Ent(G,\eps)$ grow as $\eps\to0$?
+
+The question has a short history. For two-player games of quantum value one, the first explicit examples gave polynomial growth.
+Slofstra and Vidick built a linear system game with $c\,\eps^{-1/6}\le\Ent(G,\eps)\le C\eps^{-1/2}$ and wrote that they did not expect the
+inverse polynomial scaling to be optimal~\cite{SV18}. Slofstra then reached $\exp(\eps^{-c})$ for a game of commuting-operator value
+one, and noted that it is not clear whether its quantum value is one, in part because his group is not known to be hyperlinear and in
+part because of limitations of the embedding theorem of~\cite{Slo20} that he used~\cite{Slo18}. Games with super-polynomial growth
+are known with three players~\cite{JLV20}, and for two players when the value is not one~\cite{Col20}. There is also a uniform obstruction.
+Deciding whether $\omq(G)=1$ is $\Pi_2$-complete~\cite[Thm.~1.1]{MNY22}, while for fixed $D$ and $k$ it is decidable, by
+Tarski--Seidenberg, whether some strategy of local dimension at most $D$ wins with probability at least $1-1/k$; so no total computable
+function of the game and the precision bounds $\Ent(G,\eps)$ for all games of quantum value one. This names no game and gives no rate
+for any one game. Dykema, Paulsen and Prakash showed, through correlation functions of graphs, that
+the set of quantum correlations is not closed already for five questions and two answers per player~\cite{DPP19}, so that approximating
+some limits of finite-dimensional correlations needs unbounded dimension. \Cref{tab:known}
+collects the explicit bounds.
+
+\subsection{The result}
+
+We give an explicit two-player game of quantum value one in which every near-optimal strategy needs exponential entanglement, and we
+determine the exponent. Throughout, $\bfun(\eps)=2^{-4(24+\log\log(1/\eps))^2}$; this is $\eps^{o(1)}$ as $\eps\to0$. Logarithms are to
+base two.
+
+\begin{theoremA}
+There is a binary linear system game $G$, with $1687$ equations in $1993$ variables and at most three variables in each equation, such that
+$\omq(G)=1$ and no finite-dimensional strategy wins $G$ with certainty, and there are explicit constants $c,C,\eps_0>0$ with the
+following properties for $0<\eps\le\eps_0$.
+\begin{enumerate}[label=(\roman*),itemsep=1pt]
+\item Every strategy that wins $G$ with probability at least $1-\eps$ has entanglement entropy
+\[
+S(\rho_B)\ \ge\ c\,\eps^{-1}\,\bfun(\eps),
+\]
+and hence Schmidt rank, and local dimension, at least $2^{c\,\eps^{-1}\bfun(\eps)}$. For $0<\eps\le\eps_0/2$ the same lower bound,
+with $c/4$ in place of $c$, holds for the entanglement of formation of every mixed strategy.
+\item Some strategy that wins with probability at least $1-\eps$ uses a maximally entangled state of local dimension at most
+$\exp\bigl(C\eps^{-1}\log(1/\eps)\bigr)$.
+\end{enumerate}
+In particular $\log\Ent(G,\eps)=\eps^{-1+o(1)}$, and the same holds for the least entanglement entropy and for strategies on maximally
+entangled states.
+\end{theoremA}
+
+The precise statement is \cref{thm:main}, with $c=4.9\cdot10^{-34}$, $C=7.4\cdot10^{10}$ and $\eps_0=2^{-5500}$; these values are far
+from optimal. \Cref{box:game} describes the game. To our knowledge $G$ is the first explicit two-player game
+of quantum value one that needs more than polynomial entanglement, and the first two-player game of value one whose entanglement is pinned
+to a scale $\exp(\eps^{-\Theta(1)})$. The lower bound is on the entanglement \emph{entropy}, so it counts ebits and not only dimensions:
+near-optimal play of $G$ consumes $\eps^{-1+o(1)}$ ebits, whatever the shape of the shared state.
+
+\begin{table}[t]
+\centering
+\footnotesize\setlength{\tabcolsep}{3.5pt}%
+\begin{tabular}{@{}llllll@{}}
+\toprule
+ & players & value & needed & sufficient & remark \\
+\midrule
+\cite{SV18} & 2 & $\omq=1$ & $c\,\eps^{-1/6}$ & $C\eps^{-1/2}$ & linear system game \\
+\cite{MV15} & 2 & $1$ & $c\,\eps^{-1/2}$ & $\eps^{-O(1)}$ & answers of unbounded length \\
+\cite{Slo18} & 2 & $\omqc=1$ & $\exp(\eps^{-c})$ & & $\omq=1$ not known \\
+\cite{Col20} & 2 & below $1$ & $2^{\Omega(\eps^{-1/8})}$ & $2^{O(\eps^{-1})}$ & within $\eps$ of the value \\
+\cite{JLV20} & 3 & $1$ & $2^{\Omega(\eps^{-c})}$ & $2^{O(\eps^{-1})}$ & three players \\
+\midrule
+Theorem~A & 2 & $\omq=1$ & $\exp(\eps^{-1+o(1)})$ & $\exp(C\eps^{-1}\log\frac1\eps)$ & linear system game; also in ebits \\
+\bottomrule
+\end{tabular}
+\caption{Local dimension needed, and known to suffice, to win with probability $\omega-\eps$, for games whose value $\omega$ is not attained
+by finite-dimensional strategies. For Coladangelo's game the bounds concern coming within $\eps$ of its value.
+Gao, Yu and Zhi recently gave an explicit linear system game whose commuting-operator
+value is one and whose quantum value is below one~\cite{GYZ26}, a different question.}
+\label{tab:known}
+\end{table}
+
+\paragraph{The group behind the game.} A linear system game is governed by its solution group $\Gamma$, which contains a central involution
+$J$: a near-optimal strategy is, up to small errors, a representation of $\Gamma$ in which $J$ acts as $-I$, and the entanglement of the
+game is the price of keeping $J$ away from the identity in approximate representations~\cite{SV18}. So we need a group in which $J$ survives
+in approximate representations, which gives value one, but only in very large dimension.
+
+Our group $\GP$ is a lamplighter whose lamps sit on configurations rather than on points (\cref{sec:group}, \cref{fig:lamps}). The points
+are those of the three rays of Houghton's group $H_3$; a configuration is a finite set of points, written as a binary vector; and the
+lighter is a group of affine maps of configurations that permute points, toggle a point, or add one point to another. Each lamp is a Pauli
+pair $x_v,z_v$, a copy of the dihedral group of order eight, and the centres $(x_vz_v)^2$ of all lamps are one central involution $J$. On
+$N$ points there are $2^N$ configurations, hence $2^N$ Pauli pairs. Yet the generators of the lighter either move points along the rays,
+as Houghton's group does, or involve at most two points of a configuration, so any two lamps can be brought together cheaply: their
+commutator has area $2^{O(\log^2N)}$ (\cref{thm:pair-area}),
+priced by a quasi-polynomial Dehn bound for $H_3$ that we prove in \cref{app:dehn}. The group is elementary amenable, hence hyperlinear,
+which removes the first of Slofstra's obstacles. For the second we give explicitly a presentation of the type that the Slofstra--Vidick
+reduction needs, with one non-involutive generator, whose $29$ derivations are checked by machine (\cref{sec:game}).
+
+\input{sections/fig-lamps}
+
+\subsection{Why the state must be kept}
+
+A strategy that wins with probability $1-\eps$ controls the players' operators to precision about $\sqrt\eps$, measured in their shared
+state: if $\rho$ is Bob's reduced density matrix and $\xi=\rho^{1/2}$, his observables satisfy the relations of the solution group up to
+$\sqrt\eps$ in the norm $\hs{Y\xi}=\Tr(Y^*Y\rho)^{1/2}$, and they nearly commute with $\xi$, again to order $\sqrt\eps$. The usual route to a
+lower bound then \emph{flattens} the state: it passes to a spectral projection of $\rho$~\cite{SV18}, to a strategy on a maximally entangled
+state~\cite{Pad22}, or to the operator norm. Each of these steps costs a power of $\eps$. For linear system games the precision $\sqrt\eps$
+becomes $\eps^{1/4}$~\cite[Cor.~5.2]{SV18}; for our game this would give only $\log\Ent(G,\eps)\ge\eps^{-1/2+o(1)}$, the exponent of
+maximally entangled strategies halved.
+
+We avoid the loss by never leaving the state. The counting argument below works with the Hilbert--Schmidt vector $\xi$ itself: it
+compares quantities measured in one and the same state, and it pays for every change of state with a \emph{state commutator}
+$\hs{[Y,\xi]}$, which near-optimal play supplies at precision $\sqrt\eps$. Two results make this precise, and both may be of independent use.
+
+The first is a robust form of the fact that $M$ pairs of anticommuting involutions need $M$ qubits, valid in an arbitrary state, with the
+errors of different pairs adding in squares rather than in norms.
+
+\begin{theoremC}[\cref{thm:count,cor:count}]
+Let $X_1,\dots,X_M,Z_1,\dots,Z_M$ be involutions on $\C^d$, $M\ge2$, let $\rho$ be a density matrix and $\xi=\rho^{1/2}$. If for all $i\ne j$
+\[
+\hs{[Z_i,Z_j]\xi},\ \ \hs{[X_i,Z_j]\xi},\ \ \hs{\{X_i,Z_i\}\xi},\ \ \hs{[X_i,\xi]},\ \ \hs{[Z_i,\xi]}\ \le\ \kappa
+\]
+and $16M\kappa^2\le\frac1{10}$, then $S(\rho)\ge\frac34M$.
+\end{theoremC}
+
+The full statement, \cref{thm:count}, bounds $S(\rho)$ from below by a sum over the pairs in which the errors of each pair enter only through sums of
+squares. The state commutators cannot be dropped (\cref{ex:commutators-needed}). Stability theorems of Gowers--Hatami type~\cite{GH17} and the
+many-qubit tests of Natarajan and Vidick~\cite{NV17} need control of a whole Pauli group; \cref{thm:count} needs only the pairwise relations,
+and the $\ell^2$ tolerance is what produces the exponent $1$ in Theorem~A. Pairwise approximate relations with a fixed error per pair allow many
+approximate qubits to overlap in a small space~\cite{CRSV17}; \cref{thm:count} is consistent with this, because it charges the errors of all
+pairs together, through a sum of squares.
+
+The second result says that for linear system games nothing is lost in either direction when the state is kept. For a finite presentation
+and a word $w$, let $\hlps(w;e)$ be the least dimension of a homomorphism $\phi$ from the free group to $\U(d)$ together with a density
+matrix $\rho$ such that every relator is $e$-close to the identity in the norm $\hs{(\cdot)\xi}$, every generator has state commutator at
+most $e$, and $\hs{(\phi(w)+I)\xi}\le e$ (\cref{def:state-profile}).
+
+\begin{theoremD}[\cref{thm:transfer,thm:return,cor:two-sided}]
+Let $G$ be a binary linear system game of quantum value one with solution group $\Gamma$ and central element $J$. There are constants
+$C,C'>0$, depending only on the number of equations, the number of variables per equation and the question distribution, such that for
+every $\eps>0$
+\[
+\hlps_\Gamma\bigl(J;C\sqrt\eps\bigr)\ \le\ \Ent(G,\eps)\ \le\ \hlps_\Gamma\bigl(J;C'\sqrt\eps\bigr).
+\]
+Both directions keep the state: the lower bound uses Bob's reduced state, and the upper bound is realised on the canonical purification of
+the state of the model. The same holds for the least entanglement entropy.
+\end{theoremD}
+
+For flat models the right-hand inequality is the classical direction of the correspondence of Slofstra and
+Vidick~\cite[Prop.~4.4(a)]{SV18}. The left-hand one is their passage from strategies to approximate representations~\cite[Prop.~5.4]{SV18},
+stopped before the state is flattened.
+
+\subsection{The profile of the central involution}
+
+On the side of the group, the lower bound of Theorem~A is a statement about approximate representations of $\GP$ in which $J$ is visible.
+Let $\hlp(J;\delta,\eps)$ be the least dimension of an $\eps$-representation $\phi$ with $\fn{\phi(J)-I}\ge\delta$, the \emph{hyperlinear
+profile} of $J$~\cite{SV18}, and let $\RP$ be the finite certificate of $27$ relations of $\GP$ of \cref{def:RP}.
+
+\begin{theoremB}[\cref{thm:profile}]
+Let $R\supseteq\RP$ be a finite set of words in the generators $p,q,t,d,x,z$ of $\GP$ that represent $1$ in $\GP$, and $J=(xz)^2$. There are
+constants $c,C>0$, with $C$ depending on the lengths of the words of $R$, such that for $0<\delta\le2$ and $0<\eps\le2^{-1071}\delta$
+\[
+c\,\delta^2\eps^{-2}\bfun(\eps)\ \le\ \log\hlp_R(J;\delta,\eps)\ \le\ C\,\delta^2\eps^{-2}\log(1/\eps).
+\]
+The same two-sided bound $\log\hlps_R(J;e)=e^{-2+o(1)}$ holds for the state-weighted profile.
+\end{theoremB}
+
+So $\log\hlp(J;\delta,\eps)=\eps^{-2+o(1)}$. By~\cite[Prop.~7.1]{DM-lamps} the group $\GP$ is finitely presented (nothing here uses
+this; see \cref{rem:GP-fp}), so it is, to our knowledge, the first finitely presented amenable group with a central involution of
+superpolynomial hyperlinear profile. The upper bound comes from \emph{hash models} (\cref{sec:upper}): we keep only the
+lamps that a short word lights, on a register of qubits indexed by a random affine hash of the configurations, and a clock handles the
+abelian quotient of the lighter. Slofstra's group in~\cite{Slo18} has $\log\hlp\ge c\,\eps^{-a}$ for every $a<\frac12$, and is not known to be
+hyperlinear; the sofic group of Slofstra and Vidick has a central involution of polynomial profile~\cite[Prop.~3.2]{SV18}.
+
+\subsection{Two sharp rates}
+
+The same two tools close the gaps in two classical examples, in which the known lower bounds lost a power of $\eps$ by flattening.
+
+The XOR games CHSH$(n)$ of Slofstra~\cite{Slo11} force $n$ pairwise anticommuting observables. Ostrev showed that every nearly optimal
+strategy approximately contains the algebraic structure of the canonical optimal one~\cite{Ost16}; the question here is how much
+entanglement that forces as a function of the error. Ostrev and Vidick showed that a strategy within
+a factor $1-\eps$ of the optimal bias needs $\Omega(\eps^{-1/5})$ ebits, using $n=\Theta(\eps^{-1/5})$, and that every XOR game has an
+$\eps$-optimal strategy with $\lceil1/\eps\rceil$ ebits~\cite{OV18}.
+
+\begin{theoremE}[\cref{thm:chsh,cor:chsh-ebits,cor:chsh-ef}]
+For $n\ge3$ and $0<\eps\le1$, the least entanglement entropy of a strategy for CHSH$(n)$ whose bias is at least $1-\eps$ times the optimal
+bias lies between $10^{-7}\min(n,1/\eps)/6-\frac12$ and $\min(\lfloor n/2\rfloor,\lceil1/\eps\rceil)$; so it is $\Theta(\min(n,1/\eps))$ as
+$\min(n,1/\eps)\to\infty$. The least entanglement of formation of a mixed strategy obeys the same bounds, with $10^{-7}/24$ and $\frac14$
+in place of $10^{-7}/6$ and $\frac12$.
+\end{theoremE}
+
+This improves the exponent $\frac15$ of~\cite{OV18} to the optimal $1$. Slofstra and Vidick built a linear system game $\Gsv$ from a group $K$
+whose central involution $c$ has hyperlinear profile between $\eps^{-2/3}$ and $\eps^{-1}$, and gave the bounds
+$c\,\eps^{-1/6}\le\Ent(\Gsv,\eps)\le C\eps^{-1/2}$~\cite{SV18}.
+
+\begin{theoremF}[\cref{cor:K-profile,thm:sv-game}]
+The hyperlinear profile of $c$ in $K$ is $\Theta(1/\eps)$, for every fixed $\delta$, and $\Ent(\Gsv,\eps)=\Theta(\eps^{-1/2})$.
+\end{theoremF}
+
+Here the relations make the spectral measure of one generator, measured in the state, nearly invariant under doubling and under a half-turn
+of the circle; averaging over the two inverse branches of the doubling map contracts the Wasserstein-$1$ distance by a factor two, so the
+measure is within $\frac{29\pi}2$ times the precision of Haar measure (\cref{prop:K-W1}), while a measure with $d$ atoms is at distance at
+least $\pi/(2d)$.
+
+The upper bound $\Ent(\Gsv,\eps)\le C\eps^{-1/2}$ is that of Slofstra and Vidick~\cite[Thm.~1.1]{SV18}. Its proof, through that
+of~\cite[Prop.~6.2]{SV18}, lifts approximate representations of $K$ to the solution group by~\cite[Prop.~4.8]{Slo19}, which removes one
+non-involutive generator at a time; $K$ has two, and after both removals the image of $c$ is no longer balanced, so the last step of that
+proof does not apply as written (\cref{sec:rates-sv}). Only the upper bound is affected: the value one of the game, the lower bounds and
+the nontriviality of $J$ do not use this step, and with at most one non-involutive generator the argument is complete. For the explicit
+models of $K$ we give a lift that keeps $c$ balanced (\cref{lem:sv-lift}), so~\cite[Thm.~1.1]{SV18} holds as stated.
+
+\subsection{How the proof of Theorem A works}
+
+We describe the lower bound; the upper bound runs the chain backwards using flat approximate models in which the marked involution is
+exactly $-I$. \Cref{game:fig-map} in \cref{sec:game}
+shows both chains with their constants.
+
+\emph{From the game to a state-weighted model.} A strategy that wins with probability $1-\eps$ gives, on the support of Bob's reduced state
+$\rho$, involutions for the variables of the game that satisfy the relations of the solution group $\Gamma$, and commute with $\xi$, up to
+$O(\sqrt\eps)$ in the state (\cref{thm:transfer}). This is bookkeeping, but it is the step at which earlier arguments flattened the state.
+
+\emph{From the game to the group.} The game is built from a presentation $\Pres$ of Slofstra's type $E\Gamma_0$ through Slofstra's
+embedding, run so that the distinguished involution goes to $-I$ (\cref{app:gadget}), and the $27$ relations of the certificate $\RP$ are
+consequences of $\Pres$ of area at most $60$ (\cref{prop:presentation}). So the model of $\Gamma$ restricts to an assignment of unitaries to
+the generators $p,q,t,d,x,z$ of $\GP$ satisfying $\RP$ to $O(\sqrt\eps)$ in the state, in which the image of $J$ stays at distance about one
+from the identity.
+
+\emph{Lamps on the sector.} On the sector where (the rounded image of) $J$ acts as $-1$, the transported lamps $x_u,z_u$, $u\subseteq\{1,\dots,N\}$,
+are $2^N$ approximate Pauli pairs measured in the state: within a pair they nearly anticommute because $(x_uz_u)^2=J=-1$, and across pairs
+they nearly commute at a cost of the pair area $\Lambda_N=2^{O(\log^2N)}$ times the precision (\cref{thm:pair-area}). Charging conjugators
+through state commutators squares this cost.
+
+\emph{Counting.} Theorem~C applies with $M=2^N$ and $\kappa\approx\Lambda_N^2\sqrt\eps$, as long as $2^N\Lambda_N^4\eps\lesssim1$. Choosing the
+largest such $N$ gives $2^N=\eps^{-1+o(1)}$ qubits of entropy on the sector (\cref{thm:sector}), and the sector carries a constant fraction of
+the state (\cref{lem:sector-entropy}). This is where the exponent $1$ comes from: precision $\sqrt\eps$, errors adding in squares.
+
+\emph{The upper bound.} The hash models give $\eps$-representations of $\GPp$ with $J\mapsto-I$ exactly in dimension
+$\exp(C\eps^{-2}\log(1/\eps))$; they give approximate representations of $\Pres$ with $w\mapsto-I$ and then of $\Gamma$ with $J\mapsto-I$
+(the embedding theorem, \cref{thm:embedding} in \cref{app:gadget}), and the return direction of
+Theorem~D turns them into strategies on a maximally entangled state that lose with probability $O(\eps^2)$ (\cref{thm:return}).
+
+\subsection{Related work and what is new}
+
+The architecture of the group follows Slofstra's~\cite{Slo18}: a central involution $J$, a family of involutions whose commutators are
+$J$ or $1$, exponentially many of them reached by short words, and a transfer of approximate representations along the group.
+In~\cite{Slo18} the involutions generate, with $J$, an infinite Clifford group, any two of them anticommuting up to $J$, and they are
+reached through the HNN doubling $tzt^{-1}=z^2$; here they form Pauli pairs and are reached through Houghton's group acting on
+configurations, which keeps the group amenable. The passage from groups to games is Slofstra's embedding~\cite{Slo19,Slo20} in the explicit form of Slofstra and
+Vidick~\cite{SV18}, and the identification of the entanglement of a linear system game with the hyperlinear profile of $J$ is theirs. The
+pair-area argument and the hash models adapt our earlier construction for lamps that are copies of $S_3$, where they bound the sofic profile
+of an amenable group~\cite{DM-lamps}; nothing in this paper depends on that preprint.
+
+On the analytic side, the Hilbert--Schmidt picture of a shared state, with the reduced state as a factor $\xi$, is the standard form of the
+state. Slofstra and Vidick use it for general strategies~\cite{SV18}, and Marrakchi and de la Salle use it to round near-synchronous
+strategies~\cite{MdlS23}. The coupling of two spectral measures in one state is Connes' joint distribution of left and right
+multiplication~\cite{Con76}. Robust tests of many qubits in the players' state are due to Natarajan and Vidick~\cite{NV17}, through a test
+that samples the whole Pauli group; Pauli stability for synchronous strategies is in~\cite{dlS22}; state-dependent anticommutators appear in
+the entropic uncertainty relations of Kaniewski, Tomamichel and Wehner~\cite{KTW14}; and rounding to maximally entangled or tracial strategies
+is studied in~\cite{Vid22,Pad22,Lin23,MdlS23}.
+
+What is new is the following.
+\begin{enumerate}[label=(\arabic*),itemsep=1pt]
+\item An explicit two-player game of quantum value one whose near-optimal strategies need $\eps^{-1+o(1)}$ ebits, with a matching upper
+bound (Theorem~A).
+\item An elementary amenable group with a central involution whose hyperlinear profile is $\exp(\eps^{-2+o(1)})$, two-sided, for every
+finite set of valid relations that contains $\RP$ (Theorem~B), and a self-contained proof, from Johnson's presentation, of a
+quasi-polynomial Dehn bound for Houghton's group $H_3$ (\cref{app:dehn}); our preprint~\cite{DM-H3} proves a polynomial bound, which
+this paper does not use.
+\item A count of qubits from pairwise Pauli relations in an arbitrary state, with errors adding in squares (Theorem~C).
+\item A correspondence between linear system games and state-weighted approximate representations that loses nothing in either direction
+(Theorem~D).
+\item The optimal exponents for CHSH$(n)$ and for the game and group of Slofstra and Vidick (Theorems~E and~F).
+\end{enumerate}
+
+\subsection{Organization and conventions}
+
+\Cref{sec:prelim} fixes norms, approximate representations, state-weighted models and linear system games. \Cref{sec:state} develops a
+calculus for words in unitaries measured in a fixed state, \cref{sec:count} proves Theorem~C, and \cref{sec:transfer} proves Theorem~D.
+\Cref{sec:group} defines the group $\GP$, \cref{sec:pair} proves the pair areas, \cref{sec:sector} the lower bound of Theorem~B and the sector
+theorem, and \cref{sec:upper} the hash models and Theorem~B. \Cref{sec:game} builds the game and proves Theorem~A, and \cref{sec:rates}
+proves Theorems~E and~F. \Cref{sec:open} lists open questions. \Cref{app:dehn} proves the Dehn bound for $H_3$, \cref{app:gadget} gives
+Slofstra's embedding with the distinguished involution sent to $-I$, and \cref{app:cert} describes the machine checks of the finite
+certificates.
+
+Logarithms are to base two unless written $\ln$; $h$ is the binary entropy and $S$ the von Neumann entropy in bits. For words and group
+elements $[a,b]=aba^{-1}b^{-1}$; for operators $[S,T]=ST-TS$ and $\{S,T\}=ST+TS$.
