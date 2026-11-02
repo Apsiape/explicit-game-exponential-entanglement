@@ -1,0 +1,89 @@
+{
+  "version": "1.2.0",
+  "packagesDir": ".lake/packages",
+  "packages": [
+    {
+      "type": "path",
+      "name": "plausible",
+      "dir": "vendor/plausible",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "LeanSearchClient",
+      "dir": "vendor/LeanSearchClient",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "importGraph",
+      "dir": "vendor/importGraph",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "proofwidgets",
+      "dir": "vendor/proofwidgets",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.lean",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "aesop",
+      "dir": "vendor/aesop",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "Qq",
+      "dir": "vendor/Qq",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "batteries",
+      "dir": "vendor/batteries",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "Cli",
+      "dir": "vendor/Cli",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.toml",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "mathlib",
+      "dir": "vendor/mathlib",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.lean",
+      "inherited": false
+    },
+    {
+      "type": "path",
+      "name": "LeanQIT",
+      "dir": "vendor/LeanQIT",
+      "manifestFile": "lake-manifest.json",
+      "configFile": "lakefile.lean",
+      "inherited": false
+    }
+  ],
+  "name": "companion",
+  "lakeDir": ".lake",
+  "fixedToolchain": false
+}

@@ -1,0 +1,30 @@
+{
+  "repository": "https://github.com/QuAIR/Lean-QIT",
+  "commit": "8a931d4bda61ba503cfc0728704cfef5dedf2cff",
+  "license": "Apache-2.0",
+  "upstream_lean": "4.34.0",
+  "compiled_lean": "4.35.0",
+  "selected_modules": 68,
+  "compatibility_changes": [
+    "QIT/States/TraceNorm/Audenaert.lean"
+  ],
+  "build_files_added": [
+    "lakefile.lean"
+  ],
+  "audit": "logs/QuAIRAudit.log",
+  "archive_sha256": "3c3724d39265ba2ae5999012bf2c9a90518ca50e9bf840d4d15117806880a3f0",
+  "status": "Selected 68-module closure built and both requested declarations axiom-audited",
+  "verified_utc": "2026-10-26T20:22:08.341356+00:00",
+  "source_patch": {
+    "path": "QIT/States/TraceNorm/Audenaert.lean",
+    "before": "SeminormedAddGroup.toContinuousENorm",
+    "after": "SeminormedAddGroup.toESeminormedAddMonoid.toContinuousENorm",
+    "reason": "Mathlib 4.35 instance-parent rename; no theorem statement or proof argument changed"
+  },
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "admitted_dependencies": false
+}

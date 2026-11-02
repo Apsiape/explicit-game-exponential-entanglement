@@ -1,5 +1,6 @@
 An explicit nonlocal game of quantum value one that needs exponential entanglement
 Copyright 2026 Nidhal Mghirbi and Seth Douglas
 
-No third-party source text or code is redistributed in this repository. Cited works must be obtained from their
-publishers or repositories, under their own terms.
+The Lean development includes third-party proof sources with their original
+licences and attribution. See lean/THIRD-PARTY-NOTICES.md, lean/DEPENDENCIES.json,
+lean/Blueprint/A/Diagram/PROVENANCE.json and the individual package licences.

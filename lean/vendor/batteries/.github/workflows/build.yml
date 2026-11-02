@@ -1,0 +1,61 @@
+on:
+  push:
+    # Other branches are built by `pull_request` when they have a PR.
+    branches:
+      - main
+      - nightly-testing
+      - 'lean-pr-testing-*'
+  pull_request:
+
+name: ci
+
+concurrency:
+  group: build-${{ github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - id: lean-action
+        name: build, test, and lint batteries
+        uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865 # v1.6.1
+        with:
+          build-args: '--wfail'
+
+      - name: Check that all files are imported
+        run: lake env lean scripts/check_imports.lean
+
+      - name: Check for forbidden character ↦
+        if: always()
+        run: |
+          if grep -r -n --include=\*.lean -e '↦' . ; then
+            echo "Error: Found forbidden character ↦"
+            exit 1
+          fi
+
+      - name: Check for 'namespace Mathlib'
+        if: always()
+        run: |
+          if grep -r -n --include=\*.lean -e 'namespace Mathlib' . ; then
+            echo "Error: Found 'namespace Mathlib'"
+            exit 1
+          fi
+
+      - name: Check for long lines
+        if: always()
+        run: |
+          ! (find Batteries -name "*.lean" -type f -exec grep -E -H -n '^.{101,}$' {} \; | grep -v -E 'https?://')
+
+      - name: Check for trailing whitespace
+        if: always()
+        run: |
+          scripts/lintWhitespace.sh
+
+      - name: Don't 'import Lean', use precise imports
+        if: always()
+        run: |
+          ! (find . -name "*.lean" ! -path "./BatteriesTest/import_lean.lean" -type f -print0 | xargs -0 grep -E -n '^import Lean$')

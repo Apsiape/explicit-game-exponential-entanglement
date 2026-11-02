@@ -1,2 +1,2 @@
-# Keep the ancillary programs and data byte-exact on every platform: their checks compare SHA-256 digests and bytes.
-anc/** -text
+# Keep every file byte-exact on every platform: the ancillary checks and the Lean source manifest compare SHA-256 digests and bytes.
+* -text

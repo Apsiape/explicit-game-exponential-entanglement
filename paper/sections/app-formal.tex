@@ -1,0 +1,73 @@
+%======================================================================
+\section{Formal verification and its scope}\label{app:formal}
+%======================================================================
+
+The Lean sources are in the \texttt{lean/} directory of the accompanying
+repository. The exact types, dependency pins, source hashes, third-party notices
+and commands for a separate build and kernel replay are given in
+\texttt{lean/README.md}, the dependency record and the source manifest
+in that directory. The frozen file \texttt{Challenge.lean}
+contains historical admitted declarations; these are statement markers and are
+not the proofs of the certified roots. The final \texttt{Audit.lean} compares
+its six analytic statement types with the proved declarations and prints the
+axioms of every listed root. The A/E/F aggregate propositions are defined in
+\texttt{Blueprint.lean}, beyond the original frozen statement file.
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}p{0.34\textwidth}p{0.61\textwidth}@{}}
+\toprule
+Paper statement & Lean declaration (qualified by namespace)\\
+\midrule
+\endhead
+Theorem A & \texttt{Blueprint.theoremA}\\
+\Cref{lem:conjugator-length} & \texttt{Blueprint.DiagramProof.}\newline\texttt{conjugatorLengths}\\
+A second Theorem A wrapper & \texttt{Blueprint.DiagramProof.theoremA}\\
+Pauli hash models used in the upper bound & \texttt{Blueprint.Published.pauliHashModels}\\
+\Cref{thm:count} & \texttt{Companion.Analytic.CountProof.count}\\
+Theorem C and \cref{cor:count} & \texttt{Companion.Analytic.CountProof.}\newline\texttt{uniformCount}\\
+\Cref{thm:transfer} & \texttt{Companion.Analytic.TransferProof.}\newline\texttt{transfer}\\
+\Cref{thm:return}, including the specified measurement and zero error & \texttt{Companion.Analytic.ReturnProof.}\newline\texttt{returnTheorem}\\
+Positive-error existence from \cref{thm:return} & \texttt{Companion.Analytic.ReturnProof.}\newline\texttt{returnExistence}\\
+Theorem D and the three conclusions of \cref{cor:two-sided} & \texttt{Companion.Analytic.ProfileProof.}\newline\texttt{twoSided}\\
+Theorem E & \texttt{Blueprint.theoremE}\\
+Theorem F & \texttt{Blueprint.theoremF}\\
+\Cref{thm:sector}, entropy and rank inequalities & \texttt{Blueprint.ASector.source\_sector}\\
+\Cref{prop:hash-models} & \texttt{Blueprint.AHash.general\_hash\_models}\\
+Literal boundary merge in the conjugator proof & \texttt{Blueprint.DiagramProof.merge\_matching}\\
+\bottomrule
+\end{longtable}}
+
+\paragraph{Exact scope.}
+The type of \texttt{Blueprint.theoremA} is
+\texttt{Published.TensorPerfectFinite} $\to$ \texttt{AStatement}, in namespace
+\texttt{Blueprint}. The latter includes the concrete counts, arity three,
+quantum value one, exclusion of finite perfect strategies, pure and mixed lower
+bounds, the maximally entangled upper bound, and dimension-profile exponents.
+It additionally includes exclusion of perfect spatial strategies; that conclusion
+uses the published parameter described above. The pure lower bound also bounds
+entropy by log rank. The entropy asymptotic is supplied by the lower and upper
+bounds rather than a separate entropy-limit conjunct.
+The uniform count includes the rank conclusion. The analytic statements are
+finite-dimensional; linear-system rows are nonempty, sorted, duplicate-free and
+bounded, with an admissible question distribution. The return theorem fixes
+Bob's rounded observables and Alice's sequential measurement with parity
+correction. The sector and hash-model adapter declarations retain, respectively,
+a conjugator-length and a Pauli-hash-model parameter; the Theorem~A assembly
+supplies both proofs internally. The sector root records the entropy and rank
+inequalities, not all intermediate sector-state conclusions as separate conjuncts.
+The literal boundary merge is an internal combinatorial lemma, not an additional
+paper theorem. The E/F propositions use the definitions of profiles in
+\texttt{Blueprint/RatesDefinitions.lean} and \texttt{Blueprint/FSVGame.lean}.
+The K profile has the explicit range $0<\delta\le2$.
+
+\paragraph{What is not formalized.}
+The external perfect-tensor-strategy implication itself is a parameter rather
+than a Lean proof. There is no standalone certified root for Theorem~B, no claim
+that every proposition, discussion, literature result or appendix of the paper
+has been formalized, and no formal certification of the ancillary numerical
+experiments, the prose, or its identification with the definitions. Historical
+comments in the unchanged statement and proof sources may describe an earlier
+state of completion; the proved declarations and their audited types specify
+the present claims. In particular, the remaining point of trust is that the
+definitions in \texttt{Challenge.lean} mean what the paper means.

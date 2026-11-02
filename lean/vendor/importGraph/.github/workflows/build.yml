@@ -1,0 +1,23 @@
+name: Build
+run-name: Build the project
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: leanprover/lean-action@f061402b660e0c34644504b324e830f2991d4865 # v1.6.1
+        with:
+          check-reservoir-eligibility: true
+      # use setup from lean-action to perform the following steps
+      - name: verify `lake exe graph` works
+        run: |
+          lake exe graph
+          rm import_graph.dot

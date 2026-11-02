@@ -1,0 +1,83 @@
+{
+  "Map": {
+    "source": "OAI/Algebra/GroupRing/ClosedWords.lean",
+    "source_sha256": "69e7d79f5c91c0633dd01e6b1ef3256e7d3963e1b29df082cd317171a8d713dc",
+    "line_ranges": [
+      [
+        179,
+        258
+      ],
+      [
+        1442,
+        1462
+      ],
+      [
+        1615,
+        1629
+      ],
+      [
+        2212,
+        3475
+      ]
+    ]
+  },
+  "Pairing": {
+    "source": "OAI/Algebra/GroupRing/ClosedWords.lean",
+    "source_sha256": "69e7d79f5c91c0633dd01e6b1ef3256e7d3963e1b29df082cd317171a8d713dc",
+    "line_ranges": [
+      [
+        3480,
+        4289
+      ]
+    ]
+  },
+  "Surgery": {
+    "source": "OAI/Algebra/GroupRing/ClosedWords.lean",
+    "source_sha256": "69e7d79f5c91c0633dd01e6b1ef3256e7d3963e1b29df082cd317171a8d713dc",
+    "line_ranges": [
+      [
+        4291,
+        5099
+      ]
+    ]
+  },
+  "Boundaries": {
+    "source": "OAI/Algebra/GroupRing/ContiguousSplit.lean",
+    "source_sha256": "d6f14485cc957b2b2d6abb3c1c42a4a5962998f666c9d3e15bf3d86e6d105933",
+    "line_ranges": [
+      [
+        8,
+        291
+      ]
+    ]
+  },
+  "Blocks": {
+    "source": "OAI/Algebra/GroupRing/WordBlocks.lean",
+    "source_sha256": "4eeb5df504a7e292163fe8cdf8a5ed7055171dbcd1a0416383ced37f4fdd47e7",
+    "modifications": "imports; omitted AlgebraicPictures namespace; added attribution header"
+  },
+  "Restriction": {
+    "sources": {
+      "BFSTree.lean": "115b999a4270c7f5ee673cd7b26ed5d0acb33cd9d77884b5e015f5626cf912e2",
+      "MapRestrict.lean": "7aed7c69d7ba55126df23e473dadd3273358fb3c83c0d516015f5a56a5f08208",
+      "ConedMap.lean": "29fd1239c42822976ee274359d34804f7a5ef51f872bcceaf7b786ba7848eebd"
+    },
+    "selection": "support_card_nat; MapRestrict permutation/cycle/support decomposition; invariant component restriction",
+    "modifications": "generic namespace extraction, narrowed import and section scopes; no proof weakening"
+  },
+  "origin": {
+    "repository": "https://github.com/openai/math",
+    "commit": "1581d4cbdd69a0faf34b2089614fe2a814316a6a",
+    "licence": "Apache-2.0",
+    "mathlib_target": "4.35.0",
+    "modifications": "generic namespace extraction, import narrowing, section scopes and finite heartbeat options; original declaration namespaces retained"
+  },
+  "current_source_sha256": {
+    "Blocks.lean": "c3dd3360a125bca9ac5907e1d9edbe02f17e32e3d2d12a9a99327ba6fed9a11f",
+    "Boundaries.lean": "a3d4e1be124c6ef73532c411c315d29a3d55ce82ddb5568b52dd2e4e957e818f",
+    "Map.lean": "da18ee86eca7966f5233e716f1ef7ecaee6228642aab33867e05f507117c4c0b",
+    "Pairing.lean": "d94ffa183351cc0d8d8657302c53de3a39cb36b02e689ba2117e4b144e3a0962",
+    "Restriction.lean": "eda98b5639609a734fe4d543b0d6e4109a0a9386d05ea3ce1c445cb8a0c0e062",
+    "Surgery.lean": "9e5dbf45f0318f1ec019a70cf0d5b408c3e8b30b1f1822431c22e08b1b1d067d"
+  }
+}

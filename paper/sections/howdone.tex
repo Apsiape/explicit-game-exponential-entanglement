@@ -64,4 +64,23 @@ needs, and \cref{lem:sv-lift} now supplies a balanced lift for the explicit mode
 account of the machine checks claimed more than the programs established, which led to the second cell-count verifier for $A_*=60$ and to
 the cap of $42$ factors in both verifiers of (C4); and several smaller points. All are corrected here.
 \end{itemize}
-A formalization in Lean is in progress and is not part of this version. The proofs are given in full, and the checks support them but do not replace them.
+\paragraph{Formal verification.}
+The accompanying Lean 4.35.0 development in \texttt{lean/} checks the aggregate
+Theorem~A, the conjugator-length bound of \cref{lem:conjugator-length}, the
+finite-dimensional qubit count and its uniform-error consequence
+(\cref{thm:count,cor:count}), transfer and prescribed-measurement return
+(\cref{thm:transfer,thm:return}), the three profile comparisons of
+\cref{cor:two-sided}, and the stated aggregates for Theorems~E and~F.
+The sole parameter of the Theorem~A aggregate is the implication from a perfect
+projective tensor-product strategy to a finite-dimensional operator solution,
+restricted to the linear systems defined in the development: Definition~1 and
+Theorem~5, (1)$\Rightarrow$(2), of Cleve--Liu--Slofstra,
+arXiv:1606.02278v1~\cite{CLS17}. Its proof is not formalized here; the changes
+from spatial POVMs to this projective formulation are proved in Lean.
+The certified roots have only the standard axioms of propositional extensionality,
+classical choice and quotient soundness; their selected proof export was replayed
+by \texttt{leanchecker} and \texttt{nanoda}. The release packaging itself does not
+constitute a fresh replay. \Cref{app:formal} gives the declaration map and scope,
+including the absence of a standalone certified Theorem~B and of a formalization
+of the whole manuscript. Build and replay instructions are in
+\texttt{lean/README.md} of the accompanying repository.
