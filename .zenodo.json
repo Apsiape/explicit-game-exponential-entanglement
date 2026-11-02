@@ -27,6 +27,6 @@
   "access_right": "open",
   "license": "cc-by-4.0",
   "language": "eng",
-  "notes": "Preprint. The paper and documentation are licensed CC BY 4.0 and the programs MIT or Apache 2.0, at the user's option (see RIGHTS.md and NOTICE). It has not been peer reviewed. This release includes a Lean proof of Theorem A conditional on the published perfect tensor-strategy implication, together with certified E/F and finite-dimensional analytic results. The Lean development is Apache-2.0 unless otherwise marked; see lean/THIRD-PARTY-NOTICES.md. The prior v1.0.0 DOI is 10.5281/zenodo.23697255; no DOI is assigned here to v1.1.0.",
+  "notes": "Preprint. The paper and documentation are licensed CC BY 4.0 and the programs MIT or Apache 2.0, at the user's option (see RIGHTS.md and NOTICE). It has not been peer reviewed. This release includes a Lean proof of Theorem A conditional on the published perfect tensor-strategy implication, together with certified E/F and finite-dimensional analytic results. The Lean development is Apache-2.0 unless otherwise marked; see lean/THIRD-PARTY-NOTICES.md. The prior v1.0.0 DOI is 10.5281/zenodo.23697255.",
   "publication_date": "2026-11-02"
 }
